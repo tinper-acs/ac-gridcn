@@ -1,0 +1,136 @@
+@import "../node_modules/tinper-bee-core/scss/minxin-variables";
+@import "../node_modules/tinper-bee-core/scss/minxin-mixins";
+@import "../node_modules/bee-tooltip/src/Tooltip.scss";
+@import "../node_modules/bee-icon/src/Icon.scss";
+@import "../node_modules/bee-form-control/src/FormControl.scss";
+@import "../node_modules/bee-select/src/Select.scss";
+@import "../node_modules/bee-complex-grid/src/Grid.scss";
+@import "../node_modules/bee-datepicker/src/DatePicker.scss";
+
+.demo-grid-wrapper {
+    .u-grid.ucf-example-grid {
+        background: #fff;
+        overflow: hidden;
+        table {
+            table-layout: fixed;
+        }
+
+        //修改table的header背景色颜色和body中隔行差
+
+
+        .table-menu {
+            height: 16px;
+            line-height: 1;
+        }
+
+        th.column-number-right,
+        td.column-number-right {
+            // text-align: right !important;
+        }
+    }
+    .u-input-group {
+        border-spacing: 0;
+    }
+    .u-table {
+
+        tr {
+            transition: none;
+            &:nth-child(2n) {
+                background: #FAFAFA;
+            }
+            &:nth-child(2n + 1) {
+                background: #ffffff;
+            }
+            &:hover, &.u-table-row-hover {
+                background: #EBECF0;
+
+            }
+            &.u-table-row {
+                &.selected, &.ref-multiple-table-row-selected {
+                    background: #FFF7E7;
+                }
+            }
+
+        }
+        th, td {
+            padding: 10px 8px;
+            height: 40px;
+        }
+        th{
+            overflow: visible;
+            background-clip:padding-box;
+            word-break: keep-all;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: left;
+        }
+        tr.filterable th {
+            padding: 0 2px;
+            // height: 39px;
+        }
+
+    }
+}
+.u-table-filter-column-pop-cont-item {
+    &>span {
+        margin: 0 !important;
+    }
+}
+
+.triangle-flag {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .triangle-redline {
+        width: 2px;
+        height: 20px;
+        border-left: 2px solid #ff0000;
+        display: inline-block;
+        margin-right: 2px;
+    }
+    .triangle-element {
+        width: 100%;
+    }
+    .triangle-icon {
+        color: #ff0000;
+        padding-left: 3px;
+        cursor: pointer;
+        .uf {
+            padding: 0;
+        }
+    }
+    .triangle_border_nw {
+        width: 0;
+        height: 0;
+        border-width: 0 0 6px 6px;
+        border-style: solid;
+        border-color: transparent transparent transparent #f44336;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+    .triangle_border_nw_number {
+        width: 0;
+        height: 0;
+        border-width: 0 0 6px 6px;
+        border-style: solid;
+        border-color: transparent transparent transparent #f44336;
+        position: absolute;
+        top: 2px;
+        left: 2px;
+    }
+}
+
+//行编辑内的错误Tip
+.inline-edit-tooltip {
+    line-height: 1 !important;
+    div.tooltip-arrow {
+    }
+    div.tooltip-inner {
+        background-color: #de2626;
+        height: 28px;
+        line-height: 22px;
+    }
+}
+
