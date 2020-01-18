@@ -96,6 +96,8 @@ class Grid extends Component {
                                     index = {index}
                                     value = {text}
                                     field = {item.dataIndex}
+                                    onChange = {this.onChange}
+                                    status = {record.status}
                                 />:<div>{text}</div>
                             )
                         }
@@ -113,6 +115,8 @@ class Grid extends Component {
                                     index = {index}
                                     value = {value}
                                     field = {item.dataIndex}
+                                    onChange = {this.onChange}
+                                    status = {record.status}
                                 />:<div>{text}</div>
                             )
                         }
@@ -129,6 +133,8 @@ class Grid extends Component {
                                     index = {index}
                                     value = {value}
                                     field = {item.dataIndex}
+                                    onChange = {this.onChange}
+                                    status = {record.status}
                                 />:<div>{text}</div>
                             )
                         }
@@ -142,6 +148,8 @@ class Grid extends Component {
                                     index = {index}
                                     value = {text}
                                     field = {item.dataIndex}
+                                    onChange = {this.onChange}
+                                    status = {record.status}
                                 />:<div>{text}</div>
                             )
                         }
@@ -155,6 +163,8 @@ class Grid extends Component {
                                     index = {index}
                                     value = {text}
                                     field = {item.dataIndex}
+                                    onChange = {this.onChange}
+                                    status = {record.status}
                                 />:<div>{text}</div>
                             )
                         }
@@ -172,6 +182,7 @@ class Grid extends Component {
         data.forEach((item,index)=>{
             if(index%2>0){
                 item._edit = true;
+                item.status = 'edit';
             }else{
                 item._edit = false;
             }
@@ -179,6 +190,14 @@ class Grid extends Component {
         this.setState({
             data
         })
+    }
+    onChange=(field, value, index)=>{
+        console.log(field, value, index)
+        // let data = cloneDeep(this.state.data);
+        // data[index]['status']='edit';
+        // this.setState({
+        //     data
+        // })
     }
 
     render() {
@@ -197,6 +216,10 @@ class Grid extends Component {
                     onClick:this.addRow,
                     disabled:disabled
                 },
+                update:{
+                    onClick:this.addRow,
+                    disabled:disabled
+                },
                 delRow:{
                     onClick:this.delRow,
                     disabled:this.state.selectData==0||disabled
@@ -212,6 +235,10 @@ class Grid extends Component {
         }else{
             btnsObj= {
                 addRow:{
+                    onClick:this.addRow,
+                    disabled:disabled
+                },
+                update:{
                     onClick:this.addRow,
                     disabled:disabled
                 },
