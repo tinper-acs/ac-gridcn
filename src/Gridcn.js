@@ -93,6 +93,7 @@ class Grid extends Component {
                 // customizeRender,//自定义render
                 dataIndex,
                 render:oldRender,
+                component,
                 ...other
             } = item;
             // if(customizeRender){
@@ -175,6 +176,21 @@ class Grid extends Component {
                         item.render=(text,record,index)=>{
                             return (
                                 record._edit?<YearField 
+                                    {...other}
+                                    fieldProps={fieldProps}
+                                    index = {index}
+                                    value = {oldRender&&oldRender(text,record,index)}
+                                    field = {item.dataIndex}
+                                    onChange = {this.onChange}
+                                    status = {record._status}
+                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
+                            )
+                        }
+                    break;
+                    case 'refer':
+                        item.render=(text,record,index)=>{
+                            return (
+                                record._edit?<component 
                                     {...other}
                                     fieldProps={fieldProps}
                                     index = {index}
