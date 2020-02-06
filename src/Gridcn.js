@@ -103,7 +103,11 @@ class Grid extends Component {
             // }
             if(!oldRender)oldRender=text=>text;
             if(renderType){
-                if(fieldProps.defaultValue!=undefined)defaultValueKeyValue[dataIndex]=fieldProps.defaultValue;
+                if(fieldProps.defaultValue!=undefined){
+                    defaultValueKeyValue[dataIndex]=fieldProps.defaultValue;
+                }else{
+                    defaultValueKeyValue[dataIndex]='';
+                }
                 switch(renderType){
                     case 'input':
                         item.render=(text,record,index)=>{
@@ -190,15 +194,19 @@ class Grid extends Component {
                     case 'refer':
                         item.render=(text,record,index)=>{
                             return (
-                                record._edit?<component 
-                                    {...other}
-                                    fieldProps={fieldProps}
-                                    index = {index}
-                                    value = {oldRender&&oldRender(text,record,index)}
-                                    field = {item.dataIndex}
-                                    onChange = {this.onChange}
-                                    status = {record._status}
-                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
+                                record._edit?<span>
+                                    {
+                                        React.cloneElement(component,{
+                                            ...other,
+                                            ...fieldProps,
+                                            index : index,
+                                            value :oldRender&&oldRender(text,record,index),
+                                            field :item.dataIndex,
+                                            onChange :this.onChange,
+                                            status :record._status
+                                        })
+                                    }
+                                </span>:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
                     break;
@@ -234,7 +242,7 @@ class Grid extends Component {
     addRow=()=>{
         let defaultValueKeyValue = this.state.defaultValueKeyValue;
         let data = cloneDeep(this.state.data);
-        let item = cloneDeep(data[0]);
+        let item = cloneDeep(data[0]||defaultValueKeyValue);
         this.props.excludeKeys.forEach(it=>{
             delete item[it];
         })

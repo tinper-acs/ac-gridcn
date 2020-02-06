@@ -146,7 +146,11 @@ var Grid = function (_Component) {
                     return text;
                 };
                 if (renderType) {
-                    if (fieldProps.defaultValue != undefined) defaultValueKeyValue[dataIndex] = fieldProps.defaultValue;
+                    if (fieldProps.defaultValue != undefined) {
+                        defaultValueKeyValue[dataIndex] = fieldProps.defaultValue;
+                    } else {
+                        defaultValueKeyValue[dataIndex] = '';
+                    }
                     switch (renderType) {
                         case 'input':
                             item.render = function (text, record, index) {
@@ -239,14 +243,17 @@ var Grid = function (_Component) {
                             break;
                         case 'refer':
                             item.render = function (text, record, index) {
-                                return record._edit ? _react2["default"].createElement("component", _extends({}, other, {
-                                    fieldProps: fieldProps,
-                                    index: index,
-                                    value: oldRender && oldRender(text, record, index),
-                                    field: item.dataIndex,
-                                    onChange: _this.onChange,
-                                    status: record._status
-                                })) : _react2["default"].createElement(
+                                return record._edit ? _react2["default"].createElement(
+                                    "span",
+                                    null,
+                                    _react2["default"].cloneElement(component, _extends({}, other, fieldProps, {
+                                        index: index,
+                                        value: oldRender && oldRender(text, record, index),
+                                        field: item.dataIndex,
+                                        onChange: _this.onChange,
+                                        status: record._status
+                                    }))
+                                ) : _react2["default"].createElement(
                                     "div",
                                     null,
                                     oldRender && oldRender(text, record, index)
@@ -287,7 +294,7 @@ var Grid = function (_Component) {
         _this.addRow = function () {
             var defaultValueKeyValue = _this.state.defaultValueKeyValue;
             var data = (0, _lodash2["default"])(_this.state.data);
-            var item = (0, _lodash2["default"])(data[0]);
+            var item = (0, _lodash2["default"])(data[0] || defaultValueKeyValue);
             _this.props.excludeKeys.forEach(function (it) {
                 delete item[it];
             });
