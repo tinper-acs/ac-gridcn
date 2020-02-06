@@ -7,6 +7,8 @@
 import React, { Component } from 'react';
 import data from './data';
 import Grid from '../../src/index'
+import moment from 'moment';
+import Button from 'bee-button';
 
 class Demo1 extends Component {
     constructor(props){
@@ -25,6 +27,9 @@ class Demo1 extends Component {
                 width: 120,
                 renderType:'input',
                 required:true,
+                fieldProps:{
+                    defaultValue:'姓名'
+                }
                 // render: (text, record, index) => {
                 //     return <FactoryComp
                 //         type='name'//姓名业务组件类型
@@ -45,6 +50,7 @@ class Demo1 extends Component {
                 width: 120,
                 renderType:'select',
                 fieldProps:{
+                    defaultValue:'男',
                     data:[{
                         key: "请选择",
                         value: '',
@@ -112,6 +118,9 @@ class Demo1 extends Component {
                 className: 'column-number-right ', // 靠右对齐
                 renderType:'inputNumber',
                 required:true,
+                fieldProps:{
+                    defaultValue:2
+                }
                 // render: (text, record, index) => {
                 //     return <FactoryComp
                 //         type='serviceYears'//姓名业务组件类型
@@ -154,6 +163,12 @@ class Demo1 extends Component {
                 renderType:'year',
                 required:true,
                 required:true,
+                fieldProps:{
+                    defaultValue:'2018'
+                },
+                render:(text, record, index)=>{
+                    return moment(text).format('YYYY');
+                }
                 // render: (text, record, index) => {
                 //     return <FactoryComp
                 //         type='year'//姓名业务组件类型
@@ -439,6 +454,12 @@ class Demo1 extends Component {
     getSelectedDataFunc=()=>{
         console.log('getSelectedDataFunc')
     }
+
+    getAllData=()=>{
+        console.log(this.grid )
+    }
+    
+    
     render () {
         let paginationObj = {
             activePage: 1,//当前页
@@ -450,6 +471,7 @@ class Demo1 extends Component {
         }
         return (
             <div className='grid-parent'>
+                <Button onClick={this.getAllData}>获得所有数据</Button>
                 <Grid
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
@@ -463,6 +485,12 @@ class Demo1 extends Component {
                     syncHover={false}//是否同步状态
                     getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调
                     scroll={{ y: 500 }}
+                    delRow={(selectList)=>{
+                        console.log('删除，数据如下-----------',selectList)
+                    }}
+                    save={(selectList)=>{
+                        console.log('保存，数据如下-----------',selectList)
+                    }}
                 />
             </div>
         )

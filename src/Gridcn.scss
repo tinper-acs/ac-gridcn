@@ -7,6 +7,7 @@
 @import "../node_modules/bee-complex-grid/src/Grid.scss";
 @import "../node_modules/bee-datepicker/src/DatePicker.scss";
 @import "../node_modules/ac-btns/src/Btns.scss";
+@import "../node_modules/ac-tips/src/AcTips.scss";
 
 .demo-grid-wrapper {
     .u-grid.ucf-example-grid {
@@ -70,6 +71,18 @@
             // height: 39px;
         }
 
+    }
+    &.max {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        background: #fff;
+        width: 100%;
+        z-index: 2;
+        overflow: auto;
+    }
+    .ac-btns button.ac-btns-item.u-button.ac-btns-max{
+        padding-bottom: 2px;
     }
 }
 .u-table-filter-column-pop-cont-item {

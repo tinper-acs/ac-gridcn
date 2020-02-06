@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "ac-btns": "^0.1.3",
+    "ac-tips": "0.0.10",
     "async-validator": "^3.2.3",
     "babel-runtime": "^6.23.0",
     "bee-button-group": "^2.0.1",

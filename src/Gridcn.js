@@ -15,6 +15,8 @@ import YearField from './RowField/YearField';
 //日期组件
 import DateField from './RowField/DateField';
 
+import AcTips from 'ac-tips';
+
 const defualtPaginationParam = {
     dataNumSelect: ["5", "10", "15", "20", "25", "50", "All"],
     horizontalPosition: 'center',
@@ -30,7 +32,12 @@ const defaultProps = {
     //   hideBodyScroll: true,
     headerScroll: false,
     bordered: false,
-    data: []
+    data: [],
+    excludeKeys:[],
+    delRow:()=>{},//删除回调
+    getSelectedDataFunc:()=>{},//选中回调
+    save:()=>{},//保存回调
+
 };
 
 class Grid extends Component {
@@ -42,8 +49,14 @@ class Grid extends Component {
             isMax:false,//是否最大化了
             columns:props.columns,
             data:props.data,
+            defaultValueKeyValue:{},//每个单元格的默认值
+            isMax:false,//是否最大化了
+            // selectData:[],//copy的数据
+            allEditing:false,//是否正在修改所有数据
         }
         this.oldColumns = props.columns;
+        this.selectList = [];//选中的数据
+        this.allData = [];//表格所有数据
     }
 
     /**
@@ -72,12 +85,14 @@ class Grid extends Component {
 
     setColumn=(cl)=>{
         let columns = cloneDeep(cl);
+        let defaultValueKeyValue = {};
         columns.forEach(item => {
             let {
                 renderType,//渲染类型 input/inputNumber/select/datepicker/year
                 fieldProps={},//传给`field`的属性
                 // customizeRender,//自定义render
                 dataIndex,
+                render:oldRender,
                 ...other
             } = item;
             // if(customizeRender){
@@ -85,7 +100,9 @@ class Grid extends Component {
                     
             //     }
             // }
+            if(!oldRender)oldRender=text=>text;
             if(renderType){
+                if(fieldProps.defaultValue!=undefined)defaultValueKeyValue[dataIndex]=fieldProps.defaultValue;
                 switch(renderType){
                     case 'input':
                         item.render=(text,record,index)=>{
@@ -94,11 +111,11 @@ class Grid extends Component {
                                     {...other}
                                     fieldProps={fieldProps}
                                     index = {index}
-                                    value = {text}
+                                    value = {oldRender&&oldRender(text,record,index)}
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
-                                    status = {record.status}
-                                />:<div>{text}</div>
+                                    status = {record._status}
+                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
                     break;
@@ -113,19 +130,19 @@ class Grid extends Component {
                                     {...other}
                                     fieldProps={fieldProps}
                                     index = {index}
-                                    value = {value}
+                                    value = {oldRender&&oldRender(text,record,index)}
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
-                                    status = {record.status}
-                                />:<div>{text}</div>
+                                    status = {record._status}
+                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
                     break;
                     case 'select':
                         item.render=(text,record,index)=>{
                             let selectList = fieldProps.data;
-                            let selected = selectList.find(item => item.value === value);
-                            let value = selected ? selected.key : '';
+                            let selected = selectList.find(item => item.key === text);
+                            let value = selected ? selected.value : '';
                             return (
                                 record._edit?<SelectField 
                                     {...other}
@@ -134,8 +151,8 @@ class Grid extends Component {
                                     value = {value}
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
-                                    status = {record.status}
-                                />:<div>{text}</div>
+                                    status = {record._status}
+                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
                     break;
@@ -146,11 +163,11 @@ class Grid extends Component {
                                     {...other}
                                     fieldProps={fieldProps}
                                     index = {index}
-                                    value = {text}
+                                    value = {oldRender&&oldRender(text,record,index)}
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
-                                    status = {record.status}
-                                />:<div>{text}</div>
+                                    status = {record._status}
+                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
                     break;
@@ -161,11 +178,11 @@ class Grid extends Component {
                                     {...other}
                                     fieldProps={fieldProps}
                                     index = {index}
-                                    value = {text}
+                                    value = {oldRender&&oldRender(text,record,index)}
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
-                                    status = {record.status}
-                                />:<div>{text}</div>
+                                    status = {record._status}
+                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
                     break;
@@ -173,23 +190,20 @@ class Grid extends Component {
             }
         });
         this.setState({
-            columns
+            columns,
+            defaultValueKeyValue
         })
         this.oldColumns = columns;
     }
     setData=(da)=>{
         let data = cloneDeep(da);
-        data.forEach((item,index)=>{
-            if(index%2>0){
-                item._edit = true;
-                item.status = 'edit';
-            }else{
-                item._edit = false;
-            }
-        })
+        // data.forEach((item,index)=>{
+            
+        // })
         this.setState({
             data
         })
+        this.allData = data;
     }
     onChange=(field, value, index)=>{
         console.log(field, value, index)
@@ -198,10 +212,191 @@ class Grid extends Component {
         // this.setState({
         //     data
         // })
+        this.allData[index][field] = value;
+    }
+    //增行
+    addRow=()=>{
+        let defaultValueKeyValue = this.state.defaultValueKeyValue;
+        let data = cloneDeep(this.state.data);
+        let item = cloneDeep(data[0]);
+        this.props.excludeKeys.forEach(it=>{
+            delete item[it];
+        })
+        for( let attr in item){
+            if(defaultValueKeyValue[attr]){
+                item[attr]=defaultValueKeyValue[attr];
+            }else{
+                item[attr]='';
+            }
+            
+        }
+        item._edit = true;
+        item._status = 'edit';
+        data.push(item);
+        this.setState({
+            data
+        })
+        this.allData = data;
     }
 
-    render() {
-        let { copying,isMax,columns,data } = this.state;
+    //修改
+    updateAll=()=>{
+        let data = cloneDeep(this.state.data);
+        data.forEach(item=>{
+            item._edit = true;//是否编辑态
+            item._status = 'edit';//是否编辑态，用于显示是否编辑过
+        })
+        this.setState({
+            data,
+            allEditing:true
+        })
+        this.allData = data;
+    }
+
+    //删除行
+    delRow=()=>{
+        if(this.selectList.length<=0){
+            AcTips.create({
+                type:'warning',
+                content:"请先选择数据"
+            })
+        }else{
+            this.props.delRow(this.selectList);
+        }
+    }
+
+    //复制行
+    copyRow=()=>{
+        if(this.selectList.length<=0){
+            AcTips.create({
+                type:'warning',
+                content:"请先选择数据"
+            })
+        }else{
+            let copyData = [];
+            let data = cloneDeep(this.state.data);
+            data.forEach(item=>{
+                if(item._checked)copyData.push(item)
+            })
+            this.setState({
+                copying:true,
+                selectData:copyData
+            })
+            this.allData = data;
+        }
+        
+    }
+
+    //保存数据
+    save=()=>{
+        if(this.selectList.length<=0){
+            AcTips.create({
+                type:'warning',
+                content:"请先选择数据"
+            })
+        }else{
+            this.cancelEdit();
+            this.props.save(this.selectList);
+        }
+    }
+
+    //取消复制
+    cancelCopy=()=>{
+        this.setState({
+            copying:false,
+            selectData:[]
+        })
+    }
+    //粘贴至末行
+    copyToEnd=()=>{
+        let { data } = this.state;
+        let selectData = this.selectList;
+        selectData.forEach((item,index)=>{
+            this.props.excludeKeys.forEach(it=>{
+                delete item[it];
+            })
+        })
+        data = data.concat(selectData);
+        data = this.resetChecked(data)
+        this.setState({
+            data,
+            copying:false
+        })
+        this.allData = data;
+    }
+
+    //粘贴至此处
+    copyToHere=()=>{
+        let index = this.currentIndex;
+        let data = cloneDeep(this.state.data);
+        let selectData = this.selectList;
+        selectData.forEach((item,index)=>{
+            this.props.excludeKeys.forEach(it=>{
+                delete item[it];
+            })
+        })
+        data.splice(index,0,...selectData);
+        data = this.resetChecked(data)
+        this.setState({
+            data,
+            copying:false
+        })
+        this.allData = data;
+    }
+
+    //最大化、最小化
+    max=()=>{
+        this.setState({
+            isMax:!this.state.isMax
+        })
+    }
+
+    //修改取消
+    cancelEdit=()=>{
+        let data = cloneDeep(this.state.data);
+        data.forEach(item=>{
+            item._edit = false;//是否编辑态
+            item._status = '';//是否编辑态，用于显示是否编辑过
+        })
+        this.setState({
+            data,
+            allEditing:false
+        })
+        this.allData = data;
+    }
+    //全不选
+    resetChecked=(dataValue)=>{
+        let data = cloneDeep(dataValue);
+        data.forEach((item,index)=>{
+            item._checked=false
+        })
+        return data;
+    }
+
+    //行hover
+    onRowHover = (index,record) => {
+        this.currentIndex = index;
+    }
+
+    //粘贴至此处按钮
+    hoverContent=()=>{
+        if(this.state.copying){
+            return <span onClick={this.copyToHere} className='copy-to-here'>粘贴至此</span>
+        }else{
+            return ''
+        }
+    }
+
+    //数据选择回调
+    getSelectedDataFunc=(selectList,record,index)=>{
+        this.selectList = selectList;
+        this.props.getSelectedDataFunc(selectList,record,index)
+    }
+
+    
+
+    renderDom=()=>{
+        let { copying,isMax,columns,data,allEditing } = this.state;
         const { paginationObj, exportData,disabled,  ...otherProps } = this.props;
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
         _paginationObj.disabled = paginationObj.disabled !== undefined
@@ -209,50 +404,42 @@ class Grid extends Component {
             : data.length === 0;
         let _exportData = exportData || data;
         let btnsObj = {}
-        
-        if(isMax){
-            btnsObj= {
-                addRow:{
-                    onClick:this.addRow,
-                    disabled:disabled
-                },
-                update:{
-                    onClick:this.addRow,
-                    disabled:disabled
-                },
-                delRow:{
-                    onClick:this.delRow,
-                    disabled:this.state.selectData==0||disabled
-                },
-                copyRow:{
-                    onClick:this.copyRow,
-                    disabled:this.state.selectData==0||disabled
-                },
-                min:{
-                    onClick:this.max
-                }
+        btnsObj= {
+            addRow:{
+                onClick:this.addRow,
+                disabled:disabled
+            },
+            update:{
+                onClick:this.updateAll,
+                disabled:disabled
+            },
+            delRow:{
+                onClick:this.delRow,
+                // disabled:this.state.selectData==0||disabled
+            },
+            copyRow:{
+                onClick:this.copyRow,
+                // disabled:this.state.selectData==0||disabled
+            },
+            min:{
+                onClick:this.max
+            },
+            cancel:{
+                onClick:this.cancelEdit
             }
-        }else{
-            btnsObj= {
-                addRow:{
-                    onClick:this.addRow,
-                    disabled:disabled
-                },
-                update:{
-                    onClick:this.addRow,
-                    disabled:disabled
-                },
-                delRow:{
-                    onClick:this.delRow,
-                    disabled:this.state.selectData==0||disabled
-                },
-                copyRow:{
-                    onClick:this.copyRow,
-                    disabled:this.state.selectData==0||disabled
-                },
-                max:{
-                    onClick:this.max
-                }
+        }
+        if(!isMax){
+            delete btnsObj.min;
+            btnsObj.max = {
+                onClick:this.max
+            };
+        }
+        if(allEditing){
+            btnsObj.save = {
+                onClick:this.save
+            }
+            btnsObj.cancel = {
+                onClick:this.cancelEdit
             }
         }
         if(copying){
@@ -265,8 +452,8 @@ class Grid extends Component {
                 }
             }
         }
-        return (
-            <div className='demo-grid-wrapper'>
+        
+        return (<div className={`demo-grid-wrapper ${disabled?'disabled':''} ${isMax?'max':''}`}>
                 <span className='ac-gridcn-panel-btns'>
                     <ButtonGroup>
                         <Btns btns={btnsObj}/>
@@ -280,9 +467,22 @@ class Grid extends Component {
                     exportData={_exportData}
                     paginationObj={_paginationObj}
                     ref={el => this.grid = el}
+                    hoverContent={this.hoverContent}
+                    getSelectedDataFunc={this.getSelectedDataFunc}
+                    onRowHover={this.onRowHover}
                 />
             </div>
         );
+    }
+
+    render() {
+        return (<span>
+                {
+                    this.state.isMax?ReactDOM.createPortal(this.renderDom(),document.querySelector('body')):this.renderDom()
+                }
+            </span>
+        )
+        
     }
 }
 

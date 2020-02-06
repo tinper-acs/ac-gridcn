@@ -31,7 +31,8 @@ export default [{
     "lastModified": "2020-01-16 16:25:49 187",
     "allowanceTypeEnumValue": "电脑补助",
     "ts": "2020-01-16 16:25:49 189"
-}, {
+}, 
+{
     "deptName": "iUAP",
     "code": "A20200116003",
     "year": "2020-01-16T02:58:17.816Z",
@@ -290,4 +291,5 @@ export default [{
     "name2": " ",
     "allowanceTypeEnumValue": "电脑补助",
     "ts": "2020-01-15 13:52:49 185"
-}]
+}
+]
