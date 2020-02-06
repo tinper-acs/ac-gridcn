@@ -84,6 +84,15 @@
     .ac-btns button.ac-btns-item.u-button.ac-btns-max{
         padding-bottom: 2px;
     }
+    .copy-to-here {
+        cursor: pointer;
+        color: #0073E1;
+    }
+    .ac-gridcn-panel-btns{
+        padding-bottom: 10px;
+        display: block;
+        text-align: right;
+    }
 }
 .u-table-filter-column-pop-cont-item {
     &>span {

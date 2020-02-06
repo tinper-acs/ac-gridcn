@@ -456,7 +456,7 @@ class Demo1 extends Component {
     }
 
     getAllData=()=>{
-        console.log(this.grid )
+        console.log(this.grid.allData)
     }
     
     
@@ -471,7 +471,10 @@ class Demo1 extends Component {
         }
         return (
             <div className='grid-parent'>
-                <Button onClick={this.getAllData}>获得所有数据</Button>
+                <div style={{'marginBottom':'20px'}}>
+                    <Button onClick={this.getAllData}>获得所有数据</Button>
+                </div>
+                
                 <Grid
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
@@ -485,6 +488,7 @@ class Demo1 extends Component {
                     syncHover={false}//是否同步状态
                     getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调
                     scroll={{ y: 500 }}
+                    excludeKeys={['id','ts','lastModified']}
                     delRow={(selectList)=>{
                         console.log('删除，数据如下-----------',selectList)
                     }}

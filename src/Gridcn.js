@@ -423,9 +423,6 @@ class Grid extends Component {
             },
             min:{
                 onClick:this.max
-            },
-            cancel:{
-                onClick:this.cancelEdit
             }
         }
         if(!isMax){
@@ -435,12 +432,13 @@ class Grid extends Component {
             };
         }
         if(allEditing){
-            btnsObj.save = {
-                onClick:this.save
-            }
             btnsObj.cancel = {
                 onClick:this.cancelEdit
             }
+            btnsObj.save = {
+                onClick:this.save
+            }
+            
         }
         if(copying){
             btnsObj={
