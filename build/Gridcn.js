@@ -160,7 +160,8 @@ var Grid = function (_Component) {
                                     value: oldRender && oldRender(text, record, index),
                                     field: item.dataIndex,
                                     onChange: _this.onChange,
-                                    status: record._status
+                                    status: record._status,
+                                    onValidate: _this.onValidate
                                 })) : _react2["default"].createElement(
                                     "div",
                                     null,
@@ -180,7 +181,8 @@ var Grid = function (_Component) {
                                     value: oldRender && oldRender(text, record, index),
                                     field: item.dataIndex,
                                     onChange: _this.onChange,
-                                    status: record._status
+                                    status: record._status,
+                                    onValidate: _this.onValidate
                                 })) : _react2["default"].createElement(
                                     "div",
                                     null,
@@ -201,7 +203,8 @@ var Grid = function (_Component) {
                                     value: value,
                                     field: item.dataIndex,
                                     onChange: _this.onChange,
-                                    status: record._status
+                                    status: record._status,
+                                    onValidate: _this.onValidate
                                 })) : _react2["default"].createElement(
                                     "div",
                                     null,
@@ -217,7 +220,8 @@ var Grid = function (_Component) {
                                     value: oldRender && oldRender(text, record, index),
                                     field: item.dataIndex,
                                     onChange: _this.onChange,
-                                    status: record._status
+                                    status: record._status,
+                                    onValidate: _this.onValidate
                                 })) : _react2["default"].createElement(
                                     "div",
                                     null,
@@ -233,7 +237,8 @@ var Grid = function (_Component) {
                                     value: oldRender && oldRender(text, record, index),
                                     field: item.dataIndex,
                                     onChange: _this.onChange,
-                                    status: record._status
+                                    status: record._status,
+                                    onValidate: _this.onValidate
                                 })) : _react2["default"].createElement(
                                     "div",
                                     null,
@@ -251,7 +256,8 @@ var Grid = function (_Component) {
                                         value: oldRender && oldRender(text, record, index),
                                         field: item.dataIndex,
                                         onChange: _this.onChange,
-                                        status: record._status
+                                        status: record._status,
+                                        onValidate: _this.onValidate
                                     }))
                                 ) : _react2["default"].createElement(
                                     "div",
@@ -281,13 +287,29 @@ var Grid = function (_Component) {
             _this.allData = data;
         };
 
+        _this.onValidate = function (filed, errors, index) {
+            var current = _this.errors[index] || {};
+            if (errors) {
+                current[filed] = errors[filed][0].message;
+            } else {
+                delete current[filed];
+            }
+            if (Object.keys(current).length == 0) {
+                delete _this.errors[index];
+            } else {
+                _this.errors[index] = current;
+            }
+        };
+
+        _this.validate = function () {
+            if (Object.keys(_this.errors).length) {
+                return _this.errors;
+            } else {
+                return null;
+            }
+        };
+
         _this.onChange = function (field, value, index) {
-            console.log(field, value, index);
-            // let data = cloneDeep(this.state.data);
-            // data[index]['status']='edit';
-            // this.setState({
-            //     data
-            // })
             _this.allData[index][field] = value;
         };
 
@@ -309,9 +331,19 @@ var Grid = function (_Component) {
             item._status = 'edit';
             data.push(item);
             _this.setState({
-                data: data
+                data: data,
+                adding: true
             });
             _this.allData = data;
+        };
+
+        _this.cancelAdd = function () {
+            var data = (0, _lodash2["default"])(_this.state.data);
+            data.pop();
+            _this.setState({
+                data: data,
+                adding: false
+            });
         };
 
         _this.updateAll = function () {
@@ -364,6 +396,12 @@ var Grid = function (_Component) {
                     type: 'warning',
                     content: "请先选择数据"
                 });
+            } else if (_this.validate()) {
+                _acTips2["default"].create({
+                    type: 'warning',
+                    content: "数据校验失败"
+                });
+                console.log(_this.errors);
             } else {
                 _this.cancelEdit();
                 _this.props.save(_this.selectList);
@@ -469,7 +507,8 @@ var Grid = function (_Component) {
                 isMax = _this$state.isMax,
                 columns = _this$state.columns,
                 data = _this$state.data,
-                allEditing = _this$state.allEditing;
+                allEditing = _this$state.allEditing,
+                adding = _this$state.adding;
 
             var _this$props = _this.props,
                 paginationObj = _this$props.paginationObj,
@@ -478,7 +517,7 @@ var Grid = function (_Component) {
                 otherProps = _objectWithoutProperties(_this$props, ["paginationObj", "exportData", "disabled"]);
 
             var _paginationObj = _extends({}, defualtPaginationParam, paginationObj);
-            _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0;
+            _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0 || allEditing || copying || adding;
             var _exportData = exportData || data;
             var btnsObj = {};
             btnsObj = {
@@ -515,8 +554,11 @@ var Grid = function (_Component) {
                 btnsObj.save = {
                     onClick: _this.save
                 };
-            }
-            if (copying) {
+            } else if (adding) {
+                btnsObj.cancel = {
+                    onClick: _this.cancelAdd
+                };
+            } else if (copying) {
                 btnsObj = {
                     copyToEnd: {
                         onClick: _this.copyToEnd
@@ -561,10 +603,11 @@ var Grid = function (_Component) {
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
-            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "allEditing", false), _this$state2);
+            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "allEditing", false), _defineProperty(_this$state2, "adding", false), _this$state2);
         _this.oldColumns = props.columns;
         _this.selectList = []; //选中的数据
         _this.allData = []; //表格所有数据
+        _this.errors = {};
         return _this;
     }
 
@@ -585,6 +628,8 @@ var Grid = function (_Component) {
     };
     //增行
 
+
+    //取消新增
 
     //修改
 

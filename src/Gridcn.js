@@ -53,10 +53,12 @@ class Grid extends Component {
             isMax:false,//是否最大化了
             // selectData:[],//copy的数据
             allEditing:false,//是否正在修改所有数据
+            adding:false,//是否正在新增
         }
         this.oldColumns = props.columns;
         this.selectList = [];//选中的数据
         this.allData = [];//表格所有数据
+        this.errors = {}
     }
 
     /**
@@ -120,6 +122,7 @@ class Grid extends Component {
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
                                     status = {record._status}
+                                    onValidate={this.onValidate}
                                 />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
@@ -139,6 +142,7 @@ class Grid extends Component {
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
                                     status = {record._status}
+                                    onValidate={this.onValidate}
                                 />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
@@ -157,6 +161,7 @@ class Grid extends Component {
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
                                     status = {record._status}
+                                    onValidate={this.onValidate}
                                 />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
@@ -172,6 +177,7 @@ class Grid extends Component {
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
                                     status = {record._status}
+                                    onValidate={this.onValidate}
                                 />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
@@ -187,6 +193,7 @@ class Grid extends Component {
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
                                     status = {record._status}
+                                    onValidate={this.onValidate}
                                 />:<div>{oldRender&&oldRender(text,record,index)}</div>
                             )
                         }
@@ -203,7 +210,8 @@ class Grid extends Component {
                                             value :oldRender&&oldRender(text,record,index),
                                             field :item.dataIndex,
                                             onChange :this.onChange,
-                                            status :record._status
+                                            status :record._status,
+                                            onValidate:this.onValidate
                                         })
                                     }
                                 </span>:<div>{oldRender&&oldRender(text,record,index)}</div>
@@ -229,13 +237,30 @@ class Grid extends Component {
         })
         this.allData = data;
     }
+
+
+    onValidate=(filed,errors,index)=>{
+        let current = this.errors[index]||{};
+        if(errors){
+            current[filed] = errors[filed][0].message;
+        }else{
+           delete current[filed];
+        }
+        if(Object.keys(current).length==0){
+            delete this.errors[index];
+        }else{
+            this.errors[index] = current;
+        }
+    }
+    validate = ()=>{
+        if(Object.keys(this.errors).length){
+            return this.errors;
+        }else{
+            return null;
+        }
+    }
+
     onChange=(field, value, index)=>{
-        console.log(field, value, index)
-        // let data = cloneDeep(this.state.data);
-        // data[index]['status']='edit';
-        // this.setState({
-        //     data
-        // })
         this.allData[index][field] = value;
     }
     //增行
@@ -258,11 +283,21 @@ class Grid extends Component {
         item._status = 'edit';
         data.push(item);
         this.setState({
-            data
+            data,
+            adding:true
         })
         this.allData = data;
     }
 
+    //取消新增
+    cancelAdd=()=>{
+        let data = cloneDeep(this.state.data);
+        data.pop();
+        this.setState({
+            data,
+            adding:false
+        })
+    }
     //修改
     updateAll=()=>{
         let data = cloneDeep(this.state.data);
@@ -318,6 +353,12 @@ class Grid extends Component {
                 type:'warning',
                 content:"请先选择数据"
             })
+        }else if(this.validate()){
+            AcTips.create({
+                type:'warning',
+                content:"数据校验失败"
+            })
+            console.log(this.errors)
         }else{
             this.cancelEdit();
             this.props.save(this.selectList);
@@ -420,12 +461,12 @@ class Grid extends Component {
     
 
     renderDom=()=>{
-        let { copying,isMax,columns,data,allEditing } = this.state;
+        let { copying,isMax,columns,data,allEditing,adding } = this.state;
         const { paginationObj, exportData,disabled,  ...otherProps } = this.props;
         const _paginationObj = {...defualtPaginationParam, ...paginationObj};
         _paginationObj.disabled = paginationObj.disabled !== undefined
             ? paginationObj.disabled
-            : data.length === 0;
+            : (data.length === 0||allEditing||copying||adding);
         let _exportData = exportData || data;
         let btnsObj = {}
         btnsObj= {
@@ -463,8 +504,11 @@ class Grid extends Component {
                 onClick:this.save
             }
             
-        }
-        if(copying){
+        }else if(adding){
+            btnsObj.cancel = {
+                onClick:this.cancelAdd
+            }
+        }else if(copying){
             btnsObj={
                 copyToEnd:{
                     onClick:this.copyToEnd
@@ -474,6 +518,7 @@ class Grid extends Component {
                 }
             }
         }
+        
         
         return (<div className={`demo-grid-wrapper ${disabled?'disabled':''} ${isMax?'max':''}`}>
                 <span className='ac-gridcn-panel-btns'>

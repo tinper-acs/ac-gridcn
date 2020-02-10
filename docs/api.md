@@ -8,9 +8,8 @@
 
 ```js
 
-import AcGrids from 'ac-grids';
-import 'ac-grids/build/AcGrids.css';
-const EditGrid = AcGrids.EditGrid;
+import Gridcn from 'ac-gridcn';
+import 'ac-gridcn/build/Gridcn.css';
 
 ```
 
@@ -20,40 +19,24 @@ const EditGrid = AcGrids.EditGrid;
 
 ### Grid
 
-|参数|说明|类型|默认值|
-|:---|:-----|:----|:------|
-|data|数据|array|[]|
-|columns|列|array|[]|
-|paginationObj|分页属性|同分页组件|-|
-|showPagination|是否显示分页|bool|true|
-|showTooltip|是否显示tooltip|bool|false|
-|showIndex|是否显示序号列|bool|false|
-
-
-### EditGrid
+在 [bee-complex-grid](http://bee.tinper.org/tinper-acs/bee-complex-grid) 基础上新增如下api
 
 |参数|说明|类型|默认值|
 |:---|:-----|:----|:------|
-|data|数据|array|[]|
-|columns|列|array|[]|
-|title|标题|string|-|
-|onOpenChange|展开收起回调|function|-|
-|onChange|数据改变、选中时的回调|function|-|
-|disabled|是否可编辑|bool|-|
-|onDel|删除的回调|function|-|
-|defaultOpen|默认是否打开|bool|-|
-|showIndex|是否显示序号列|bool|true|
-|excludeKeys|粘贴时不需要粘贴的key值合集|array|[]|
+|delRow|删除回调|function|-|
+|getSelectedDataFunc|选中回调|function|-|
+|save|保存回调|function|-|
+
 
 
 ### columns
 
-参考 [table的columns API](http://bee.tinper.org/tinper-bee/bee-table#Column)
+在 [table的columns API](http://bee.tinper.org/tinper-bee/bee-table#Column) 基础上新增如下api
 
 |参数|说明|类型|默认值|
 |:---|:-----|:----|:------|
-|renderType|表单类型|目前支持 `input/inputNumber/select/datepicker/year`，正在继续完善，不写则不render成表单|-|
-|customizeRender|自定义render表单元素，此组件封装要遵循的规则较多，目前已封装`ac-grids-refer-field` mdf-refer参照使用的render，[组件参考地址](https://github.com/tinper-acs/ac-grids-refer-field)，文档持续完善|node|-|
+|renderType|表单类型|目前支持 `input/inputNumber/select/datepicker/year/refer`，正在继续完善，不写则不render成表单，注意如使用 `refer` 类型，需要写component属性，component属性如下|-|
+|component|参照类型使用，`mdf-refer`参照需要引入 [`ac-gridcn-refer-field`](https://www.npmjs.com/package/ac-gridcn-refer-field)，并作为此属性传入||
 |validate|是否校验|bool|-|
 |required|是否必填|bool|-|
 |message|必填校验失败错误信息|string|-|
@@ -79,6 +62,5 @@ const EditGrid = AcGrids.EditGrid;
  ## 注意事项
 
  - `field`这里代表 render出来的表单元素。例如：`type:'input'`，则 `formcontrol` 即为`field`
- - `EditGrid` 在使用 `renderType` 时，不支持自定义行列合并
 
  ## 更新日志

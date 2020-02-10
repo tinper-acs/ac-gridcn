@@ -54,7 +54,7 @@ class Demo1 extends Component {
                     data:[{
                         key: "请选择",
                         value: '',
-                        disabled: true
+                        // disabled: true
                     }, {
                         key: "男",
                         value: 1
@@ -458,7 +458,15 @@ class Demo1 extends Component {
     getAllData=()=>{
         console.log(this.grid.allData)
     }
-    
+    validate=()=>{
+        let error = this.grid.validate();
+        if(error){
+            alert('数据校验失败，错误信息见控制台');
+            console.log(error)
+        }else{
+            alert('数据校验成功')
+        }
+    }
     
     render () {
         let paginationObj = {
@@ -467,12 +475,13 @@ class Demo1 extends Component {
             items: 10,
             freshData: this.freshData,//刷新数据
             onDataNumSelect: this.onDataNumSelect,//选择记录行
-            disabled: false//分页条禁用状态
+            // disabled: false//分页条禁用状态
         }
         return (
             <div className='grid-parent'>
                 <div style={{'marginBottom':'20px'}}>
-                    <Button onClick={this.getAllData}>获得所有数据</Button>
+                    <Button onClick={this.getAllData} colors="primary" >获得所有数据</Button>
+                    <Button onClick={this.validate} colors="primary" style={{'marginLeft':'20px'}}>主动校验</Button>
                 </div>
                 
                 <Grid
