@@ -118,6 +118,8 @@ class YearField extends Component {
 
         let { className, message, required, fieldProps } = this.props;
 
+        let { defaultValue,...other } = fieldProps;
+
         return (
             <FieldWrap
                 required={required}
@@ -129,7 +131,7 @@ class YearField extends Component {
                     format={'YYYY'}
                     locale={zhCN}
                     placeholder={"选择年"}
-                    {...fieldProps}
+                    {...other}
                     className={className}
                     value={value}
                     onChange={this.handlerChange}

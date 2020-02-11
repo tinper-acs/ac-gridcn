@@ -38,6 +38,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
 
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -190,6 +192,8 @@ var YearField = function (_Component) {
             required = _props.required,
             fieldProps = _props.fieldProps;
 
+        var defaultValue = fieldProps.defaultValue,
+            other = _objectWithoutProperties(fieldProps, ['defaultValue']);
 
         return _react2["default"].createElement(
             _FieldWrap2["default"],
@@ -203,7 +207,7 @@ var YearField = function (_Component) {
                 format: 'YYYY',
                 locale: _zh_CN2["default"],
                 placeholder: "选择年"
-            }, fieldProps, {
+            }, other, {
                 className: className,
                 value: value,
                 onChange: this.handlerChange

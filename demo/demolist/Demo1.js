@@ -49,7 +49,9 @@ class Demo1 extends Component {
                 key: "sexEnumValue",
                 width: 120,
                 renderType:'select',
+                required:true,
                 fieldProps:{
+                    allowClear:true,
                     defaultValue:'男',
                     data:[{
                         key: "请选择",
