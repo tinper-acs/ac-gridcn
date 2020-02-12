@@ -26,6 +26,10 @@ var _lodash = require("lodash.clonedeep");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+var _beeIcon = require("bee-icon");
+
+var _beeIcon2 = _interopRequireDefault(_beeIcon);
+
 var _TextField = require("./RowField/TextField");
 
 var _TextField2 = _interopRequireDefault(_TextField);
@@ -98,8 +102,8 @@ var defaultProps = {
     excludeKeys: [],
     delRow: function delRow() {}, //删除回调
     getSelectedDataFunc: function getSelectedDataFunc() {}, //选中回调
-    save: function save() {} //保存回调
-
+    save: function save() {}, //保存回调
+    clsfix: 'ac-gridcn'
 };
 
 var Grid = function (_Component) {
@@ -498,7 +502,16 @@ var Grid = function (_Component) {
 
         _this.getSelectedDataFunc = function (selectList, record, index) {
             _this.selectList = selectList;
+            // this.setState({
+            //     selectData:selectList
+            // })
             _this.props.getSelectedDataFunc(selectList, record, index);
+        };
+
+        _this.open = function () {
+            _this.setState({
+                open: !_this.state.open
+            });
         };
 
         _this.renderDom = function () {
@@ -508,22 +521,28 @@ var Grid = function (_Component) {
                 columns = _this$state.columns,
                 data = _this$state.data,
                 allEditing = _this$state.allEditing,
-                adding = _this$state.adding;
+                adding = _this$state.adding,
+                open = _this$state.open;
 
             var _this$props = _this.props,
+                clsfix = _this$props.clsfix,
                 paginationObj = _this$props.paginationObj,
                 exportData = _this$props.exportData,
                 disabled = _this$props.disabled,
-                otherProps = _objectWithoutProperties(_this$props, ["paginationObj", "exportData", "disabled"]);
+                title = _this$props.title,
+                otherProps = _objectWithoutProperties(_this$props, ["clsfix", "paginationObj", "exportData", "disabled", "title"]);
 
-            var _paginationObj = _extends({}, defualtPaginationParam, paginationObj);
-            _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0 || allEditing || copying || adding;
+            var _paginationObj = 'none';
+            if (paginationObj != 'none') {
+                _paginationObj = _extends({}, defualtPaginationParam, paginationObj);
+                _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0 || allEditing || copying || adding;
+            }
             var _exportData = exportData || data;
             var btnsObj = {};
             btnsObj = {
                 addRow: {
                     onClick: _this.addRow,
-                    disabled: disabled
+                    disabled: allEditing || adding || disabled
                 },
                 update: {
                     onClick: _this.updateAll,
@@ -531,11 +550,11 @@ var Grid = function (_Component) {
                 },
                 delRow: {
                     onClick: _this.delRow
-                    // disabled:this.state.selectData==0||disabled
+                    // disabled:this.selectList==0||disabled
                 },
                 copyRow: {
                     onClick: _this.copyRow
-                    // disabled:this.state.selectData==0||disabled
+                    // disabled:this.selectList==0||disabled
                 },
                 min: {
                     onClick: _this.max
@@ -568,11 +587,36 @@ var Grid = function (_Component) {
                     }
                 };
             }
-
             return _react2["default"].createElement(
                 "div",
-                { className: "demo-grid-wrapper " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') },
-                _react2["default"].createElement(
+                { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') },
+                typeof title == 'string' ? _react2["default"].createElement(
+                    "div",
+                    { className: clsfix + "-panel " + (open ? '' : 'close') },
+                    _react2["default"].createElement(
+                        "span",
+                        { onClick: _this.open },
+                        _react2["default"].createElement(
+                            "span",
+                            { className: clsfix + "-panel-icon" },
+                            open ? _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-down" }) : _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-right" })
+                        ),
+                        _react2["default"].createElement(
+                            "span",
+                            { className: clsfix + "-panel-title" },
+                            title
+                        )
+                    ),
+                    open ? _react2["default"].createElement(
+                        "span",
+                        { className: clsfix + "-panel-btns" },
+                        _react2["default"].createElement(
+                            _beeButtonGroup2["default"],
+                            null,
+                            _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj })
+                        )
+                    ) : ''
+                ) : _react2["default"].createElement(
                     "span",
                     { className: "ac-gridcn-panel-btns" },
                     _react2["default"].createElement(
@@ -581,7 +625,24 @@ var Grid = function (_Component) {
                         _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj })
                     )
                 ),
-                _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
+                typeof title == 'string' ? _react2["default"].createElement(
+                    "div",
+                    { className: clsfix + "-inner " + (open ? 'show' : 'hide') + " " + (isMax ? 'max' : '') },
+                    _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
+                        className: "ucf-example-grid",
+                        data: data,
+                        columns: columns,
+                        exportData: _exportData,
+                        paginationObj: _paginationObj,
+                        ref: function ref(el) {
+                            return _this.grid = el;
+                        },
+                        hoverContent: _this.hoverContent,
+                        getSelectedDataFunc: _this.getSelectedDataFunc,
+                        onRowHover: _this.onRowHover,
+                        syncHover: false
+                    }))
+                ) : _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
                     className: "ucf-example-grid",
                     data: data,
                     columns: columns,
@@ -592,14 +653,15 @@ var Grid = function (_Component) {
                     },
                     hoverContent: _this.hoverContent,
                     getSelectedDataFunc: _this.getSelectedDataFunc,
-                    onRowHover: _this.onRowHover
+                    onRowHover: _this.onRowHover,
+                    syncHover: false
                 }))
             );
         };
 
         _this.state = (_this$state2 = {
             copying: false, //是否正在拷贝
-            open: props.defaultOpen || true, //默认展开收起
+            open: props.defaultOpen != undefined ? props.defaultValue : true, //默认展开收起
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
@@ -666,6 +728,9 @@ var Grid = function (_Component) {
 
 
     //数据选择回调
+
+
+    //打开关闭
 
 
     Grid.prototype.render = function render() {

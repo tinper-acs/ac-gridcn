@@ -26,6 +26,8 @@ import 'ac-gridcn/build/Gridcn.css';
 |delRow|删除回调|function|-|
 |getSelectedDataFunc|选中回调|function|-|
 |save|保存回调|function|-|
+|title|标题，如果title值为string则使用此组件的title，如果title的值为function，则使用bee-table的title|string|-|
+|defaultOpen|默认是否展开，需配合title为string使用|bool|true|
 
 
 

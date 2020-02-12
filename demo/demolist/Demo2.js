@@ -1,7 +1,7 @@
 /**
 *
-* @title 基本示例
-* @description 基本示例
+* @title 使用标题
+* @description 设置 title属性，如果title值为string则使用此组件的title，如果title的值为function，则使用bee-table的title
 *
 */
 import React, { Component } from 'react';
@@ -487,6 +487,7 @@ class Demo1 extends Component {
                 </div>
                 
                 <Grid
+                    title='标题'
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
                     rowKey={r => r.id ? r.id : r.key}
@@ -496,7 +497,6 @@ class Demo1 extends Component {
                     showHeaderMenu={true}//是否显示菜单
                     dragborder={true}//是否调整列宽
                     draggable={true}//是否拖拽
-                    syncHover={false}//是否同步状态
                     getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调
                     scroll={{ y: 500 }}
                     excludeKeys={['id','ts','lastModified']}

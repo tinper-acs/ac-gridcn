@@ -3,6 +3,7 @@ import BeeGrid from "bee-complex-grid";
 import Btns from 'ac-btns';
 import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
+import Icon from 'bee-icon';
 
 //文本输入组件
 import TextField from './RowField/TextField';
@@ -37,7 +38,7 @@ const defaultProps = {
     delRow:()=>{},//删除回调
     getSelectedDataFunc:()=>{},//选中回调
     save:()=>{},//保存回调
-
+    clsfix:'ac-gridcn'
 };
 
 class Grid extends Component {
@@ -45,13 +46,13 @@ class Grid extends Component {
         super(props);
         this.state={
             copying:false,//是否正在拷贝
-            open:props.defaultOpen||true,//默认展开收起
+            open:props.defaultOpen!=undefined?props.defaultValue:true,//默认展开收起
             isMax:false,//是否最大化了
             columns:props.columns,
             data:props.data,
             defaultValueKeyValue:{},//每个单元格的默认值
             isMax:false,//是否最大化了
-            // selectData:[],//copy的数据
+            // selectData:[],//选中的数据
             allEditing:false,//是否正在修改所有数据
             adding:false,//是否正在新增
         }
@@ -455,24 +456,35 @@ class Grid extends Component {
     //数据选择回调
     getSelectedDataFunc=(selectList,record,index)=>{
         this.selectList = selectList;
-        this.props.getSelectedDataFunc(selectList,record,index)
+        // this.setState({
+        //     selectData:selectList
+        // })
+        this.props.getSelectedDataFunc(selectList,record,index);
     }
 
     
-
+    //打开关闭
+    open=()=>{
+        this.setState({
+            open:!this.state.open
+        })
+    }
     renderDom=()=>{
-        let { copying,isMax,columns,data,allEditing,adding } = this.state;
-        const { paginationObj, exportData,disabled,  ...otherProps } = this.props;
-        const _paginationObj = {...defualtPaginationParam, ...paginationObj};
-        _paginationObj.disabled = paginationObj.disabled !== undefined
-            ? paginationObj.disabled
-            : (data.length === 0||allEditing||copying||adding);
+        let { copying,isMax,columns,data,allEditing,adding,open } = this.state;
+        const { clsfix,paginationObj, exportData,disabled,title,  ...otherProps } = this.props;
+        let _paginationObj ='none';
+        if(paginationObj!='none'){
+            _paginationObj = {...defualtPaginationParam, ...paginationObj};
+            _paginationObj.disabled = paginationObj.disabled !== undefined
+                ? paginationObj.disabled
+                : (data.length === 0||allEditing||copying||adding);
+        }
         let _exportData = exportData || data;
         let btnsObj = {}
         btnsObj= {
             addRow:{
                 onClick:this.addRow,
-                disabled:disabled
+                disabled:allEditing||adding||disabled
             },
             update:{
                 onClick:this.updateAll,
@@ -480,11 +492,11 @@ class Grid extends Component {
             },
             delRow:{
                 onClick:this.delRow,
-                // disabled:this.state.selectData==0||disabled
+                // disabled:this.selectList==0||disabled
             },
             copyRow:{
                 onClick:this.copyRow,
-                // disabled:this.state.selectData==0||disabled
+                // disabled:this.selectList==0||disabled
             },
             min:{
                 onClick:this.max
@@ -518,26 +530,66 @@ class Grid extends Component {
                 }
             }
         }
-        
-        
-        return (<div className={`demo-grid-wrapper ${disabled?'disabled':''} ${isMax?'max':''}`}>
-                <span className='ac-gridcn-panel-btns'>
-                    <ButtonGroup>
-                        <Btns btns={btnsObj}/>
-                    </ButtonGroup>
-                </span>
-                <BeeGrid
-                    {...otherProps}
-                    className="ucf-example-grid"
-                    data={data}
-                    columns={columns}
-                    exportData={_exportData}
-                    paginationObj={_paginationObj}
-                    ref={el => this.grid = el}
-                    hoverContent={this.hoverContent}
-                    getSelectedDataFunc={this.getSelectedDataFunc}
-                    onRowHover={this.onRowHover}
-                />
+        return (
+            <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
+                {
+                    typeof title=='string'?<div className={`${clsfix}-panel ${open?'':'close'}`}>
+                    <span onClick={this.open}>
+                        <span className={`${clsfix}-panel-icon`}>
+                            {
+                                open?<Icon type='uf-triangle-down'/>:<Icon type='uf-triangle-right'/>
+                            }
+                        </span>
+                        <span className={`${clsfix}-panel-title`}>
+                            {title}
+                        </span>
+                    </span>
+                    {
+                        open?<span className={`${clsfix}-panel-btns`}>
+                            <ButtonGroup>
+                                <Btns btns={btnsObj}/>
+                            </ButtonGroup>
+                        </span>:''
+                    }
+                    
+                    </div>:<span className='ac-gridcn-panel-btns'>
+                        <ButtonGroup>
+                            <Btns btns={btnsObj}/>
+                        </ButtonGroup>
+                    </span>
+                }
+                {
+                    typeof title=='string'?<div className={`${clsfix}-inner ${open?'show':'hide'} ${isMax?'max':''}`}>
+                        <BeeGrid
+                        {...otherProps}
+                        className="ucf-example-grid"
+                        data={data}
+                        columns={columns}
+                        exportData={_exportData}
+                        paginationObj={_paginationObj}
+                        ref={el => this.grid = el}
+                        hoverContent={this.hoverContent}
+                        getSelectedDataFunc={this.getSelectedDataFunc}
+                        onRowHover={this.onRowHover}
+                        syncHover={false}
+                    />
+                    </div>:<BeeGrid
+                        {...otherProps}
+                        className="ucf-example-grid"
+                        data={data}
+                        columns={columns}
+                        exportData={_exportData}
+                        paginationObj={_paginationObj}
+                        ref={el => this.grid = el}
+                        hoverContent={this.hoverContent}
+                        getSelectedDataFunc={this.getSelectedDataFunc}
+                        onRowHover={this.onRowHover}
+                        syncHover={false}
+                    />
+                }
+                
+                
+                
             </div>
         );
     }
