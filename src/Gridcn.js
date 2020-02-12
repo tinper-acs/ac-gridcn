@@ -4,7 +4,7 @@ import Btns from 'ac-btns';
 import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
-
+import isequal from 'lodash.isequal';
 //文本输入组件
 import TextField from './RowField/TextField';
 //下拉选择组件
@@ -38,7 +38,8 @@ const defaultProps = {
     delRow:()=>{},//删除回调
     getSelectedDataFunc:()=>{},//选中回调
     save:()=>{},//保存回调
-    clsfix:'ac-gridcn'
+    clsfix:'ac-gridcn',
+    onChange:()=>{},//数据改变回调
 };
 
 class Grid extends Component {
@@ -85,7 +86,12 @@ class Grid extends Component {
         this.setColumn(this.props.columns)
         this.setData(this.props.data)
     }
-
+    componentWillReceiveProps(nextProps){
+        if(!isequal(nextProps.data,this.allData)){
+            this.setData(nextProps.data);
+            this.allData = nextProps.data;
+        }
+    }
     setColumn=(cl)=>{
         let columns = cloneDeep(cl);
         let defaultValueKeyValue = {};
@@ -96,7 +102,7 @@ class Grid extends Component {
                 // customizeRender,//自定义render
                 dataIndex,
                 render:oldRender,
-                component,
+                component,//参照组件
                 ...other
             } = item;
             // if(customizeRender){
@@ -150,8 +156,8 @@ class Grid extends Component {
                     break;
                     case 'select':
                         item.render=(text,record,index)=>{
-                            let selectList = fieldProps.data;
-                            let selected = selectList.find(item => item.key === text);
+                            let selectList = fieldProps.data||[];
+                            let selected = selectList.find(it => it.key === text);
                             let value = selected ? selected.value : '';
                             return (
                                 record._edit?<SelectField 
@@ -239,7 +245,6 @@ class Grid extends Component {
         this.allData = data;
     }
 
-
     onValidate=(filed,errors,index)=>{
         let current = this.errors[index]||{};
         if(errors){
@@ -263,6 +268,10 @@ class Grid extends Component {
 
     onChange=(field, value, index)=>{
         this.allData[index][field] = value;
+        // this.setState({
+        //     data:this.allData
+        // })
+        this.props.onChange(this.allData);
     }
     //增行
     addRow=()=>{

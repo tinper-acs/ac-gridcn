@@ -30,6 +30,10 @@ var _beeIcon = require("bee-icon");
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
+var _lodash3 = require("lodash.isequal");
+
+var _lodash4 = _interopRequireDefault(_lodash3);
+
 var _TextField = require("./RowField/TextField");
 
 var _TextField2 = _interopRequireDefault(_TextField);
@@ -69,7 +73,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-
 //文本输入组件
 
 //下拉选择组件
@@ -103,7 +106,8 @@ var defaultProps = {
     delRow: function delRow() {}, //删除回调
     getSelectedDataFunc: function getSelectedDataFunc() {}, //选中回调
     save: function save() {}, //保存回调
-    clsfix: 'ac-gridcn'
+    clsfix: 'ac-gridcn',
+    onChange: function onChange() {} //数据改变回调
 };
 
 var Grid = function (_Component) {
@@ -196,9 +200,9 @@ var Grid = function (_Component) {
                             break;
                         case 'select':
                             item.render = function (text, record, index) {
-                                var selectList = fieldProps.data;
-                                var selected = selectList.find(function (item) {
-                                    return item.key === text;
+                                var selectList = fieldProps.data || [];
+                                var selected = selectList.find(function (it) {
+                                    return it.key === text;
                                 });
                                 var value = selected ? selected.value : '';
                                 return record._edit ? _react2["default"].createElement(_SelectField2["default"], _extends({}, other, {
@@ -315,6 +319,10 @@ var Grid = function (_Component) {
 
         _this.onChange = function (field, value, index) {
             _this.allData[index][field] = value;
+            // this.setState({
+            //     data:this.allData
+            // })
+            _this.props.onChange(_this.allData);
         };
 
         _this.addRow = function () {
@@ -692,6 +700,13 @@ var Grid = function (_Component) {
     Grid.prototype.componentWillMount = function componentWillMount() {
         this.setColumn(this.props.columns);
         this.setData(this.props.data);
+    };
+
+    Grid.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
+        if (!(0, _lodash4["default"])(nextProps.data, this.allData)) {
+            this.setData(nextProps.data);
+            this.allData = nextProps.data;
+        }
     };
     //增行
 
