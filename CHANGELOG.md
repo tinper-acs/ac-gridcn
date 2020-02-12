@@ -1,3 +1,13 @@
+<a name="0.0.5"></a>
+## [0.0.5](https://github.com/tinper-bee/ac-gridcn/compare/v0.0.4...v0.0.5) (2020-02-12)
+
+
+### Features
+
+* **ac-gridcn:** 新增展开收起功能 ([3c85866](https://github.com/tinper-bee/ac-gridcn/commit/3c85866))
+
+
+
 <a name="0.0.4"></a>
 ## [0.0.4](https://github.com/tinper-bee/ac-gridcn/compare/v0.0.3...v0.0.4) (2020-02-11)
 
