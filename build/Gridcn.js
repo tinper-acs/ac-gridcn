@@ -541,8 +541,8 @@ var Grid = function (_Component) {
             var btnsObj = {};
             btnsObj = {
                 addRow: {
-                    onClick: _this.addRow,
-                    disabled: allEditing || adding || disabled
+                    onClick: _this.addRow
+                    // disabled:allEditing||adding||disabled
                 },
                 update: {
                     onClick: _this.updateAll,
@@ -555,6 +555,11 @@ var Grid = function (_Component) {
                 copyRow: {
                     onClick: _this.copyRow
                     // disabled:this.selectList==0||disabled
+                },
+                "export": {
+                    onClick: function onClick() {
+                        _this.grid.exportExcel();
+                    }
                 },
                 min: {
                     onClick: _this.max

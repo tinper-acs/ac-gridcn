@@ -484,7 +484,7 @@ class Grid extends Component {
         btnsObj= {
             addRow:{
                 onClick:this.addRow,
-                disabled:allEditing||adding||disabled
+                // disabled:allEditing||adding||disabled
             },
             update:{
                 onClick:this.updateAll,
@@ -497,6 +497,11 @@ class Grid extends Component {
             copyRow:{
                 onClick:this.copyRow,
                 // disabled:this.selectList==0||disabled
+            },
+            export: {
+                onClick: () => {
+                    this.grid.exportExcel();
+                }
             },
             min:{
                 onClick:this.max
