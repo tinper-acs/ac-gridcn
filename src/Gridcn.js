@@ -507,6 +507,7 @@ class Grid extends Component {
         if(paginationObj!='none'){
             _paginationObj = {...defualtPaginationParam, ...paginationObj};
             _paginationObj.gap = true;
+            _paginationObj.size="sm";
             _paginationObj.disabled = paginationObj.disabled !== undefined
                 ? paginationObj.disabled
                 : (data.length === 0||allEditing||copying||adding);

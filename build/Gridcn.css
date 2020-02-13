@@ -15299,14 +15299,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     border-color: #d0d0d0; }
   .ac-gridcn .u-pagination .u-pagination-total {
     display: none; }
-  .ac-gridcn .u-pagination .u-pagination-list > li.iconBtn > a {
-    padding: 2px 5px; }
-  .ac-gridcn .u-pagination .u-pagination-list > li > a, .ac-gridcn .u-pagination .u-pagination-list > li > span {
-    padding: 2px 10px; }
-  .ac-gridcn .u-pagination .data_per_select .u-select, .ac-gridcn .u-pagination .data_per_select .u-select .u-select-selection, .ac-gridcn .u-pagination .page_jump_btn, .ac-gridcn .u-pagination .page_jump_value {
-    height: 28px; }
-  .ac-gridcn .u-pagination .data_per_select .u-select .u-select-selection .u-select-selection-rendered, .ac-gridcn .u-pagination .data_per_select > span, .ac-gridcn .u-pagination .page_jump > span {
-    line-height: 28px; }
 
 .u-table-filter-column-pop-cont-item > span {
   margin: 0 !important; }

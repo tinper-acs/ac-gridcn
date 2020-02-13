@@ -570,6 +570,7 @@ var Grid = function (_Component) {
             if (paginationObj != 'none') {
                 _paginationObj = _extends({}, defualtPaginationParam, paginationObj);
                 _paginationObj.gap = true;
+                _paginationObj.size = "sm";
                 _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0 || allEditing || copying || adding;
             }
             var _exportData = exportData || data;
