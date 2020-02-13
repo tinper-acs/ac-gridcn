@@ -424,6 +424,11 @@ class Demo1 extends Component {
                 // }
             }
         ];
+        this.state={
+            activePage:1,
+            total:100,
+            items:10
+        }
     }
     /**
      * 跳转指定页码
@@ -469,12 +474,19 @@ class Demo1 extends Component {
             alert('数据校验成功')
         }
     }
+    changPag=()=>{
+        this.setState({
+            activePage:2,
+            total:50,
+            items:20
+        })
+    }
     
     render () {
         let paginationObj = {
-            activePage: 1,//当前页
-            total: 100,//总条数
-            items: 10,
+            activePage: this.state.activePage,//当前页
+            total: this.state.total,//总条数
+            items: this.state.items,
             freshData: this.freshData,//刷新数据
             onDataNumSelect: this.onDataNumSelect,//选择记录行
             // disabled: false//分页条禁用状态
@@ -482,6 +494,7 @@ class Demo1 extends Component {
         return (
             <div className='grid-parent'>
                 <div style={{'marginBottom':'20px'}}>
+                    <Button onClick={this.changPag} colors="primary" >改变分页</Button>
                     <Button onClick={this.getAllData} colors="primary" >获得所有数据</Button>
                     <Button onClick={this.validate} colors="primary" style={{'marginLeft':'20px'}}>主动校验</Button>
                 </div>

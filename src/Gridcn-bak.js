@@ -53,12 +53,12 @@ class Grid extends Component {
             data:props.data,
             defaultValueKeyValue:{},//每个单元格的默认值
             isMax:false,//是否最大化了
-            // selectData:[],//选中的数据
+            selectData:[],//选中的数据
             allEditing:false,//是否正在修改所有数据
             adding:false,//是否正在新增
         }
         this.oldColumns = props.columns;
-        this.selectList = [];//选中的数据
+        // this.selectList = [];//选中的数据
         this.allData = [];//表格所有数据
         this.errors = {}
     }
@@ -268,9 +268,9 @@ class Grid extends Component {
 
     onChange=(field, value, index)=>{
         this.allData[index][field] = value;
-        // this.setState({
-        //     data:this.allData
-        // })
+        this.setState({
+            data:this.allData
+        })
         this.props.onChange(this.allData);
     }
     //增行
@@ -314,7 +314,6 @@ class Grid extends Component {
         data.forEach(item=>{
             item._edit = true;//是否编辑态
             item._status = 'edit';//是否编辑态，用于显示是否编辑过
-            item._checked = false;
         })
         this.setState({
             data,
@@ -325,19 +324,19 @@ class Grid extends Component {
 
     //删除行
     delRow=()=>{
-        if(this.selectList.length<=0){
+        if(this.state.selectData.length<=0){
             AcTips.create({
                 type:'warning',
                 content:"请先选择数据"
             })
         }else{
-            this.props.delRow(this.selectList);
+            this.props.delRow(this.state.selectData);
         }
     }
 
     //复制行
     copyRow=()=>{
-        if(this.selectList.length<=0){
+        if(this.state.selectData.length<=0){
             AcTips.create({
                 type:'warning',
                 content:"请先选择数据"
@@ -359,12 +358,7 @@ class Grid extends Component {
 
     //保存数据
     save=()=>{
-        console.log(this.allData)
-        let selectList = [];
-        this.allData.forEach(item=>{
-            if(item._checked)selectList.push(item)
-        })
-        if(selectList.length<=0){
+        if(this.state.selectData.length<=0){
             AcTips.create({
                 type:'warning',
                 content:"请先选择数据"
@@ -377,7 +371,7 @@ class Grid extends Component {
             console.log(this.errors)
         }else{
             this.cancelEdit();
-            this.props.save(selectList);
+            this.props.save(this.state.selectData);
         }
     }
 
@@ -391,7 +385,7 @@ class Grid extends Component {
     //粘贴至末行
     copyToEnd=()=>{
         let { data } = this.state;
-        let selectData = this.selectList;
+        let selectData = this.state.selectData;
         selectData.forEach((item,index)=>{
             this.props.excludeKeys.forEach(it=>{
                 delete item[it];
@@ -410,7 +404,7 @@ class Grid extends Component {
     copyToHere=()=>{
         let index = this.currentIndex;
         let data = cloneDeep(this.state.data);
-        let selectData = this.selectList;
+        let selectData = this.state.selectData;
         selectData.forEach((item,index)=>{
             this.props.excludeKeys.forEach(it=>{
                 delete item[it];
@@ -438,7 +432,6 @@ class Grid extends Component {
         data.forEach(item=>{
             item._edit = false;//是否编辑态
             item._status = '';//是否编辑态，用于显示是否编辑过
-            item._checked = false;
         })
         this.setState({
             data,
@@ -470,26 +463,30 @@ class Grid extends Component {
     }
 
     //数据选择回调
-    getSelectedDataFunc=(selectList,record,index)=>{
-        this.selectList = selectList;
+    getSelectedDataFunc=(selectData,record,index)=>{
+        let data = cloneDeep(this.state.data);
         if (index != undefined) {
-            this.allData[index]['_checked'] = !this.allData[index]['_checked'];
+            data[index]['_checked'] = !data[index]['_checked'];
         } else {//点击了全选
             if (selectData.length > 0) {//全选
-                this.allData.map(item => {
+                data.map(item => {
                     if (!item['_disabled']) {
                         item['_checked'] = true
                     }
                 });
             } else {//反选
-                this.allData.map(item => {
+                data.map(item => {
                     if (!item['_disabled']) {
                         item['_checked'] = false
                     }
                 });
             }
         }
-        this.props.getSelectedDataFunc(selectList,record,index);
+        this.setState({
+            data,
+            selectData
+        })
+        this.props.getSelectedDataFunc(selectData,record,index);
     }
 
     
@@ -522,11 +519,11 @@ class Grid extends Component {
             },
             delRow:{
                 onClick:this.delRow,
-                // disabled:this.selectList==0||disabled
+                // disabled:this.state.selectData==0||disabled
             },
             copyRow:{
                 onClick:this.copyRow,
-                // disabled:this.selectList==0||disabled
+                // disabled:this.state.selectData==0||disabled
             },
             export: {
                 onClick: () => {
@@ -554,9 +551,6 @@ class Grid extends Component {
         }else if(adding){
             btnsObj.cancel = {
                 onClick:this.cancelAdd
-            }
-            btnsObj.save = {
-                onClick:this.save
             }
         }else if(copying){
             btnsObj={

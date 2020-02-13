@@ -319,9 +319,9 @@ var Grid = function (_Component) {
 
         _this.onChange = function (field, value, index) {
             _this.allData[index][field] = value;
-            // this.setState({
-            //     data:this.allData
-            // })
+            _this.setState({
+                data: _this.allData
+            });
             _this.props.onChange(_this.allData);
         };
 
@@ -363,7 +363,6 @@ var Grid = function (_Component) {
             data.forEach(function (item) {
                 item._edit = true; //是否编辑态
                 item._status = 'edit'; //是否编辑态，用于显示是否编辑过
-                item._checked = false;
             });
             _this.setState({
                 data: data,
@@ -373,18 +372,18 @@ var Grid = function (_Component) {
         };
 
         _this.delRow = function () {
-            if (_this.selectList.length <= 0) {
+            if (_this.state.selectData.length <= 0) {
                 _acTips2["default"].create({
                     type: 'warning',
                     content: "请先选择数据"
                 });
             } else {
-                _this.props.delRow(_this.selectList);
+                _this.props.delRow(_this.state.selectData);
             }
         };
 
         _this.copyRow = function () {
-            if (_this.selectList.length <= 0) {
+            if (_this.state.selectData.length <= 0) {
                 _acTips2["default"].create({
                     type: 'warning',
                     content: "请先选择数据"
@@ -404,12 +403,7 @@ var Grid = function (_Component) {
         };
 
         _this.save = function () {
-            console.log(_this.allData);
-            var selectList = [];
-            _this.allData.forEach(function (item) {
-                if (item._checked) selectList.push(item);
-            });
-            if (selectList.length <= 0) {
+            if (_this.state.selectData.length <= 0) {
                 _acTips2["default"].create({
                     type: 'warning',
                     content: "请先选择数据"
@@ -422,7 +416,7 @@ var Grid = function (_Component) {
                 console.log(_this.errors);
             } else {
                 _this.cancelEdit();
-                _this.props.save(selectList);
+                _this.props.save(_this.state.selectData);
             }
         };
 
@@ -436,7 +430,7 @@ var Grid = function (_Component) {
         _this.copyToEnd = function () {
             var data = _this.state.data;
 
-            var selectData = _this.selectList;
+            var selectData = _this.state.selectData;
             selectData.forEach(function (item, index) {
                 _this.props.excludeKeys.forEach(function (it) {
                     delete item[it];
@@ -456,7 +450,7 @@ var Grid = function (_Component) {
 
             var index = _this.currentIndex;
             var data = (0, _lodash2["default"])(_this.state.data);
-            var selectData = _this.selectList;
+            var selectData = _this.state.selectData;
             selectData.forEach(function (item, index) {
                 _this.props.excludeKeys.forEach(function (it) {
                     delete item[it];
@@ -482,7 +476,6 @@ var Grid = function (_Component) {
             data.forEach(function (item) {
                 item._edit = false; //是否编辑态
                 item._status = ''; //是否编辑态，用于显示是否编辑过
-                item._checked = false;
             });
             _this.setState({
                 data: data,
@@ -515,29 +508,33 @@ var Grid = function (_Component) {
             }
         };
 
-        _this.getSelectedDataFunc = function (selectList, record, index) {
-            _this.selectList = selectList;
+        _this.getSelectedDataFunc = function (selectData, record, index) {
+            var data = (0, _lodash2["default"])(_this.state.data);
             if (index != undefined) {
-                _this.allData[index]['_checked'] = !_this.allData[index]['_checked'];
+                data[index]['_checked'] = !data[index]['_checked'];
             } else {
                 //点击了全选
                 if (selectData.length > 0) {
                     //全选
-                    _this.allData.map(function (item) {
+                    data.map(function (item) {
                         if (!item['_disabled']) {
                             item['_checked'] = true;
                         }
                     });
                 } else {
                     //反选
-                    _this.allData.map(function (item) {
+                    data.map(function (item) {
                         if (!item['_disabled']) {
                             item['_checked'] = false;
                         }
                     });
                 }
             }
-            _this.props.getSelectedDataFunc(selectList, record, index);
+            _this.setState({
+                data: data,
+                selectData: selectData
+            });
+            _this.props.getSelectedDataFunc(selectData, record, index);
         };
 
         _this.open = function () {
@@ -582,11 +579,11 @@ var Grid = function (_Component) {
                 },
                 delRow: {
                     onClick: _this.delRow
-                    // disabled:this.selectList==0||disabled
+                    // disabled:this.state.selectData==0||disabled
                 },
                 copyRow: {
                     onClick: _this.copyRow
-                    // disabled:this.selectList==0||disabled
+                    // disabled:this.state.selectData==0||disabled
                 },
                 "export": {
                     onClick: function onClick() {
@@ -613,9 +610,6 @@ var Grid = function (_Component) {
             } else if (adding) {
                 btnsObj.cancel = {
                     onClick: _this.cancelAdd
-                };
-                btnsObj.save = {
-                    onClick: _this.save
                 };
             } else if (copying) {
                 btnsObj = {
@@ -705,9 +699,9 @@ var Grid = function (_Component) {
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
-            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "allEditing", false), _defineProperty(_this$state2, "adding", false), _this$state2);
+            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "selectData", []), _defineProperty(_this$state2, "allEditing", false), _defineProperty(_this$state2, "adding", false), _this$state2);
         _this.oldColumns = props.columns;
-        _this.selectList = []; //选中的数据
+        // this.selectList = [];//选中的数据
         _this.allData = []; //表格所有数据
         _this.errors = {};
         return _this;
