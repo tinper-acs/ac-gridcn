@@ -501,6 +501,7 @@ class Demo1 extends Component {
                     scroll={{ y: 500 }}
                     excludeKeys={['id','ts','lastModified']}
                     hideSave={true}
+                    isEdit={true}
                     delRow={(selectList)=>{
                         console.log('删除，数据如下-----------',selectList)
                     }}

@@ -28,6 +28,8 @@ import 'ac-gridcn/build/Gridcn.css';
 |save|保存回调|function|-|
 |title|标题，如果title值为string则使用此组件的title，如果title的值为function，则使用bee-table的title|string|-|
 |defaultOpen|默认是否展开，需配合title为string使用|bool|true|
+|hideSave|是否隐藏保存按钮，用于全部保存时|bool|false|
+|isEdit|是否需要编辑，true则显示 复制、新增、删除等按钮|bool|false|
 
 
 

@@ -495,11 +495,12 @@ class Demo1 extends Component {
             <div className='grid-parent'>
                 <div style={{'marginBottom':'20px'}}>
                     <Button onClick={this.changPag} colors="primary" >改变分页</Button>
-                    <Button onClick={this.getAllData} colors="primary" >获得所有数据</Button>
+                    <Button onClick={this.getAllData} colors="primary" style={{'marginLeft':'20px'}} >获得所有数据</Button>
                     <Button onClick={this.validate} colors="primary" style={{'marginLeft':'20px'}}>主动校验</Button>
                 </div>
                 
                 <Grid
+                    isEdit={true}
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
                     rowKey={r => r.id ? r.id : r.key}

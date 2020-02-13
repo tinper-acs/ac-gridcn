@@ -108,7 +108,8 @@ var defaultProps = {
     save: function save() {}, //保存回调
     clsfix: 'ac-gridcn',
     onChange: function onChange() {}, //数据改变回调
-    hideSave: false //是否隐藏保存按钮
+    hideSave: false, //是否隐藏保存按钮
+    isEdit: false //是否需要表格编辑
 };
 
 var Grid = function (_Component) {
@@ -564,7 +565,8 @@ var Grid = function (_Component) {
                 disabled = _this$props.disabled,
                 title = _this$props.title,
                 hideSave = _this$props.hideSave,
-                otherProps = _objectWithoutProperties(_this$props, ["clsfix", "paginationObj", "exportData", "disabled", "title", "hideSave"]);
+                isEdit = _this$props.isEdit,
+                otherProps = _objectWithoutProperties(_this$props, ["clsfix", "paginationObj", "exportData", "disabled", "title", "hideSave", "isEdit"]);
 
             var _paginationObj = 'none';
             if (paginationObj != 'none') {
@@ -636,46 +638,80 @@ var Grid = function (_Component) {
                 };
             }
             return _react2["default"].createElement(
-                "div",
-                { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') },
-                typeof title == 'string' ? _react2["default"].createElement(
+                _react.Fragment,
+                null,
+                isEdit ? _react2["default"].createElement(
                     "div",
-                    { className: clsfix + "-panel " + (open ? '' : 'close') },
-                    _react2["default"].createElement(
-                        "span",
-                        { onClick: _this.open },
+                    { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') },
+                    typeof title == 'string' ? _react2["default"].createElement(
+                        "div",
+                        { className: clsfix + "-panel " + (open ? '' : 'close') },
                         _react2["default"].createElement(
                             "span",
-                            { className: clsfix + "-panel-icon" },
-                            open ? _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-down" }) : _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-right" })
+                            { onClick: _this.open },
+                            _react2["default"].createElement(
+                                "span",
+                                { className: clsfix + "-panel-icon" },
+                                open ? _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-down" }) : _react2["default"].createElement(_beeIcon2["default"], { type: "uf-triangle-right" })
+                            ),
+                            _react2["default"].createElement(
+                                "span",
+                                { className: clsfix + "-panel-title" },
+                                title
+                            )
                         ),
-                        _react2["default"].createElement(
+                        open ? _react2["default"].createElement(
                             "span",
-                            { className: clsfix + "-panel-title" },
-                            title
-                        )
-                    ),
-                    open ? _react2["default"].createElement(
+                            { className: clsfix + "-panel-btns" },
+                            _react2["default"].createElement(
+                                _beeButtonGroup2["default"],
+                                null,
+                                _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj })
+                            )
+                        ) : ''
+                    ) : _react2["default"].createElement(
                         "span",
-                        { className: clsfix + "-panel-btns" },
+                        { className: "ac-gridcn-panel-btns" },
                         _react2["default"].createElement(
                             _beeButtonGroup2["default"],
                             null,
                             _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj })
                         )
-                    ) : ''
+                    ),
+                    typeof title == 'string' ? _react2["default"].createElement(
+                        "div",
+                        { className: clsfix + "-inner " + (open ? 'show' : 'hide') + " " + (isMax ? 'max' : '') },
+                        _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
+                            className: "ucf-example-grid",
+                            data: data,
+                            columns: columns,
+                            exportData: _exportData,
+                            paginationObj: _paginationObj,
+                            ref: function ref(el) {
+                                return _this.grid = el;
+                            },
+                            hoverContent: _this.hoverContent,
+                            getSelectedDataFunc: _this.getSelectedDataFunc,
+                            onRowHover: _this.onRowHover,
+                            syncHover: false
+                        }))
+                    ) : _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
+                        className: "ucf-example-grid",
+                        data: data,
+                        columns: columns,
+                        exportData: _exportData,
+                        paginationObj: _paginationObj,
+                        ref: function ref(el) {
+                            return _this.grid = el;
+                        },
+                        hoverContent: _this.hoverContent,
+                        getSelectedDataFunc: _this.getSelectedDataFunc,
+                        onRowHover: _this.onRowHover,
+                        syncHover: false
+                    }))
                 ) : _react2["default"].createElement(
-                    "span",
-                    { className: "ac-gridcn-panel-btns" },
-                    _react2["default"].createElement(
-                        _beeButtonGroup2["default"],
-                        null,
-                        _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj })
-                    )
-                ),
-                typeof title == 'string' ? _react2["default"].createElement(
                     "div",
-                    { className: clsfix + "-inner " + (open ? 'show' : 'hide') + " " + (isMax ? 'max' : '') },
+                    { className: clsfix + " " + (disabled ? 'disabled' : '') },
                     _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
                         className: "ucf-example-grid",
                         data: data,
@@ -690,20 +726,7 @@ var Grid = function (_Component) {
                         onRowHover: _this.onRowHover,
                         syncHover: false
                     }))
-                ) : _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
-                    className: "ucf-example-grid",
-                    data: data,
-                    columns: columns,
-                    exportData: _exportData,
-                    paginationObj: _paginationObj,
-                    ref: function ref(el) {
-                        return _this.grid = el;
-                    },
-                    hoverContent: _this.hoverContent,
-                    getSelectedDataFunc: _this.getSelectedDataFunc,
-                    onRowHover: _this.onRowHover,
-                    syncHover: false
-                }))
+                )
             );
         };
 

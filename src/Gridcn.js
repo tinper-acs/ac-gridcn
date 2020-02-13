@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component,Fragment } from "react";
 import BeeGrid from "bee-complex-grid";
 import Btns from 'ac-btns';
 import ButtonGroup from 'bee-button-group';
@@ -41,6 +41,7 @@ const defaultProps = {
     clsfix:'ac-gridcn',
     onChange:()=>{},//数据改变回调
     hideSave:false,//是否隐藏保存按钮
+    isEdit:false,//是否需要表格编辑
 };
 
 class Grid extends Component {
@@ -502,7 +503,7 @@ class Grid extends Component {
     }
     renderDom=()=>{
         let { copying,isMax,columns,data,allEditing,adding,open } = this.state;
-        const { clsfix,paginationObj, exportData,disabled,title,hideSave,  ...otherProps } = this.props;
+        const { clsfix,paginationObj, exportData,disabled,title,hideSave, isEdit, ...otherProps } = this.props;
         let _paginationObj ='none';
         if(paginationObj!='none'){
             _paginationObj = {...defualtPaginationParam, ...paginationObj};
@@ -575,74 +576,91 @@ class Grid extends Component {
             }
         }
         return (
-            <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
+            <Fragment>
                 {
-                    typeof title=='string'?<div className={`${clsfix}-panel ${open?'':'close'}`}>
-                    <span onClick={this.open}>
-                        <span className={`${clsfix}-panel-icon`}>
-                            {
-                                open?<Icon type='uf-triangle-down'/>:<Icon type='uf-triangle-right'/>
-                            }
-                        </span>
-                        <span className={`${clsfix}-panel-title`}>
-                            {title}
-                        </span>
-                    </span>
+                    isEdit?<div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
                     {
-                        open?<span className={`${clsfix}-panel-btns`}>
+                        typeof title=='string'?<div className={`${clsfix}-panel ${open?'':'close'}`}>
+                        <span onClick={this.open}>
+                            <span className={`${clsfix}-panel-icon`}>
+                                {
+                                    open?<Icon type='uf-triangle-down'/>:<Icon type='uf-triangle-right'/>
+                                }
+                            </span>
+                            <span className={`${clsfix}-panel-title`}>
+                                {title}
+                            </span>
+                        </span>
+                        {
+                            open?<span className={`${clsfix}-panel-btns`}>
+                                <ButtonGroup>
+                                    <Btns btns={btnsObj}/>
+                                </ButtonGroup>
+                            </span>:''
+                        }
+                        
+                        </div>:<span className='ac-gridcn-panel-btns'>
                             <ButtonGroup>
                                 <Btns btns={btnsObj}/>
                             </ButtonGroup>
-                        </span>:''
+                        </span>
                     }
-                    
-                    </div>:<span className='ac-gridcn-panel-btns'>
-                        <ButtonGroup>
-                            <Btns btns={btnsObj}/>
-                        </ButtonGroup>
-                    </span>
-                }
-                {
-                    typeof title=='string'?<div className={`${clsfix}-inner ${open?'show':'hide'} ${isMax?'max':''}`}>
+                    {
+                        typeof title=='string'?<div className={`${clsfix}-inner ${open?'show':'hide'} ${isMax?'max':''}`}>
+                            <BeeGrid
+                            {...otherProps}
+                            className="ucf-example-grid"
+                            data={data}
+                            columns={columns}
+                            exportData={_exportData}
+                            paginationObj={_paginationObj}
+                            ref={el => this.grid = el}
+                            hoverContent={this.hoverContent}
+                            getSelectedDataFunc={this.getSelectedDataFunc}
+                            onRowHover={this.onRowHover}
+                            syncHover={false}
+                        />
+                        </div>:<BeeGrid
+                            {...otherProps}
+                            className="ucf-example-grid"
+                            data={data}
+                            columns={columns}
+                            exportData={_exportData}
+                            paginationObj={_paginationObj}
+                            ref={el => this.grid = el}
+                            hoverContent={this.hoverContent}
+                            getSelectedDataFunc={this.getSelectedDataFunc}
+                            onRowHover={this.onRowHover}
+                            syncHover={false}
+                        />
+                    }
+                    </div>:<div className={`${clsfix} ${disabled?'disabled':''}`}>
                         <BeeGrid
-                        {...otherProps}
-                        className="ucf-example-grid"
-                        data={data}
-                        columns={columns}
-                        exportData={_exportData}
-                        paginationObj={_paginationObj}
-                        ref={el => this.grid = el}
-                        hoverContent={this.hoverContent}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
-                        onRowHover={this.onRowHover}
-                        syncHover={false}
-                    />
-                    </div>:<BeeGrid
-                        {...otherProps}
-                        className="ucf-example-grid"
-                        data={data}
-                        columns={columns}
-                        exportData={_exportData}
-                        paginationObj={_paginationObj}
-                        ref={el => this.grid = el}
-                        hoverContent={this.hoverContent}
-                        getSelectedDataFunc={this.getSelectedDataFunc}
-                        onRowHover={this.onRowHover}
-                        syncHover={false}
-                    />
+                            {...otherProps}
+                            className="ucf-example-grid"
+                            data={data}
+                            columns={columns}
+                            exportData={_exportData}
+                            paginationObj={_paginationObj}
+                            ref={el => this.grid = el}
+                            hoverContent={this.hoverContent}
+                            getSelectedDataFunc={this.getSelectedDataFunc}
+                            onRowHover={this.onRowHover}
+                            syncHover={false}
+                        />
+                    </div>
+                    
                 }
-                
-                
-                
-            </div>
+            </Fragment>
         );
     }
 
     render() {
-        return (<span>
-                {
-                    this.state.isMax?ReactDOM.createPortal(this.renderDom(),document.querySelector('body')):this.renderDom()
-                }
+        return (
+            <span>
+                    {
+                        this.state.isMax?ReactDOM.createPortal(this.renderDom(),document.querySelector('body')):this.renderDom()
+                    }
             </span>
         )
         
