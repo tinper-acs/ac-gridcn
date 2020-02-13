@@ -40,6 +40,7 @@ const defaultProps = {
     save:()=>{},//保存回调
     clsfix:'ac-gridcn',
     onChange:()=>{},//数据改变回调
+    hideSave:false,//是否隐藏保存按钮
 };
 
 class Grid extends Component {
@@ -501,10 +502,11 @@ class Grid extends Component {
     }
     renderDom=()=>{
         let { copying,isMax,columns,data,allEditing,adding,open } = this.state;
-        const { clsfix,paginationObj, exportData,disabled,title,  ...otherProps } = this.props;
+        const { clsfix,paginationObj, exportData,disabled,title,hideSave,  ...otherProps } = this.props;
         let _paginationObj ='none';
         if(paginationObj!='none'){
             _paginationObj = {...defualtPaginationParam, ...paginationObj};
+            _paginationObj.gap = true;
             _paginationObj.disabled = paginationObj.disabled !== undefined
                 ? paginationObj.disabled
                 : (data.length === 0||allEditing||copying||adding);
@@ -547,16 +549,19 @@ class Grid extends Component {
             btnsObj.cancel = {
                 onClick:this.cancelEdit
             }
-            btnsObj.save = {
-                onClick:this.save
+            if(!hideSave){
+                btnsObj.save = {
+                    onClick:this.save
+                }
             }
-            
         }else if(adding){
             btnsObj.cancel = {
                 onClick:this.cancelAdd
             }
-            btnsObj.save = {
-                onClick:this.save
+            if(!hideSave){
+                btnsObj.save = {
+                    onClick:this.save
+                }
             }
         }else if(copying){
             btnsObj={

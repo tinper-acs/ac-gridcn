@@ -107,7 +107,8 @@ var defaultProps = {
     getSelectedDataFunc: function getSelectedDataFunc() {}, //选中回调
     save: function save() {}, //保存回调
     clsfix: 'ac-gridcn',
-    onChange: function onChange() {} //数据改变回调
+    onChange: function onChange() {}, //数据改变回调
+    hideSave: false //是否隐藏保存按钮
 };
 
 var Grid = function (_Component) {
@@ -562,11 +563,13 @@ var Grid = function (_Component) {
                 exportData = _this$props.exportData,
                 disabled = _this$props.disabled,
                 title = _this$props.title,
-                otherProps = _objectWithoutProperties(_this$props, ["clsfix", "paginationObj", "exportData", "disabled", "title"]);
+                hideSave = _this$props.hideSave,
+                otherProps = _objectWithoutProperties(_this$props, ["clsfix", "paginationObj", "exportData", "disabled", "title", "hideSave"]);
 
             var _paginationObj = 'none';
             if (paginationObj != 'none') {
                 _paginationObj = _extends({}, defualtPaginationParam, paginationObj);
+                _paginationObj.gap = true;
                 _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0 || allEditing || copying || adding;
             }
             var _exportData = exportData || data;
@@ -607,16 +610,20 @@ var Grid = function (_Component) {
                 btnsObj.cancel = {
                     onClick: _this.cancelEdit
                 };
-                btnsObj.save = {
-                    onClick: _this.save
-                };
+                if (!hideSave) {
+                    btnsObj.save = {
+                        onClick: _this.save
+                    };
+                }
             } else if (adding) {
                 btnsObj.cancel = {
                     onClick: _this.cancelAdd
                 };
-                btnsObj.save = {
-                    onClick: _this.save
-                };
+                if (!hideSave) {
+                    btnsObj.save = {
+                        onClick: _this.save
+                    };
+                }
             } else if (copying) {
                 btnsObj = {
                     copyToEnd: {

@@ -15268,6 +15268,46 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   .ac-gridcn .u-table tr td .u-select .u-select-selection {
     height: 30px; }
 
+.ac-gridcn .u-pagination {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 9px;
+  padding-left: 12px; }
+  .ac-gridcn .u-pagination .u-select {
+    width: 85px; }
+    .ac-gridcn .u-pagination .u-select .u-select-selection {
+      border-color: #d0d0d0; }
+  .ac-gridcn .u-pagination .u-pagination-list > .active > a,
+  .ac-gridcn .u-pagination .u-pagination-list > .active > a:focus,
+  .ac-gridcn .u-pagination .u-pagination-list > .active > a:hover,
+  .ac-gridcn .u-pagination .u-pagination-list > .active > span,
+  .ac-gridcn .u-pagination .u-pagination-list > .active > span:focus,
+  .ac-gridcn .u-pagination .u-pagination-list > .active > span:hover {
+    color: #E14C46;
+    background: #fff;
+    border-color: #E14C46; }
+  .ac-gridcn .u-pagination .u-pagination-list > .disabled > a,
+  .ac-gridcn .u-pagination .u-pagination-list > .disabled > a:focus,
+  .ac-gridcn .u-pagination .u-pagination-list > .disabled > a:hover,
+  .ac-gridcn .u-pagination .u-pagination-list > .disabled > span,
+  .ac-gridcn .u-pagination .u-pagination-list > .disabled > span:focus,
+  .ac-gridcn .u-pagination .u-pagination-list > .disabled > span:hover,
+  .ac-gridcn .u-pagination .u-pagination-list > li > a,
+  .ac-gridcn .u-pagination .u-pagination-list > li > span {
+    background: #fff;
+    border-color: #d0d0d0; }
+  .ac-gridcn .u-pagination .u-pagination-total {
+    display: none; }
+  .ac-gridcn .u-pagination .u-pagination-list > li.iconBtn > a {
+    padding: 2px 5px; }
+  .ac-gridcn .u-pagination .u-pagination-list > li > a, .ac-gridcn .u-pagination .u-pagination-list > li > span {
+    padding: 2px 10px; }
+  .ac-gridcn .u-pagination .data_per_select .u-select, .ac-gridcn .u-pagination .data_per_select .u-select .u-select-selection, .ac-gridcn .u-pagination .page_jump_btn, .ac-gridcn .u-pagination .page_jump_value {
+    height: 28px; }
+  .ac-gridcn .u-pagination .data_per_select .u-select .u-select-selection .u-select-selection-rendered, .ac-gridcn .u-pagination .data_per_select > span, .ac-gridcn .u-pagination .page_jump > span {
+    line-height: 28px; }
+
 .u-table-filter-column-pop-cont-item > span {
   margin: 0 !important; }
 

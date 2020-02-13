@@ -500,6 +500,7 @@ class Demo1 extends Component {
                     getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调
                     scroll={{ y: 500 }}
                     excludeKeys={['id','ts','lastModified']}
+                    hideSave={true}
                     delRow={(selectList)=>{
                         console.log('删除，数据如下-----------',selectList)
                     }}
