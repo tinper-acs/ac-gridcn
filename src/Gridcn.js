@@ -5,6 +5,7 @@ import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
 import isequal from 'lodash.isequal';
+import Modal from 'bee-modal';
 //文本输入组件
 import TextField from './RowField/TextField';
 //下拉选择组件
@@ -324,7 +325,7 @@ class Grid extends Component {
         })
         this.allData = data;
     }
-
+    
     //删除行
     delRow=()=>{
         if(this.selectList.length<=0){
@@ -333,7 +334,17 @@ class Grid extends Component {
                 content:"请先选择数据"
             })
         }else{
-            this.props.delRow(this.selectList);
+            Modal.confirm({
+                title: '确定要删除这条单据吗？',
+                content: '单据删除后将不能恢复。',
+                onOk:()=> {
+                    this.props.delRow(this.selectList);
+                },
+                onCancel:()=> {
+                    console.log('Cancel');
+                },
+            })
+            
         }
     }
 
@@ -658,9 +669,10 @@ class Grid extends Component {
     render() {
         return (
             <span>
-                    {
-                        this.state.isMax?ReactDOM.createPortal(this.renderDom(),document.querySelector('body')):this.renderDom()
-                    }
+                {
+                    this.state.isMax?ReactDOM.createPortal(this.renderDom(),document.querySelector('body')):this.renderDom()
+                }
+
             </span>
         )
         

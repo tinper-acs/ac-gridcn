@@ -34,6 +34,10 @@ var _lodash3 = require("lodash.isequal");
 
 var _lodash4 = _interopRequireDefault(_lodash3);
 
+var _beeModal = require("bee-modal");
+
+var _beeModal2 = _interopRequireDefault(_beeModal);
+
 var _TextField = require("./RowField/TextField");
 
 var _TextField2 = _interopRequireDefault(_TextField);
@@ -381,7 +385,16 @@ var Grid = function (_Component) {
                     content: "请先选择数据"
                 });
             } else {
-                _this.props.delRow(_this.selectList);
+                _beeModal2["default"].confirm({
+                    title: '确定要删除这条单据吗？',
+                    content: '单据删除后将不能恢复。',
+                    onOk: function onOk() {
+                        _this.props.delRow(_this.selectList);
+                    },
+                    onCancel: function onCancel() {
+                        console.log('Cancel');
+                    }
+                });
             }
         };
 
