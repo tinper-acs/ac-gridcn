@@ -16169,8 +16169,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     background: #ffffff; }
   .ac-gridcn .u-table tr:hover, .ac-gridcn .u-table tr.u-table-row-hover {
     background: #EBECF0; }
-  .ac-gridcn .u-table tr.u-table-row.selected, .ac-gridcn .u-table tr.u-table-row.ref-multiple-table-row-selected {
-    background: #FFF7E7; }
 
 .ac-gridcn .u-table th, .ac-gridcn .u-table td {
   padding: 10px 8px;
