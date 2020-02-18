@@ -30,10 +30,6 @@ var _beeIcon = require("bee-icon");
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
-var _lodash3 = require("lodash.isequal");
-
-var _lodash4 = _interopRequireDefault(_lodash3);
-
 var _beeModal = require("bee-modal");
 
 var _beeModal2 = _interopRequireDefault(_beeModal);
@@ -336,33 +332,36 @@ var Grid = function (_Component) {
         _this.addRow = function () {
             var defaultValueKeyValue = _this.state.defaultValueKeyValue;
             var data = (0, _lodash2["default"])(_this.state.data);
-            var item = (0, _lodash2["default"])(data[0] || defaultValueKeyValue);
-            _this.props.excludeKeys.forEach(function (it) {
-                delete item[it];
-            });
-            for (var attr in item) {
-                if (defaultValueKeyValue[attr]) {
-                    item[attr] = defaultValueKeyValue[attr];
-                } else {
-                    item[attr] = '';
-                }
-            }
+            var item = (0, _lodash2["default"])(defaultValueKeyValue);
+
             item._edit = true;
             item._status = 'edit';
             data.unshift(item);
             _this.setState({
                 data: data,
-                adding: true
+                adding: true,
+                addNum: _this.state.addNum + 1
             });
             _this.allData = data;
+            _this.props.onChange(_this.allData);
         };
 
         _this.cancelAdd = function () {
-            var data = (0, _lodash2["default"])(_this.state.data);
-            data.pop();
-            _this.setState({
-                data: data,
-                adding: false
+            _beeModal2["default"].confirm({
+                title: '温馨提示',
+                content: '数据未保存，确定离开 ?',
+                onOk: function onOk() {
+                    var data = (0, _lodash2["default"])(_this.state.data);
+                    data.splice(0, _this.state.addNum);
+                    _this.setState({
+                        data: data,
+                        adding: false,
+                        addNum: 0
+                    });
+                },
+                onCancel: function onCancel() {
+                    console.log('Cancel');
+                }
             });
         };
 
@@ -388,7 +387,7 @@ var Grid = function (_Component) {
                 });
             } else {
                 _beeModal2["default"].confirm({
-                    title: '确定要删除这条单据吗？',
+                    title: '温馨提示',
                     content: '单据删除后将不能恢复。',
                     onOk: function onOk() {
                         _this.props.delRow(_this.selectList);
@@ -495,17 +494,26 @@ var Grid = function (_Component) {
         };
 
         _this.cancelEdit = function () {
-            var data = (0, _lodash2["default"])(_this.state.data);
-            data.forEach(function (item) {
-                item._edit = false; //是否编辑态
-                item._status = ''; //是否编辑态，用于显示是否编辑过
-                item._checked = false;
+            _beeModal2["default"].confirm({
+                title: '温馨提示',
+                content: '数据未保存，确定离开 ?',
+                onOk: function onOk() {
+                    var data = (0, _lodash2["default"])(_this.state.data);
+                    data.forEach(function (item) {
+                        item._edit = false; //是否编辑态
+                        item._status = ''; //是否编辑态，用于显示是否编辑过
+                        item._checked = false;
+                    });
+                    _this.setState({
+                        data: data,
+                        allEditing: false
+                    });
+                    _this.allData = data;
+                },
+                onCancel: function onCancel() {
+                    console.log('Cancel');
+                }
             });
-            _this.setState({
-                data: data,
-                allEditing: false
-            });
-            _this.allData = data;
         };
 
         _this.resetChecked = function (dataValue) {
@@ -654,6 +662,8 @@ var Grid = function (_Component) {
                     }
                 };
             }
+            console.log('render');
+            console.log(_this.state.data);
             return _react2["default"].createElement(
                 _react.Fragment,
                 null,
@@ -753,7 +763,7 @@ var Grid = function (_Component) {
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
-            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "allEditing", false), _defineProperty(_this$state2, "adding", false), _this$state2);
+            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "allEditing", false), _defineProperty(_this$state2, "adding", false), _defineProperty(_this$state2, "addNum", 0), _this$state2);
         _this.oldColumns = props.columns;
         _this.selectList = []; //选中的数据
         _this.allData = []; //表格所有数据

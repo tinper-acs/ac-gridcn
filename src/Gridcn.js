@@ -4,7 +4,6 @@ import Btns from 'ac-btns';
 import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
-import isequal from 'lodash.isequal';
 import Modal from 'bee-modal';
 //文本输入组件
 import TextField from './RowField/TextField';
@@ -61,6 +60,7 @@ class Grid extends Component {
             // selectData:[],//选中的数据
             allEditing:false,//是否正在修改所有数据
             adding:false,//是否正在新增
+            addNum:0,//新增的条数
         }
         this.oldColumns = props.columns;
         this.selectList = [];//选中的数据
@@ -282,36 +282,39 @@ class Grid extends Component {
     addRow=()=>{
         let defaultValueKeyValue = this.state.defaultValueKeyValue;
         let data = cloneDeep(this.state.data);
-        let item = cloneDeep(data[0]||defaultValueKeyValue);
-        this.props.excludeKeys.forEach(it=>{
-            delete item[it];
-        })
-        for( let attr in item){
-            if(defaultValueKeyValue[attr]){
-                item[attr]=defaultValueKeyValue[attr];
-            }else{
-                item[attr]='';
-            }
-            
-        }
+        let item = cloneDeep(defaultValueKeyValue);
+
         item._edit = true;
         item._status = 'edit';
         data.unshift(item);
         this.setState({
             data,
-            adding:true
+            adding:true,
+            addNum:this.state.addNum+1
         })
         this.allData = data;
+        this.props.onChange(this.allData)
     }
 
     //取消新增
     cancelAdd=()=>{
-        let data = cloneDeep(this.state.data);
-        data.pop();
-        this.setState({
-            data,
-            adding:false
+        Modal.confirm({
+            title: '温馨提示',
+            content: '数据未保存，确定离开 ?',
+            onOk:()=> {
+                let data = cloneDeep(this.state.data);
+                data.splice(0,this.state.addNum)
+                this.setState({
+                    data,
+                    adding:false,
+                    addNum:0
+                })
+            },
+            onCancel:()=> {
+                console.log('Cancel');
+            },
         })
+        
     }
     //修改
     updateAll=()=>{
@@ -337,7 +340,7 @@ class Grid extends Component {
             })
         }else{
             Modal.confirm({
-                title: '确定要删除这条单据吗？',
+                title: '温馨提示',
                 content: '单据删除后将不能恢复。',
                 onOk:()=> {
                     this.props.delRow(this.selectList);
@@ -449,17 +452,27 @@ class Grid extends Component {
 
     //修改取消
     cancelEdit=()=>{
-        let data = cloneDeep(this.state.data);
-        data.forEach(item=>{
-            item._edit = false;//是否编辑态
-            item._status = '';//是否编辑态，用于显示是否编辑过
-            item._checked = false;
+        Modal.confirm({
+            title: '温馨提示',
+            content: '数据未保存，确定离开 ?',
+            onOk:()=> {
+                let data = cloneDeep(this.state.data);
+                data.forEach(item=>{
+                    item._edit = false;//是否编辑态
+                    item._status = '';//是否编辑态，用于显示是否编辑过
+                    item._checked = false;
+                })
+                this.setState({
+                    data,
+                    allEditing:false
+                })
+                this.allData = data;
+            },
+            onCancel:()=> {
+                console.log('Cancel');
+            },
         })
-        this.setState({
-            data,
-            allEditing:false
-        })
-        this.allData = data;
+        
     }
     //全不选
     resetChecked=(dataValue)=>{
@@ -588,6 +601,8 @@ class Grid extends Component {
                 }
             }
         }
+        console.log('render')
+        console.log(this.state.data)
         return (
             <Fragment>
                 {
