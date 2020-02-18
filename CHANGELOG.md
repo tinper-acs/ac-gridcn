@@ -1,3 +1,13 @@
+<a name="0.0.15"></a>
+## [0.0.15](https://github.com/tinper-bee/ac-gridcn/compare/v0.0.14...v0.0.15) (2020-02-18)
+
+
+### Features
+
+* **ac-gridcn:** 按钮权限 ([52a811b](https://github.com/tinper-bee/ac-gridcn/commit/52a811b))
+
+
+
 <a name="0.0.14"></a>
 ## [0.0.14](https://github.com/tinper-bee/ac-gridcn/compare/v0.0.13...v0.0.14) (2020-02-18)
 
