@@ -437,7 +437,17 @@ var Grid = function (_Component) {
                 });
                 console.log(_this.errors);
             } else {
-                _this.cancelEdit();
+                var data = (0, _lodash2["default"])(_this.state.data);
+                data.forEach(function (item) {
+                    item._edit = false; //是否编辑态
+                    item._status = ''; //是否编辑态，用于显示是否编辑过
+                    item._checked = false;
+                });
+                _this.setState({
+                    data: data,
+                    allEditing: false
+                });
+                _this.allData = data;
                 _this.props.save(selectList);
             }
         };

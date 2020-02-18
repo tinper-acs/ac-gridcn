@@ -394,7 +394,17 @@ class Grid extends Component {
             })
             console.log(this.errors)
         }else{
-            this.cancelEdit();
+            let data = cloneDeep(this.state.data);
+            data.forEach(item=>{
+                item._edit = false;//是否编辑态
+                item._status = '';//是否编辑态，用于显示是否编辑过
+                item._checked = false;
+            })
+            this.setState({
+                data,
+                allEditing:false
+            })
+            this.allData = data;
             this.props.save(selectList);
         }
     }
