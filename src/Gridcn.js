@@ -92,7 +92,7 @@ class Grid extends Component {
         this.setData(this.props.data)
     }
     componentWillReceiveProps(nextProps){
-        if(!isequal(nextProps.data,this.allData)){
+        if('data' in nextProps){
             this.setData(nextProps.data);
             this.allData = nextProps.data;
         }

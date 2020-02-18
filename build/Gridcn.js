@@ -778,7 +778,7 @@ var Grid = function (_Component) {
     };
 
     Grid.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-        if (!(0, _lodash4["default"])(nextProps.data, this.allData)) {
+        if ('data' in nextProps) {
             this.setData(nextProps.data);
             this.allData = nextProps.data;
         }
