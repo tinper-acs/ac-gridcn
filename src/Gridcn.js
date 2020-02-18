@@ -28,7 +28,7 @@ const defualtPaginationParam = {
         shape: 'border'
     },
     noBorder: true,
-    confirmBtn: () => null
+    confirmBtn: () => null,
 };
 const defaultProps = {
     //   hideBodyScroll: true,
@@ -43,6 +43,8 @@ const defaultProps = {
     onChange:()=>{},//数据改变回调
     hideSave:false,//是否隐藏保存按钮
     isEdit:false,//是否需要表格编辑
+    powerBtns:['addRow','update','delRow','copyRow','export','min','max','cancel','save','copyToEnd'],
+    forcePowerBtns:['cancel'],//不受按钮权限控制的按钮
 };
 
 class Grid extends Component {
@@ -514,7 +516,7 @@ class Grid extends Component {
     }
     renderDom=()=>{
         let { copying,isMax,columns,data,allEditing,adding,open } = this.state;
-        const { clsfix,paginationObj, exportData,disabled,title,hideSave, isEdit, ...otherProps } = this.props;
+        const { clsfix,paginationObj, exportData,disabled,title,hideSave, isEdit,powerBtns,forcePowerBtns, ...otherProps } = this.props;
         let _paginationObj ='none';
         if(paginationObj!='none'){
             _paginationObj = {...defualtPaginationParam, ...paginationObj};
@@ -605,14 +607,14 @@ class Grid extends Component {
                         {
                             open?<span className={`${clsfix}-panel-btns`}>
                                 <ButtonGroup>
-                                    <Btns btns={btnsObj}/>
+                                    <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                 </ButtonGroup>
                             </span>:''
                         }
                         
                         </div>:<span className='ac-gridcn-panel-btns'>
                             <ButtonGroup>
-                                <Btns btns={btnsObj}/>
+                                <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                             </ButtonGroup>
                         </span>
                     }

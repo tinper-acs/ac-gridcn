@@ -30,6 +30,8 @@ import 'ac-gridcn/build/Gridcn.css';
 |defaultOpen|默认是否展开，需配合title为string使用|bool|true|
 |hideSave|是否隐藏保存按钮，用于全部保存时|bool|false|
 |isEdit|是否需要编辑，true则显示 复制、新增、删除等按钮|bool|false|
+|powerBtns|有权限的按钮，也可作为控制哪些按钮显示使用|array|`['addRow','update','delRow','copyRow','export','min','max','cancel','save','copyToEnd']`|
+|forcePowerBtns|不受权限控制按钮|array|`['cancel']`|
 
 
 

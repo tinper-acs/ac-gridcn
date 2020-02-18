@@ -113,7 +113,9 @@ var defaultProps = {
     clsfix: 'ac-gridcn',
     onChange: function onChange() {}, //数据改变回调
     hideSave: false, //是否隐藏保存按钮
-    isEdit: false //是否需要表格编辑
+    isEdit: false, //是否需要表格编辑
+    powerBtns: ['addRow', 'update', 'delRow', 'copyRow', 'export', 'min', 'max', 'cancel', 'save', 'copyToEnd'],
+    forcePowerBtns: ['cancel'] //不受按钮权限控制的按钮
 };
 
 var Grid = function (_Component) {
@@ -579,7 +581,9 @@ var Grid = function (_Component) {
                 title = _this$props.title,
                 hideSave = _this$props.hideSave,
                 isEdit = _this$props.isEdit,
-                otherProps = _objectWithoutProperties(_this$props, ["clsfix", "paginationObj", "exportData", "disabled", "title", "hideSave", "isEdit"]);
+                powerBtns = _this$props.powerBtns,
+                forcePowerBtns = _this$props.forcePowerBtns,
+                otherProps = _objectWithoutProperties(_this$props, ["clsfix", "paginationObj", "exportData", "disabled", "title", "hideSave", "isEdit", "powerBtns", "forcePowerBtns"]);
 
             var _paginationObj = 'none';
             if (paginationObj != 'none') {
@@ -679,7 +683,7 @@ var Grid = function (_Component) {
                             _react2["default"].createElement(
                                 _beeButtonGroup2["default"],
                                 null,
-                                _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj })
+                                _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                             )
                         ) : ''
                     ) : _react2["default"].createElement(
@@ -688,7 +692,7 @@ var Grid = function (_Component) {
                         _react2["default"].createElement(
                             _beeButtonGroup2["default"],
                             null,
-                            _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj })
+                            _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                         )
                     ),
                     typeof title == 'string' ? _react2["default"].createElement(
