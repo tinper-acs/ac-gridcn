@@ -538,7 +538,7 @@ var Grid = function (_Component) {
                 _this.allData[index]['_checked'] = !_this.allData[index]['_checked'];
             } else {
                 //点击了全选
-                if (selectData.length > 0) {
+                if (selectList.length > 0) {
                     //全选
                     _this.allData.map(function (item) {
                         if (!item['_disabled']) {

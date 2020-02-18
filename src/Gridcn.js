@@ -490,7 +490,7 @@ class Grid extends Component {
         if (index != undefined) {
             this.allData[index]['_checked'] = !this.allData[index]['_checked'];
         } else {//点击了全选
-            if (selectData.length > 0) {//全选
+            if (selectList.length > 0) {//全选
                 this.allData.map(item => {
                     if (!item['_disabled']) {
                         item['_checked'] = true
