@@ -347,7 +347,7 @@ var Grid = function (_Component) {
             }
             item._edit = true;
             item._status = 'edit';
-            data.push(item);
+            data.unshift(item);
             _this.setState({
                 data: data,
                 adding: true
@@ -530,7 +530,7 @@ var Grid = function (_Component) {
             }
         };
 
-        _this.getSelectedDataFunc = function (selectList, record, index) {
+        _this.getSelectedDataFunc = function (selectList, record, index, newData) {
             _this.selectList = selectList;
             if (index != undefined) {
                 _this.allData[index]['_checked'] = !_this.allData[index]['_checked'];
@@ -552,7 +552,7 @@ var Grid = function (_Component) {
                     });
                 }
             }
-            _this.props.getSelectedDataFunc(selectList, record, index);
+            _this.props.getSelectedDataFunc(selectList, record, index, newData);
         };
 
         _this.open = function () {

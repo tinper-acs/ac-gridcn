@@ -294,7 +294,7 @@ class Grid extends Component {
         }
         item._edit = true;
         item._status = 'edit';
-        data.push(item);
+        data.unshift(item);
         this.setState({
             data,
             adding:true
@@ -483,7 +483,7 @@ class Grid extends Component {
     }
 
     //数据选择回调
-    getSelectedDataFunc=(selectList,record,index)=>{
+    getSelectedDataFunc=(selectList,record,index,newData)=>{
         this.selectList = selectList;
         if (index != undefined) {
             this.allData[index]['_checked'] = !this.allData[index]['_checked'];
@@ -502,7 +502,7 @@ class Grid extends Component {
                 });
             }
         }
-        this.props.getSelectedDataFunc(selectList,record,index);
+        this.props.getSelectedDataFunc(selectList,record,index,newData);
     }
 
     
