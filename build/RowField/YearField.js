@@ -34,6 +34,10 @@ var _zh_CN = require('bee-datepicker/build/locale/zh_CN');
 
 var _zh_CN2 = _interopRequireDefault(_zh_CN);
 
+var _lodash = require('lodash.isequal');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
@@ -130,7 +134,7 @@ var YearField = function (_Component) {
             var value = _this.state.value;
             //设置校验规则
 
-            var descriptor = _defineProperty({}, field, { type: "object", required: required });
+            var descriptor = _defineProperty({}, field, { type: "any", required: required });
             var validator = new _asyncValidator2["default"](descriptor);
             validator.validate(_defineProperty({}, field, value), function (errors, fields) {
                 if (errors) {
@@ -166,6 +170,11 @@ var YearField = function (_Component) {
         //当校验外部发生变化，主动校验函数
         if (nextProps.validate == true) {
             this.validate();
+        }
+        if ('value' in nextProps && !(0, _lodash2["default"])(nextProps.value, this.state.value)) {
+            this.setState({
+                value: nextProps.value
+            });
         }
     };
 

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 //验证组件 https://www.npmjs.com/package/async-validator
 import schema from 'async-validator';
-
+import isequal from 'lodash.isequal';
 //日期组件
 import DatePicker from "bee-datepicker";
 //本地化日期
@@ -71,6 +71,11 @@ class DateField extends Component {
         //当校验外部发生变化，主动校验函数
         if (nextProps.validate == true) {
             this.validate();
+        }
+        if('value' in nextProps&&(!isequal(nextProps.value,this.state.value))){
+            this.setState({
+                value:nextProps.value
+            })
         }
     }
 

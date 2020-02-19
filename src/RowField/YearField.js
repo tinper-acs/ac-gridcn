@@ -15,7 +15,7 @@ import FieldWrap from './FieldWrap'
 import DatePicker from 'bee-datepicker';
 //本地化日期
 import zhCN from "bee-datepicker/build/locale/zh_CN";
-
+import isequal from 'lodash.isequal';
 
 //变量结构
 const { YearPicker } = DatePicker;
@@ -72,6 +72,11 @@ class YearField extends Component {
         if (nextProps.validate == true) {
             this.validate();
         }
+        if('value' in nextProps&&(!isequal(nextProps.value,this.state.value))){
+            this.setState({
+                value:nextProps.value
+            })
+        }
     }
 
     /**
@@ -97,7 +102,7 @@ class YearField extends Component {
         let { value } = this.state;
         //设置校验规则
         let descriptor = {
-            [field]: { type: "object", required }
+            [field]: { type: "any", required }
         }
         let validator = new schema(descriptor);
         validator.validate({ [field]: value }, (errors, fields) => {

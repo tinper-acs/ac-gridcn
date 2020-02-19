@@ -22,6 +22,10 @@ var _asyncValidator = require('async-validator');
 
 var _asyncValidator2 = _interopRequireDefault(_asyncValidator);
 
+var _lodash = require('lodash.isequal');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _beeDatepicker = require('bee-datepicker');
 
 var _beeDatepicker2 = _interopRequireDefault(_beeDatepicker);
@@ -55,7 +59,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //日期处理
 
 //验证组件 https://www.npmjs.com/package/async-validator
-
 
 //日期组件
 
@@ -169,6 +172,11 @@ var DateField = function (_Component) {
         //当校验外部发生变化，主动校验函数
         if (nextProps.validate == true) {
             this.validate();
+        }
+        if ('value' in nextProps && !(0, _lodash2["default"])(nextProps.value, this.state.value)) {
+            this.setState({
+                value: nextProps.value
+            });
         }
     };
 

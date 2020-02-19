@@ -18,6 +18,10 @@ var _asyncValidator = require('async-validator');
 
 var _asyncValidator2 = _interopRequireDefault(_asyncValidator);
 
+var _lodash = require('lodash.isequal');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _beeFormControl = require('bee-form-control');
 
 var _beeFormControl2 = _interopRequireDefault(_beeFormControl);
@@ -156,6 +160,11 @@ var TextField = function (_Component) {
         if (nextProps.validate == true) {
             this.validate();
         }
+        if ('value' in nextProps && !(0, _lodash2["default"])(nextProps.value, this.state.value)) {
+            this.setState({
+                value: nextProps.value
+            });
+        }
     };
 
     /**
@@ -180,7 +189,6 @@ var TextField = function (_Component) {
             message = _props.message,
             required = _props.required,
             fieldProps = _props.fieldProps;
-
 
         return _react2["default"].createElement(
             _FieldWrap2["default"],

@@ -11,7 +11,9 @@ import schema from 'async-validator';
 import FieldWrap from './FieldWrap'
 //下拉组件
 import Select from 'bee-select';
+import isequal from 'lodash.isequal';
 
+const Option = Select.Option;
 
 
 //类型校验
@@ -65,6 +67,11 @@ class SelectField extends Component {
     componentWillReceiveProps(nextProps, nextState) {
         if (nextProps.validate == true) {
             this.validate();
+        }
+        if('value' in nextProps&&(!isequal(nextProps.value,this.state.value))){
+            this.setState({
+                value:nextProps.value
+            })
         }
     }
 

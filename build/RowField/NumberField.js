@@ -22,6 +22,10 @@ var _asyncValidator = require('async-validator');
 
 var _asyncValidator2 = _interopRequireDefault(_asyncValidator);
 
+var _lodash = require('lodash.isequal');
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _FieldWrap = require('./FieldWrap');
 
 var _FieldWrap2 = _interopRequireDefault(_FieldWrap);
@@ -197,6 +201,11 @@ var NumberField = function (_Component) {
         //当校验外部发生变化，主动校验函数
         if (nextProps.validate == true) {
             this.validate();
+        }
+        if ('value' in nextProps && !(0, _lodash2["default"])(nextProps.value, this.state.value)) {
+            this.setState({
+                value: nextProps.value
+            });
         }
     };
 

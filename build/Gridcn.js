@@ -34,6 +34,10 @@ var _beeModal = require("bee-modal");
 
 var _beeModal2 = _interopRequireDefault(_beeModal);
 
+var _lodash3 = require("lodash.isequal");
+
+var _lodash4 = _interopRequireDefault(_lodash3);
+
 var _TextField = require("./RowField/TextField");
 
 var _TextField2 = _interopRequireDefault(_TextField);
@@ -206,7 +210,7 @@ var Grid = function (_Component) {
                             item.render = function (text, record, index) {
                                 var selectList = fieldProps.data || [];
                                 var selected = selectList.find(function (it) {
-                                    return it.key === text;
+                                    return record._edit ? it.value == text : item.key == text;
                                 });
                                 var value = selected ? selected.value : '';
                                 return record._edit ? _react2["default"].createElement(_SelectField2["default"], _extends({}, other, {
@@ -290,9 +294,6 @@ var Grid = function (_Component) {
 
         _this.setData = function (da) {
             var data = (0, _lodash2["default"])(da);
-            // data.forEach((item,index)=>{
-
-            // })
             _this.setState({
                 data: data
             });
@@ -323,9 +324,9 @@ var Grid = function (_Component) {
 
         _this.onChange = function (field, value, index) {
             _this.allData[index][field] = value;
-            // this.setState({
-            //     data:this.allData
-            // })
+            _this.setState({
+                data: _this.allData
+            });
             _this.props.onChange(_this.allData);
         };
 
@@ -333,7 +334,6 @@ var Grid = function (_Component) {
             var defaultValueKeyValue = _this.state.defaultValueKeyValue;
             var data = (0, _lodash2["default"])(_this.state.data);
             var item = (0, _lodash2["default"])(defaultValueKeyValue);
-
             item._edit = true;
             item._status = 'edit';
             data.unshift(item);
@@ -343,7 +343,7 @@ var Grid = function (_Component) {
                 addNum: _this.state.addNum + 1
             });
             _this.allData = data;
-            _this.props.onChange(_this.allData);
+            _this.props.onChange(data);
         };
 
         _this.cancelAdd = function () {
@@ -358,6 +358,7 @@ var Grid = function (_Component) {
                         adding: false,
                         addNum: 0
                     });
+                    _this.props.onChange(data);
                 },
                 onCancel: function onCancel() {
                     console.log('Cancel');
@@ -374,8 +375,10 @@ var Grid = function (_Component) {
             });
             _this.setState({
                 data: data,
-                allEditing: true
+                allEditing: true,
+                selectData: []
             });
+            _this.props.onChange(data);
             _this.allData = data;
         };
 
@@ -415,12 +418,10 @@ var Grid = function (_Component) {
                     copying: true,
                     selectData: copyData
                 });
-                _this.allData = data;
             }
         };
 
         _this.save = function () {
-            console.log(_this.allData);
             var selectList = [];
             _this.allData.forEach(function (item) {
                 if (item._checked) selectList.push(item);
@@ -445,8 +446,10 @@ var Grid = function (_Component) {
                 });
                 _this.setState({
                     data: data,
-                    allEditing: false
+                    allEditing: false,
+                    selectData: []
                 });
+                _this.props.onChange(data);
                 _this.allData = data;
                 _this.props.save(selectList);
             }
@@ -474,6 +477,7 @@ var Grid = function (_Component) {
                 data: data,
                 copying: false
             });
+            _this.props.onChange(data);
             _this.allData = data;
         };
 
@@ -494,6 +498,7 @@ var Grid = function (_Component) {
                 data: data,
                 copying: false
             });
+            _this.props.onChange(data);
             _this.allData = data;
         };
 
@@ -516,8 +521,10 @@ var Grid = function (_Component) {
                     });
                     _this.setState({
                         data: data,
-                        allEditing: false
+                        allEditing: false,
+                        selectData: []
                     });
+                    _this.props.onChange(data);
                     _this.allData = data;
                 },
                 onCancel: function onCancel() {
@@ -531,6 +538,7 @@ var Grid = function (_Component) {
             data.forEach(function (item, index) {
                 item._checked = false;
             });
+            _this.props.onChange(data);
             return data;
         };
 
@@ -552,26 +560,32 @@ var Grid = function (_Component) {
 
         _this.getSelectedDataFunc = function (selectList, record, index, newData) {
             _this.selectList = selectList;
+            var data = (0, _lodash2["default"])(_this.state.data);
             if (index != undefined) {
-                _this.allData[index]['_checked'] = !_this.allData[index]['_checked'];
+                data[index]['_checked'] = !data[index]['_checked'];
             } else {
                 //点击了全选
                 if (selectList.length > 0) {
                     //全选
-                    _this.allData.map(function (item) {
+                    data.map(function (item) {
                         if (!item['_disabled']) {
                             item['_checked'] = true;
                         }
                     });
                 } else {
                     //反选
-                    _this.allData.map(function (item) {
+                    data.map(function (item) {
                         if (!item['_disabled']) {
                             item['_checked'] = false;
                         }
                     });
                 }
             }
+            _this.setState({
+                data: data,
+                selectData: selectList
+            });
+            _this.allData = data;
             _this.props.getSelectedDataFunc(selectList, record, index, newData);
         };
 
@@ -589,7 +603,8 @@ var Grid = function (_Component) {
                 data = _this$state.data,
                 allEditing = _this$state.allEditing,
                 adding = _this$state.adding,
-                open = _this$state.open;
+                open = _this$state.open,
+                selectData = _this$state.selectData;
 
             var _this$props = _this.props,
                 clsfix = _this$props.clsfix,
@@ -622,12 +637,12 @@ var Grid = function (_Component) {
                     disabled: disabled
                 },
                 delRow: {
-                    onClick: _this.delRow
-                    // disabled:this.selectList==0||disabled
+                    onClick: _this.delRow,
+                    disabled: selectData.length == 0 || disabled
                 },
                 copyRow: {
-                    onClick: _this.copyRow
-                    // disabled:this.selectList==0||disabled
+                    onClick: _this.copyRow,
+                    disabled: selectData.length == 0 || disabled
                 },
                 "export": {
                     onClick: function onClick() {
@@ -672,8 +687,21 @@ var Grid = function (_Component) {
                     }
                 };
             }
-            console.log('render');
-            console.log(_this.state.data);
+            var gridOptions = _extends({}, otherProps, {
+                className: "ucf-example-grid",
+                data: data,
+                columns: columns,
+                exportData: _exportData,
+                paginationObj: _paginationObj,
+                ref: function ref(el) {
+                    return _this.grid = el;
+                },
+                hoverContent: _this.hoverContent,
+                getSelectedDataFunc: _this.getSelectedDataFunc,
+                onRowHover: _this.onRowHover,
+                syncHover: false,
+                autoCheckedByClickRows: false
+            });
             return _react2["default"].createElement(
                 _react.Fragment,
                 null,
@@ -718,51 +746,12 @@ var Grid = function (_Component) {
                     typeof title == 'string' ? _react2["default"].createElement(
                         "div",
                         { className: clsfix + "-inner " + (open ? 'show' : 'hide') + " " + (isMax ? 'max' : '') },
-                        _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
-                            className: "ucf-example-grid",
-                            data: data,
-                            columns: columns,
-                            exportData: _exportData,
-                            paginationObj: _paginationObj,
-                            ref: function ref(el) {
-                                return _this.grid = el;
-                            },
-                            hoverContent: _this.hoverContent,
-                            getSelectedDataFunc: _this.getSelectedDataFunc,
-                            onRowHover: _this.onRowHover,
-                            syncHover: false
-                        }))
-                    ) : _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
-                        className: "ucf-example-grid",
-                        data: data,
-                        columns: columns,
-                        exportData: _exportData,
-                        paginationObj: _paginationObj,
-                        ref: function ref(el) {
-                            return _this.grid = el;
-                        },
-                        hoverContent: _this.hoverContent,
-                        getSelectedDataFunc: _this.getSelectedDataFunc,
-                        onRowHover: _this.onRowHover,
-                        syncHover: false
-                    }))
+                        _react2["default"].createElement(_beeComplexGrid2["default"], gridOptions)
+                    ) : _react2["default"].createElement(_beeComplexGrid2["default"], gridOptions)
                 ) : _react2["default"].createElement(
                     "div",
                     { className: clsfix + " " + (disabled ? 'disabled' : '') },
-                    _react2["default"].createElement(_beeComplexGrid2["default"], _extends({}, otherProps, {
-                        className: "ucf-example-grid",
-                        data: data,
-                        columns: columns,
-                        exportData: _exportData,
-                        paginationObj: _paginationObj,
-                        ref: function ref(el) {
-                            return _this.grid = el;
-                        },
-                        hoverContent: _this.hoverContent,
-                        getSelectedDataFunc: _this.getSelectedDataFunc,
-                        onRowHover: _this.onRowHover,
-                        syncHover: false
-                    }))
+                    _react2["default"].createElement(_beeComplexGrid2["default"], gridOptions)
                 )
             );
         };
@@ -773,7 +762,7 @@ var Grid = function (_Component) {
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
-            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "allEditing", false), _defineProperty(_this$state2, "adding", false), _defineProperty(_this$state2, "addNum", 0), _this$state2);
+            defaultValueKeyValue: {} }, _defineProperty(_this$state2, "isMax", false), _defineProperty(_this$state2, "selectData", []), _defineProperty(_this$state2, "allEditing", false), _defineProperty(_this$state2, "adding", false), _defineProperty(_this$state2, "addNum", 0), _this$state2);
         _this.oldColumns = props.columns;
         _this.selectList = []; //选中的数据
         _this.allData = []; //表格所有数据
@@ -798,9 +787,8 @@ var Grid = function (_Component) {
     };
 
     Grid.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-        if ('data' in nextProps) {
+        if ('data' in nextProps && (0, _lodash4["default"])(nextProps.data, this.state.data)) {
             this.setData(nextProps.data);
-            this.allData = nextProps.data;
         }
     };
     //增行

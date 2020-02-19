@@ -52,17 +52,17 @@ class Demo1 extends Component {
                 required:true,
                 fieldProps:{
                     allowClear:true,
-                    defaultValue:'男',
+                    defaultValue:'1',
                     data:[{
                         key: "请选择",
                         value: '',
                         // disabled: true
                     }, {
                         key: "男",
-                        value: 1
+                        value: '1'
                     }, {
                         key: "女",
-                        value: 0
+                        value: '0'
                     }]
                 },
                 // render: (text, record, index) => {

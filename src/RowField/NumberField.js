@@ -5,7 +5,7 @@ import InputNumber from 'bee-input-number';
 import PropTypes from 'prop-types';
 //验证组件 https://www.npmjs.com/package/async-validator
 import schema from 'async-validator';
-
+import isequal from 'lodash.isequal';
 import FieldWrap from './FieldWrap'
 //数值组件
 
@@ -69,6 +69,11 @@ class NumberField extends Component {
         //当校验外部发生变化，主动校验函数
         if (nextProps.validate == true) {
             this.validate();
+        }
+        if('value' in nextProps&&(!isequal(nextProps.value,this.state.value))){
+            this.setState({
+                value:nextProps.value
+            })
         }
     }
 

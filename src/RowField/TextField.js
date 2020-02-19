@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 //验证组件 https://www.npmjs.com/package/async-validator
 import schema from 'async-validator';
+import isequal from 'lodash.isequal';
 //Tinper-bee
 import FormControl from 'bee-form-control';
 import FieldWrap from './FieldWrap'
@@ -66,6 +67,11 @@ class TextField extends Component {
         if (nextProps.validate == true) {
             this.validate();
         }
+        if('value' in nextProps&&(!isequal(nextProps.value,this.state.value))){
+            this.setState({
+                value:nextProps.value
+            })
+        }
     }
 
     /**
@@ -114,9 +120,7 @@ class TextField extends Component {
     }
     render() {
         let { value, error, flag } = this.state;
-
         let { className, message, required,fieldProps } = this.props;
-
         return (
             <FieldWrap
                 required={required}

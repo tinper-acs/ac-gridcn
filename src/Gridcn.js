@@ -5,6 +5,7 @@ import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
 import Modal from 'bee-modal';
+import isequal from 'lodash.isequal';
 //文本输入组件
 import TextField from './RowField/TextField';
 //下拉选择组件
@@ -57,7 +58,7 @@ class Grid extends Component {
             data:props.data,
             defaultValueKeyValue:{},//每个单元格的默认值
             isMax:false,//是否最大化了
-            // selectData:[],//选中的数据
+            selectData:[],//选中的数据
             allEditing:false,//是否正在修改所有数据
             adding:false,//是否正在新增
             addNum:0,//新增的条数
@@ -92,9 +93,8 @@ class Grid extends Component {
         this.setData(this.props.data)
     }
     componentWillReceiveProps(nextProps){
-        if('data' in nextProps){
+        if('data' in nextProps&&(isequal(nextProps.data,this.state.data))){
             this.setData(nextProps.data);
-            this.allData = nextProps.data;
         }
     }
     setColumn=(cl)=>{
@@ -162,7 +162,7 @@ class Grid extends Component {
                     case 'select':
                         item.render=(text,record,index)=>{
                             let selectList = fieldProps.data||[];
-                            let selected = selectList.find(it => it.key === text);
+                            let selected = selectList.find(it => record._edit?it.value == text:item.key == text);
                             let value = selected ? selected.value : '';
                             return (
                                 record._edit?<SelectField 
@@ -241,9 +241,6 @@ class Grid extends Component {
     }
     setData=(da)=>{
         let data = cloneDeep(da);
-        // data.forEach((item,index)=>{
-            
-        // })
         this.setState({
             data
         })
@@ -273,9 +270,9 @@ class Grid extends Component {
 
     onChange=(field, value, index)=>{
         this.allData[index][field] = value;
-        // this.setState({
-        //     data:this.allData
-        // })
+        this.setState({
+            data:this.allData
+        })
         this.props.onChange(this.allData);
     }
     //增行
@@ -283,7 +280,6 @@ class Grid extends Component {
         let defaultValueKeyValue = this.state.defaultValueKeyValue;
         let data = cloneDeep(this.state.data);
         let item = cloneDeep(defaultValueKeyValue);
-
         item._edit = true;
         item._status = 'edit';
         data.unshift(item);
@@ -293,7 +289,7 @@ class Grid extends Component {
             addNum:this.state.addNum+1
         })
         this.allData = data;
-        this.props.onChange(this.allData)
+        this.props.onChange(data)
     }
 
     //取消新增
@@ -309,6 +305,7 @@ class Grid extends Component {
                     adding:false,
                     addNum:0
                 })
+                this.props.onChange(data)
             },
             onCancel:()=> {
                 console.log('Cancel');
@@ -326,8 +323,10 @@ class Grid extends Component {
         })
         this.setState({
             data,
-            allEditing:true
+            allEditing:true,
+            selectData:[]
         })
+        this.props.onChange(data)
         this.allData = data;
     }
     
@@ -370,14 +369,12 @@ class Grid extends Component {
                 copying:true,
                 selectData:copyData
             })
-            this.allData = data;
         }
         
     }
 
     //保存数据
     save=()=>{
-        console.log(this.allData)
         let selectList = [];
         this.allData.forEach(item=>{
             if(item._checked)selectList.push(item)
@@ -402,8 +399,10 @@ class Grid extends Component {
             })
             this.setState({
                 data,
-                allEditing:false
+                allEditing:false,
+                selectData:[]
             })
+            this.props.onChange(data)
             this.allData = data;
             this.props.save(selectList);
         }
@@ -431,6 +430,7 @@ class Grid extends Component {
             data,
             copying:false
         })
+        this.props.onChange(data)
         this.allData = data;
     }
 
@@ -450,6 +450,7 @@ class Grid extends Component {
             data,
             copying:false
         })
+        this.props.onChange(data)
         this.allData = data;
     }
 
@@ -474,8 +475,10 @@ class Grid extends Component {
                 })
                 this.setState({
                     data,
-                    allEditing:false
+                    allEditing:false,
+                    selectData:[]
                 })
+                this.props.onChange(data)
                 this.allData = data;
             },
             onCancel:()=> {
@@ -490,6 +493,7 @@ class Grid extends Component {
         data.forEach((item,index)=>{
             item._checked=false
         })
+        this.props.onChange(data)
         return data;
     }
 
@@ -510,23 +514,29 @@ class Grid extends Component {
     //数据选择回调
     getSelectedDataFunc=(selectList,record,index,newData)=>{
         this.selectList = selectList;
+        let data = cloneDeep(this.state.data)
         if (index != undefined) {
-            this.allData[index]['_checked'] = !this.allData[index]['_checked'];
+            data[index]['_checked'] = !data[index]['_checked'];
         } else {//点击了全选
             if (selectList.length > 0) {//全选
-                this.allData.map(item => {
+                data.map(item => {
                     if (!item['_disabled']) {
                         item['_checked'] = true
                     }
                 });
             } else {//反选
-                this.allData.map(item => {
+                data.map(item => {
                     if (!item['_disabled']) {
                         item['_checked'] = false
                     }
                 });
             }
         }
+        this.setState({
+            data:data,
+            selectData:selectList
+        })
+        this.allData = data;
         this.props.getSelectedDataFunc(selectList,record,index,newData);
     }
 
@@ -538,7 +548,7 @@ class Grid extends Component {
         })
     }
     renderDom=()=>{
-        let { copying,isMax,columns,data,allEditing,adding,open } = this.state;
+        let { copying,isMax,columns,data,allEditing,adding,open,selectData } = this.state;
         const { clsfix,paginationObj, exportData,disabled,title,hideSave, isEdit,powerBtns,forcePowerBtns, ...otherProps } = this.props;
         let _paginationObj ='none';
         if(paginationObj!='none'){
@@ -562,11 +572,11 @@ class Grid extends Component {
             },
             delRow:{
                 onClick:this.delRow,
-                // disabled:this.selectList==0||disabled
+                disabled:selectData.length==0||disabled
             },
             copyRow:{
                 onClick:this.copyRow,
-                // disabled:this.selectList==0||disabled
+                disabled:selectData.length==0||disabled
             },
             export: {
                 onClick: () => {
@@ -611,8 +621,20 @@ class Grid extends Component {
                 }
             }
         }
-        console.log('render')
-        console.log(this.state.data)
+        let gridOptions={
+            ...otherProps,
+            className:"ucf-example-grid",
+            data:data,
+            columns:columns,
+            exportData:_exportData,
+            paginationObj:_paginationObj,
+            ref:el => this.grid = el,
+            hoverContent:this.hoverContent,
+            getSelectedDataFunc:this.getSelectedDataFunc,
+            onRowHover:this.onRowHover,
+            syncHover:false,
+            autoCheckedByClickRows:false
+        }
         return (
             <Fragment>
                 {
@@ -645,47 +667,11 @@ class Grid extends Component {
                     }
                     {
                         typeof title=='string'?<div className={`${clsfix}-inner ${open?'show':'hide'} ${isMax?'max':''}`}>
-                            <BeeGrid
-                            {...otherProps}
-                            className="ucf-example-grid"
-                            data={data}
-                            columns={columns}
-                            exportData={_exportData}
-                            paginationObj={_paginationObj}
-                            ref={el => this.grid = el}
-                            hoverContent={this.hoverContent}
-                            getSelectedDataFunc={this.getSelectedDataFunc}
-                            onRowHover={this.onRowHover}
-                            syncHover={false}
-                        />
-                        </div>:<BeeGrid
-                            {...otherProps}
-                            className="ucf-example-grid"
-                            data={data}
-                            columns={columns}
-                            exportData={_exportData}
-                            paginationObj={_paginationObj}
-                            ref={el => this.grid = el}
-                            hoverContent={this.hoverContent}
-                            getSelectedDataFunc={this.getSelectedDataFunc}
-                            onRowHover={this.onRowHover}
-                            syncHover={false}
-                        />
+                            <BeeGrid {...gridOptions}/>
+                        </div>:<BeeGrid {...gridOptions}/>
                     }
                     </div>:<div className={`${clsfix} ${disabled?'disabled':''}`}>
-                        <BeeGrid
-                            {...otherProps}
-                            className="ucf-example-grid"
-                            data={data}
-                            columns={columns}
-                            exportData={_exportData}
-                            paginationObj={_paginationObj}
-                            ref={el => this.grid = el}
-                            hoverContent={this.hoverContent}
-                            getSelectedDataFunc={this.getSelectedDataFunc}
-                            onRowHover={this.onRowHover}
-                            syncHover={false}
-                        />
+                        <BeeGrid {...gridOptions}/>
                     </div>
                     
                 }
