@@ -93,7 +93,7 @@ class Grid extends Component {
         this.setData(this.props.data)
     }
     componentWillReceiveProps(nextProps){
-        if('data' in nextProps&&(isequal(nextProps.data,this.state.data))){
+        if('data' in nextProps&&(!isequal(nextProps.data,this.state.data))){
             this.setData(nextProps.data);
         }
     }
@@ -635,6 +635,7 @@ class Grid extends Component {
             syncHover:false,
             autoCheckedByClickRows:false
         }
+        console.log('render',data)
         return (
             <Fragment>
                 {

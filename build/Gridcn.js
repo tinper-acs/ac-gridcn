@@ -702,6 +702,7 @@ var Grid = function (_Component) {
                 syncHover: false,
                 autoCheckedByClickRows: false
             });
+            console.log('render', data);
             return _react2["default"].createElement(
                 _react.Fragment,
                 null,
@@ -787,7 +788,7 @@ var Grid = function (_Component) {
     };
 
     Grid.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
-        if ('data' in nextProps && (0, _lodash4["default"])(nextProps.data, this.state.data)) {
+        if ('data' in nextProps && !(0, _lodash4["default"])(nextProps.data, this.state.data)) {
             this.setData(nextProps.data);
         }
     };
