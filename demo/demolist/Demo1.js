@@ -52,7 +52,7 @@ class Demo1 extends Component {
                 required:true,
                 fieldProps:{
                     allowClear:true,
-                    defaultValue:'1',
+                    defaultValue:'男',
                     data:[{
                         key: "请选择",
                         value: '',
@@ -163,7 +163,6 @@ class Demo1 extends Component {
                 key: "year",
                 width: 100,
                 renderType:'year',
-                required:true,
                 required:true,
                 fieldProps:{
                     defaultValue:'2018'

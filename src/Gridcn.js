@@ -162,7 +162,8 @@ class Grid extends Component {
                     case 'select':
                         item.render=(text,record,index)=>{
                             let selectList = fieldProps.data||[];
-                            let selected = selectList.find(it => record._edit?it.value == text:item.key == text);
+                            let selected = selectList.find(it=>it.key == text);
+                            if(selected==undefined)selected = selectList.find(it=>it.value == text);
                             let value = selected ? selected.value : '';
                             return (
                                 record._edit?<SelectField 
@@ -599,7 +600,8 @@ class Grid extends Component {
             }
             if(!hideSave){
                 btnsObj.save = {
-                    onClick:this.save
+                    onClick:this.save,
+                    disabled:selectData.length==0||disabled
                 }
             }
         }else if(adding){
@@ -608,7 +610,8 @@ class Grid extends Component {
             }
             if(!hideSave){
                 btnsObj.save = {
-                    onClick:this.save
+                    onClick:this.save,
+                    disabled:selectData.length==0||disabled
                 }
             }
         }else if(copying){

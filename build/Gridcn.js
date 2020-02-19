@@ -210,7 +210,10 @@ var Grid = function (_Component) {
                             item.render = function (text, record, index) {
                                 var selectList = fieldProps.data || [];
                                 var selected = selectList.find(function (it) {
-                                    return record._edit ? it.value == text : item.key == text;
+                                    return it.key == text;
+                                });
+                                if (selected == undefined) selected = selectList.find(function (it) {
+                                    return it.value == text;
                                 });
                                 var value = selected ? selected.value : '';
                                 return record._edit ? _react2["default"].createElement(_SelectField2["default"], _extends({}, other, {
@@ -665,7 +668,8 @@ var Grid = function (_Component) {
                 };
                 if (!hideSave) {
                     btnsObj.save = {
-                        onClick: _this.save
+                        onClick: _this.save,
+                        disabled: selectData.length == 0 || disabled
                     };
                 }
             } else if (adding) {
@@ -674,7 +678,8 @@ var Grid = function (_Component) {
                 };
                 if (!hideSave) {
                     btnsObj.save = {
-                        onClick: _this.save
+                        onClick: _this.save,
+                        disabled: selectData.length == 0 || disabled
                     };
                 }
             } else if (copying) {
