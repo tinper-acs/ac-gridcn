@@ -439,8 +439,14 @@ var _initialiseProps = function _initialiseProps() {
 
     this.onChange = function (field, value, index) {
         _this2.allData[index][field] = value;
+        _this2.allData[index]._checked = true;
+        var selectList = [];
+        _this2.allData.forEach(function (item) {
+            if (item._checked) selectList.push(item);
+        });
         _this2.setState({
-            data: _this2.allData
+            data: _this2.allData,
+            selectData: selectList
         });
         _this2.props.onChange(_this2.allData);
     };
@@ -451,11 +457,17 @@ var _initialiseProps = function _initialiseProps() {
         var item = (0, _lodash2["default"])(defaultValueKeyValue);
         item._edit = true;
         item._status = 'edit';
+        item._checked = true;
         data.unshift(item);
+        var selectList = [];
+        data.forEach(function (item) {
+            if (item._checked) selectList.push(item);
+        });
         _this2.setState({
             data: data,
             adding: true,
-            addNum: _this2.state.addNum + 1
+            addNum: _this2.state.addNum + 1,
+            selectData: selectList
         });
         _this2.allData = data;
         _this2.props.onChange(data);

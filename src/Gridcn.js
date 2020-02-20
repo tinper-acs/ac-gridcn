@@ -286,8 +286,14 @@ class Grid extends Component {
 
     onChange=(field, value, index)=>{
         this.allData[index][field] = value;
+        this.allData[index]._checked = true;
+        let selectList = [];
+        this.allData.forEach(item=>{
+            if(item._checked)selectList.push(item)
+        })
         this.setState({
-            data:this.allData
+            data:this.allData,
+            selectData:selectList
         })
         this.props.onChange(this.allData);
     }
@@ -298,11 +304,17 @@ class Grid extends Component {
         let item = cloneDeep(defaultValueKeyValue);
         item._edit = true;
         item._status = 'edit';
+        item._checked = true;
         data.unshift(item);
+        let selectList = [];
+        data.forEach(item=>{
+            if(item._checked)selectList.push(item)
+        })
         this.setState({
             data,
             adding:true,
-            addNum:this.state.addNum+1
+            addNum:this.state.addNum+1,
+            selectData:selectList
         })
         this.allData = data;
         this.props.onChange(data)
