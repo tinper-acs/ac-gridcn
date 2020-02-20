@@ -1,3 +1,13 @@
+<a name="0.1.5"></a>
+## [0.1.5](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.4...v0.1.5) (2020-02-20)
+
+
+### Features
+
+* **ac-gridcn:** select适配string和number ([b5e0ca0](https://github.com/tinper-bee/ac-gridcn/commit/b5e0ca0))
+
+
+
 <a name="0.1.4"></a>
 ## [0.1.4](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.3...v0.1.4) (2020-02-20)
 
