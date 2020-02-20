@@ -45,8 +45,8 @@ class Demo1 extends Component {
             },
             {
                 title: "员工性别",
-                dataIndex: "sexEnumValue",
-                key: "sexEnumValue",
+                dataIndex: "sex",
+                key: "sex",
                 width: 120,
                 renderType:'select',
                 required:true,
@@ -59,10 +59,10 @@ class Demo1 extends Component {
                         // disabled: true
                     }, {
                         key: "男",
-                        value: 1
+                        value: '1'
                     }, {
                         key: "女",
-                        value: 0
+                        value: '0'
                     }]
                 },
                 // render: (text, record, index) => {
@@ -164,7 +164,6 @@ class Demo1 extends Component {
                 width: 100,
                 renderType:'year',
                 required:true,
-                required:true,
                 fieldProps:{
                     defaultValue:'2018'
                 },
@@ -186,8 +185,8 @@ class Demo1 extends Component {
             },
             {
                 title: "月份",
-                dataIndex: "monthEnumValue",
-                key: "monthEnumValue",
+                dataIndex: "month",
+                key: "month",
                 width: 120,
                 renderType:'select',
                 required:true,
@@ -249,8 +248,8 @@ class Demo1 extends Component {
             },
             {
                 title: "补贴类别",
-                dataIndex: "allowanceTypeEnumValue",
-                key: "allowanceTypeEnumValue",
+                dataIndex: "allowanceType",
+                key: "allowanceType",
                 width: 120,
                 renderType:'select',
                 required:true,
@@ -339,8 +338,8 @@ class Demo1 extends Component {
             },
             {
                 title: "是否超标",
-                dataIndex: "exdeedsEnumValue",
-                key: "exdeedsEnumValue",
+                dataIndex: "exdeeds",
+                key: "exdeeds",
                 width: 120,
                 required:true,
                 renderType:'select',
@@ -372,8 +371,8 @@ class Demo1 extends Component {
             },
             {
                 title: "领取方式",
-                dataIndex: "pickTypeEnumValue",
-                key: "pickTypeEnumValue",
+                dataIndex: "pickType",
+                key: "pickType",
                 width: 120,
                 renderType:'select',
                 required:true,

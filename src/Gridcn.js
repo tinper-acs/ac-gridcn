@@ -87,6 +87,21 @@ class Grid extends Component {
     exportExcel = () => {
         this.grid.exportExcel();
     };
+    getValue=(text,props)=>{
+        let { renderType,fieldProps } = props;
+        let { data=[],defaultValue } = fieldProps;
+        let value = defaultValue!=undefined?defaultValue:'';
+        if(renderType&&renderType=='select'){
+            data.forEach(item => {
+                if(item.value==text){
+                    value = item.key
+                }
+            });
+        }else{
+            value = text;
+        }
+        return value;
+    }
 
     componentWillMount(){
         this.setColumn(this.props.columns)
@@ -161,21 +176,21 @@ class Grid extends Component {
                     break;
                     case 'select':
                         item.render=(text,record,index)=>{
-                            let selectList = fieldProps.data||[];
-                            let selected = selectList.find(it=>it.key == text);
-                            if(selected==undefined)selected = selectList.find(it=>it.value == text);
-                            let value = selected ? selected.value : '';
+                            // let selectList = fieldProps.data||[];
+                            // let selected = selectList.find(it=>it.key == text);
+                            // if(selected==undefined)selected = selectList.find(it=>it.value == text);
+                            let value = this.getValue(text,item);
                             return (
                                 record._edit?<SelectField 
                                     {...other}
                                     fieldProps={fieldProps}
                                     index = {index}
-                                    value = {value}
+                                    value = {text+''}
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
                                     status = {record._status}
                                     onValidate={this.onValidate}
-                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
+                                />:<div>{oldRender&&oldRender(value,record,index)}</div>
                             )
                         }
                     break;
@@ -638,7 +653,6 @@ class Grid extends Component {
             syncHover:false,
             autoCheckedByClickRows:false
         }
-        console.log('render',data)
         return (
             <Fragment>
                 {

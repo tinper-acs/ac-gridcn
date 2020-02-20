@@ -120,7 +120,6 @@ class SelectField extends Component {
         let { className, message, required, fieldProps } = this.props;
 
         let { data,...other } = fieldProps;
-
         return (
             <FieldWrap
                 required={required}

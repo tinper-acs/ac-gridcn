@@ -45,14 +45,14 @@ class Demo1 extends Component {
             },
             {
                 title: "员工性别",
-                dataIndex: "sexEnumValue",
-                key: "sexEnumValue",
+                dataIndex: "sex",
+                key: "sex",
                 width: 120,
                 renderType:'select',
                 required:true,
                 fieldProps:{
                     allowClear:true,
-                    defaultValue:'男',
+                    defaultValue:'1',
                     data:[{
                         key: "请选择",
                         value: '',
@@ -185,8 +185,8 @@ class Demo1 extends Component {
             },
             {
                 title: "月份",
-                dataIndex: "monthEnumValue",
-                key: "monthEnumValue",
+                dataIndex: "month",
+                key: "month",
                 width: 120,
                 renderType:'select',
                 required:true,
@@ -248,8 +248,8 @@ class Demo1 extends Component {
             },
             {
                 title: "补贴类别",
-                dataIndex: "allowanceTypeEnumValue",
-                key: "allowanceTypeEnumValue",
+                dataIndex: "allowanceType",
+                key: "allowanceType",
                 width: 120,
                 renderType:'select',
                 required:true,
@@ -338,8 +338,8 @@ class Demo1 extends Component {
             },
             {
                 title: "是否超标",
-                dataIndex: "exdeedsEnumValue",
-                key: "exdeedsEnumValue",
+                dataIndex: "exdeeds",
+                key: "exdeeds",
                 width: 120,
                 required:true,
                 renderType:'select',
@@ -371,8 +371,8 @@ class Demo1 extends Component {
             },
             {
                 title: "领取方式",
-                dataIndex: "pickTypeEnumValue",
-                key: "pickTypeEnumValue",
+                dataIndex: "pickType",
+                key: "pickType",
                 width: 120,
                 renderType:'select',
                 required:true,
