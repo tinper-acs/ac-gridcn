@@ -1,3 +1,13 @@
+<a name="0.1.4"></a>
+## [0.1.4](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.3...v0.1.4) (2020-02-20)
+
+
+### Features
+
+* **ac-gridcn:** 新增修改自动选中 ([22bd4a3](https://github.com/tinper-bee/ac-gridcn/commit/22bd4a3))
+
+
+
 <a name="0.1.3"></a>
 ## [0.1.3](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.2...v0.1.3) (2020-02-20)
 
