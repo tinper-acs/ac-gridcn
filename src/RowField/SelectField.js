@@ -96,9 +96,13 @@ class SelectField extends Component {
     validate = () => {
         let { required, field, index, onValidate } = this.props;
         let { value } = this.state;
+        let type = 'string';
+        if(value){
+            if(typeof value =='number')type='number';
+        }
         //设置校验规则
         let descriptor = {
-            [field]: { type: "any", required }
+            [field]: { type, required }
         }
         let validator = new schema(descriptor);
         validator.validate({ [field]: value }, (errors, fields) => {

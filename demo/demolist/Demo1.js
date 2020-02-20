@@ -27,9 +27,11 @@ class Demo1 extends Component {
                 width: 120,
                 renderType:'input',
                 required:true,
+                validate:true,
                 fieldProps:{
                     defaultValue:'姓名'
-                }
+                },
+                
                 // render: (text, record, index) => {
                 //     return <FactoryComp
                 //         type='name'//姓名业务组件类型
@@ -50,9 +52,10 @@ class Demo1 extends Component {
                 width: 120,
                 renderType:'select',
                 required:true,
+                validate:true,
                 fieldProps:{
                     allowClear:true,
-                    defaultValue:'1',
+                    // defaultValue:'1',
                     data:[{
                         key: "请选择",
                         value: '',
