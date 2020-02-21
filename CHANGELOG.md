@@ -1,3 +1,13 @@
+<a name="0.1.6"></a>
+## [0.1.6](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.5...v0.1.6) (2020-02-21)
+
+
+### Features
+
+* **ac-gridcn:** onChange判断 ([163e88d](https://github.com/tinper-bee/ac-gridcn/commit/163e88d))
+
+
+
 <a name="0.1.5"></a>
 ## [0.1.5](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.4...v0.1.5) (2020-02-20)
 
