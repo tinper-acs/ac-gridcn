@@ -507,7 +507,7 @@ var _initialiseProps = function _initialiseProps() {
             allEditing: true,
             selectData: []
         });
-        _this2.props.onChange(data);
+        // this.props.onChange(data)
         _this2.allData = data;
     };
 
@@ -575,10 +575,11 @@ var _initialiseProps = function _initialiseProps() {
             });
             _this2.setState({
                 data: data,
+                adding: false,
                 allEditing: false,
                 selectData: []
             });
-            _this2.props.onChange(data);
+            // this.props.onChange(data)
             _this2.allData = data;
             _this2.props.save(selectList);
         }
@@ -653,7 +654,7 @@ var _initialiseProps = function _initialiseProps() {
                     allEditing: false,
                     selectData: []
                 });
-                _this2.props.onChange(data);
+                // this.props.onChange(data)
                 _this2.allData = data;
             },
             onCancel: function onCancel() {
@@ -667,7 +668,7 @@ var _initialiseProps = function _initialiseProps() {
         data.forEach(function (item, index) {
             item._checked = false;
         });
-        _this2.props.onChange(data);
+        // this.props.onChange(data)
         return data;
     };
 

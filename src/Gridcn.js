@@ -356,7 +356,7 @@ class Grid extends Component {
             allEditing:true,
             selectData:[]
         })
-        this.props.onChange(data)
+        // this.props.onChange(data)
         this.allData = data;
     }
     
@@ -429,10 +429,11 @@ class Grid extends Component {
             })
             this.setState({
                 data,
+                adding:false,
                 allEditing:false,
                 selectData:[]
             })
-            this.props.onChange(data)
+            // this.props.onChange(data)
             this.allData = data;
             this.props.save(selectList);
         }
@@ -508,7 +509,7 @@ class Grid extends Component {
                     allEditing:false,
                     selectData:[]
                 })
-                this.props.onChange(data)
+                // this.props.onChange(data)
                 this.allData = data;
             },
             onCancel:()=> {
@@ -523,7 +524,7 @@ class Grid extends Component {
         data.forEach((item,index)=>{
             item._checked=false
         })
-        this.props.onChange(data)
+        // this.props.onChange(data)
         return data;
     }
 
