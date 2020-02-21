@@ -285,17 +285,19 @@ class Grid extends Component {
     }
 
     onChange=(field, value, index)=>{
-        this.allData[index][field] = value;
-        this.allData[index]._checked = true;
-        let selectList = [];
-        this.allData.forEach(item=>{
-            if(item._checked)selectList.push(item)
-        })
-        this.setState({
-            data:this.allData,
-            selectData:selectList
-        })
-        this.props.onChange(this.allData);
+        if(!isequal(this.allData[index][field],value)){
+            this.allData[index]._checked = true;
+            this.allData[index][field] = value;
+            let selectList = [];
+            this.allData.forEach(item=>{
+                if(item._checked)selectList.push(item)
+            })
+            this.setState({
+                data:this.allData,
+                selectData:selectList
+            })
+            this.props.onChange(this.allData);
+        }
     }
     //增行
     addRow=()=>{

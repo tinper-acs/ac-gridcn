@@ -123,6 +123,7 @@ class Demo1 extends Component {
                 className: 'column-number-right ', // 靠右对齐
                 renderType:'inputNumber',
                 required:true,
+                sumCol: true,
                 fieldProps:{
                     defaultValue:2
                 }
@@ -522,6 +523,7 @@ class Demo1 extends Component {
                     save={(selectList)=>{
                         console.log('保存，数据如下-----------',selectList)
                     }}
+                    canSum={true}
                 />
             </div>
         )
