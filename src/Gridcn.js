@@ -228,6 +228,12 @@ class Grid extends Component {
                     break;
                     case 'refer':
                         item.render=(text,record,index)=>{
+                            let displayName = 'name';
+                            if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
+                            let value = oldRender&&oldRender(text,record,index);
+                            if(typeof text == 'object'&&(!record._edit)){
+                                value = oldRender&&oldRender(text[displayName],record,index);
+                            }
                             return (
                                 record._edit?<span>
                                     {
@@ -235,14 +241,14 @@ class Grid extends Component {
                                             ...other,
                                             ...fieldProps,
                                             index : index,
-                                            value :oldRender&&oldRender(text,record,index),
+                                            value ,
                                             field :item.dataIndex,
                                             onChange :this.onChange,
                                             status :record._status,
                                             onValidate:this.onValidate
                                         })
                                     }
-                                </span>:<div>{oldRender&&oldRender(text,record,index)}</div>
+                                </span>:<div>{value}</div>
                             )
                         }
                     break;
@@ -333,7 +339,8 @@ class Grid extends Component {
                 this.setState({
                     data,
                     adding:false,
-                    addNum:0
+                    addNum:0,
+                    selectData:[]
                 })
                 this.props.onChange(data)
             },
@@ -589,6 +596,10 @@ class Grid extends Component {
             _paginationObj.disabled = paginationObj.disabled !== undefined
                 ? paginationObj.disabled
                 : (data.length === 0||allEditing||copying||adding);
+
+            if((data.length === 0||allEditing||copying||adding)){
+                _paginationObj.disabled = true;
+            }
         }
         let _exportData = exportData || data;
         let btnsObj = {}

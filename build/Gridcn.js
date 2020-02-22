@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _react = require("react");
@@ -379,12 +381,18 @@ var _initialiseProps = function _initialiseProps() {
                         break;
                     case 'refer':
                         item.render = function (text, record, index) {
+                            var displayName = 'name';
+                            if (fieldProps && fieldProps.displayName) name = fieldProps.displayName;
+                            var value = oldRender && oldRender(text, record, index);
+                            if ((typeof text === "undefined" ? "undefined" : _typeof(text)) == 'object' && !record._edit) {
+                                value = oldRender && oldRender(text[displayName], record, index);
+                            }
                             return record._edit ? _react2["default"].createElement(
                                 "span",
                                 null,
                                 _react2["default"].cloneElement(component, _extends({}, other, fieldProps, {
                                     index: index,
-                                    value: oldRender && oldRender(text, record, index),
+                                    value: value,
                                     field: item.dataIndex,
                                     onChange: _this2.onChange,
                                     status: record._status,
@@ -393,7 +401,7 @@ var _initialiseProps = function _initialiseProps() {
                             ) : _react2["default"].createElement(
                                 "div",
                                 null,
-                                oldRender && oldRender(text, record, index)
+                                value
                             );
                         };
                         break;
@@ -485,7 +493,8 @@ var _initialiseProps = function _initialiseProps() {
                 _this2.setState({
                     data: data,
                     adding: false,
-                    addNum: 0
+                    addNum: 0,
+                    selectData: []
                 });
                 _this2.props.onChange(data);
             },
@@ -754,6 +763,10 @@ var _initialiseProps = function _initialiseProps() {
             _paginationObj.gap = true;
             _paginationObj.size = "sm";
             _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0 || allEditing || copying || adding;
+
+            if (data.length === 0 || allEditing || copying || adding) {
+                _paginationObj.disabled = true;
+            }
         }
         var _exportData = exportData || data;
         var btnsObj = {};
