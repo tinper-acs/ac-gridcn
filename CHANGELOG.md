@@ -1,3 +1,13 @@
+<a name="0.1.8"></a>
+## [0.1.8](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.7...v0.1.8) (2020-02-22)
+
+
+### Features
+
+* **ac-gridcn:** 分页disabled状态bug ([f38e4fc](https://github.com/tinper-bee/ac-gridcn/commit/f38e4fc))
+
+
+
 <a name="0.1.7"></a>
 ## [0.1.7](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.6...v0.1.7) (2020-02-21)
 
