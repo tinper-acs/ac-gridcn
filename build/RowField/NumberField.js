@@ -250,7 +250,8 @@ var NumberField = function (_Component) {
             _react2["default"].createElement(_beeInputNumber2["default"], _extends({}, fieldProps, {
                 className: className,
                 value: value,
-                onChange: this.handlerChange
+                onChange: this.handlerChange,
+                size: 'sm'
             }))
         );
     };

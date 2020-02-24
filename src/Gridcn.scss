@@ -32,6 +32,9 @@
         td.column-number-right {
             // text-align: right !important;
         }
+        .u-table-thead th{
+            background: #ECEFF5;
+        }
     }
     .u-input-group {
         border-spacing: 0;
@@ -41,25 +44,32 @@
         tr {
             transition: none;
             &:nth-child(2n) {
-                background: #FAFAFA;
+                background: #ffffff;
             }
             &:nth-child(2n + 1) {
                 background: #ffffff;
             }
             &:hover, &.u-table-row-hover {
-                background: #EBECF0;
+                background: #F3F3F3;
 
             }
-            // &.u-table-row {
-            //     &.selected, &.ref-multiple-table-row-selected {
-            //         background: #FFF7E7;
-            //     }
-            // }
+            &.u-table-row {
+                &.selected, &.ref-multiple-table-row-selected {
+                    background: #E3E3E3;
+                }
+            }
+            .u-table-thead .th-drag:hover{
+                background: #DCE1EB;
+            }
 
         }
-        th, td {
-            padding: 10px 8px;
-            height: 40px;
+        th{
+            padding: 8px 8px;
+            height: 35px;
+        }
+        td{
+            padding: 0 8px;
+            height: 30px;
         }
         th{
             overflow: visible;
@@ -235,10 +245,48 @@
 
             .triangle-element {
                 width: calc(100% - 30px);
-                height: 30px;
+                height: 26px;
                 text-align: left;
+                font-size: 13px;
             }
-
+            .datepicker-input-group .u-form-control {
+                height: 26px;
+                font-size: 13px;
+            }
+            .datepicker-container .u-input-group-btn{
+                color: #adb4bc;
+            }
+            .u-select{
+                height: 26px;
+                .u-select-selection-rendered{
+                    line-height: 26px;
+                    .u-select-selection-selected-value{
+                        font-size: 13px;
+                    }
+                }
+                .u-select-selection{
+                    height: 26px;
+                }
+                .u-select-arrow{
+                    color: #adb4bc;
+                }
+            }
+            .ncc-refer-container>.ant-row{
+                height: 26px;
+            }
+            .ncc-refer-container .refer-wrapper .refer-wrapper-content{
+                height: 26px;
+                .ant-input{
+                    font-size: 13px;
+                }
+            }
+            .ncc-refer-container .refer-select-wrapper .refer-canzhao-wrapper{
+                top: 0px;
+            }
+            .ncc-refer-container .refer-wrapper .refer-wrapper-content>ul .selected-item span{
+                height: 20px;
+                line-height: 20px;
+            }
             .triangle-icon {
                 color: #ff0000;
                 padding-left: 3px;
@@ -289,9 +337,9 @@
         .ac-input-number {
             margin: 0;
             padding: 0;
-            line-height: 30px;
+            line-height: 26px;
             font-size: 14px;
-            height: 30px;
+            height: 26px;
             display: inline-block;
             vertical-align: middle;
             border: 1px solid #D9D9D9;
@@ -353,7 +401,7 @@
                 text-align: center;
                 outline: 0;
                 -moz-appearance: textfield;
-                line-height: 30px;
+                line-height: 26px;
                 height: 100%;
                 transition: all 0.3s ease;
                 color: #666666;
@@ -420,14 +468,8 @@
                 border-color: #d9d9d9;
             }
         }
-        .u-select{
-            height: 30px;
-            .u-select-selection{
-                height: 30px;
-            }
-        }
+        
     }
-
     .u-pagination {
         height: 50px;
         display: flex;

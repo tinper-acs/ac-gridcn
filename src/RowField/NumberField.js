@@ -172,6 +172,7 @@ class NumberField extends Component {
                     className={className}
                     value={value}
                     onChange={this.handlerChange}
+                    size='sm'
                 />
             </FieldWrap>
         )
