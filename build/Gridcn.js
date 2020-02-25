@@ -32,9 +32,9 @@ var _beeIcon = require("bee-icon");
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
 
-var _beeModal = require("bee-modal");
+var _acConfirm = require("ac-confirm");
 
-var _beeModal2 = _interopRequireDefault(_beeModal);
+var _acConfirm2 = _interopRequireDefault(_acConfirm);
 
 var _lodash3 = require("lodash.isequal");
 
@@ -484,10 +484,10 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     this.cancelAdd = function () {
-        _beeModal2["default"].confirm({
+        _acConfirm2["default"].create({
             title: '温馨提示',
             content: '数据未保存，确定离开 ?',
-            onOk: function onOk() {
+            confirmFn: function confirmFn() {
                 var data = (0, _lodash2["default"])(_this2.state.data);
                 data.splice(0, _this2.state.addNum);
                 _this2.setState({
@@ -498,8 +498,8 @@ var _initialiseProps = function _initialiseProps() {
                 });
                 _this2.props.onChange(data);
             },
-            onCancel: function onCancel() {
-                console.log('Cancel');
+            cancelFn: function cancelFn() {
+                // console.log('Cancel');
             }
         });
     };
@@ -527,14 +527,14 @@ var _initialiseProps = function _initialiseProps() {
                 content: "请先选择数据"
             });
         } else {
-            _beeModal2["default"].confirm({
+            _acConfirm2["default"].create({
                 title: '温馨提示',
                 content: '单据删除后将不能恢复。',
-                onOk: function onOk() {
+                confirmFn: function confirmFn() {
                     _this2.props.delRow(_this2.selectList);
                 },
-                onCancel: function onCancel() {
-                    console.log('Cancel');
+                cancelFn: function cancelFn() {
+                    // console.log('Cancel');
                 }
             });
         }
@@ -648,10 +648,10 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     this.cancelEdit = function () {
-        _beeModal2["default"].confirm({
+        _acConfirm2["default"].create({
             title: '温馨提示',
             content: '数据未保存，确定离开 ?',
-            onOk: function onOk() {
+            confirmFn: function confirmFn() {
                 var data = (0, _lodash2["default"])(_this2.state.data);
                 data.forEach(function (item) {
                     item._edit = false; //是否编辑态
@@ -666,8 +666,8 @@ var _initialiseProps = function _initialiseProps() {
                 // this.props.onChange(data)
                 _this2.allData = data;
             },
-            onCancel: function onCancel() {
-                console.log('Cancel');
+            cancelFn: function cancelFn() {
+                // console.log('Cancel');
             }
         });
     };

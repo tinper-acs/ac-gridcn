@@ -4,7 +4,7 @@ import Btns from 'ac-btns';
 import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
-import Modal from 'bee-modal';
+import Confirm from 'ac-confirm';
 import isequal from 'lodash.isequal';
 //文本输入组件
 import TextField from './RowField/TextField';
@@ -330,10 +330,10 @@ class Grid extends Component {
 
     //取消新增
     cancelAdd=()=>{
-        Modal.confirm({
+        Confirm.create({
             title: '温馨提示',
             content: '数据未保存，确定离开 ?',
-            onOk:()=> {
+            confirmFn:()=> {
                 let data = cloneDeep(this.state.data);
                 data.splice(0,this.state.addNum)
                 this.setState({
@@ -344,8 +344,8 @@ class Grid extends Component {
                 })
                 this.props.onChange(data)
             },
-            onCancel:()=> {
-                console.log('Cancel');
+            cancelFn:()=> {
+                // console.log('Cancel');
             },
         })
         
@@ -375,14 +375,14 @@ class Grid extends Component {
                 content:"请先选择数据"
             })
         }else{
-            Modal.confirm({
+            Confirm.create({
                 title: '温馨提示',
                 content: '单据删除后将不能恢复。',
-                onOk:()=> {
+                confirmFn:()=> {
                     this.props.delRow(this.selectList);
                 },
-                onCancel:()=> {
-                    console.log('Cancel');
+                cancelFn:()=> {
+                    // console.log('Cancel');
                 },
             })
             
@@ -501,10 +501,10 @@ class Grid extends Component {
 
     //修改取消
     cancelEdit=()=>{
-        Modal.confirm({
+        Confirm.create({
             title: '温馨提示',
             content: '数据未保存，确定离开 ?',
-            onOk:()=> {
+            confirmFn:()=> {
                 let data = cloneDeep(this.state.data);
                 data.forEach(item=>{
                     item._edit = false;//是否编辑态
@@ -519,8 +519,8 @@ class Grid extends Component {
                 // this.props.onChange(data)
                 this.allData = data;
             },
-            onCancel:()=> {
-                console.log('Cancel');
+            cancelFn:()=> {
+                // console.log('Cancel');
             },
         })
         
