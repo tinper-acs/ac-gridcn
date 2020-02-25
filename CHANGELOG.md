@@ -1,3 +1,13 @@
+<a name="0.1.11"></a>
+## [0.1.11](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.10...v0.1.11) (2020-02-25)
+
+
+### Features
+
+* **ac-gridcn:** 二次确认使用 ac-confirm ([6f459cb](https://github.com/tinper-bee/ac-gridcn/commit/6f459cb))
+
+
+
 <a name="0.1.10"></a>
 ## [0.1.10](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.9...v0.1.10) (2020-02-24)
 
