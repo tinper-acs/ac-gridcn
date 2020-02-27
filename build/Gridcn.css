@@ -16322,6 +16322,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   .ac-gridcn .u-grid .u-table-filter-column-filter-icon {
     height: 33px;
     line-height: 33px; }
+  .ac-gridcn .u-grid .u-table-placeholder .table-nodata {
+    position: inherit; }
 
 .ac-gridcn .u-input-group {
   border-spacing: 0; }
