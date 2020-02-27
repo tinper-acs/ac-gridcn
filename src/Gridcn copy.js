@@ -103,11 +103,11 @@ class Grid extends Component {
         if('data' in nextProps&&(!isequal(nextProps.data,this.state.data))){
             this.setData(nextProps.data,nextProps.exportData);
         }
-        // if('columns' in nextProps&&(!isequal(nextProps.columns,this.state.columns))){
-        //     this.selectKeyData = {};
-        //     this.setColumn(this.props.columns)
-        //     this.setData(this.props.data)
-        // }
+        if('columns' in nextProps&&(!isequal(nextProps.columns,this.state.columns))){
+            this.selectKeyData = {};
+            this.setColumn(this.props.columns)
+            this.setData(this.props.data)
+        }
     }
     setColumn=(cl)=>{
         let columns = cloneDeep(cl);
@@ -317,7 +317,7 @@ class Grid extends Component {
         data.unshift(item);
         let selectList = [];
         data.forEach(item=>{
-            if(item._checked)selectList.push(item)
+            if(item._checked)selectList.push(item);
         })
         this.setState({
             data,
@@ -327,6 +327,19 @@ class Grid extends Component {
         })
         this.allData = data;
         this.props.onChange(data)
+
+        if(!this.props.exportData){
+            let exportItem = cloneDeep(item)
+            for(let attr in this.selectKeyData){
+                exportItem[attr] = this.getValue(exportItem[attr],{
+                    renderType:'select',
+                    fieldProps:{
+                        data:this.selectKeyData[attr]
+                    }
+                })
+            }
+            this.exportData.unshift(exportItem)
+        }
     }
 
     //取消新增
@@ -337,6 +350,9 @@ class Grid extends Component {
             confirmFn:()=> {
                 let data = cloneDeep(this.state.data);
                 data.splice(0,this.state.addNum)
+                if(!this.props.exportData){
+                    this.exportData.splice(0,this.state.addNum)
+                }
                 this.setState({
                     data,
                     adding:false,
@@ -462,6 +478,18 @@ class Grid extends Component {
             this.props.excludeKeys.forEach(it=>{
                 delete item[it];
             })
+            if(!this.props.exportData){
+                let exportItem = cloneDeep(item)
+                for(let attr in this.selectKeyData){
+                    exportItem[attr] = this.getValue(exportItem[attr],{
+                        renderType:'select',
+                        fieldProps:{
+                            data:this.selectKeyData[attr]
+                        }
+                    })
+                }
+                this.exportData.push(exportItem)
+            }
         })
         data = data.concat(selectData);
         data = this.resetChecked(data)
@@ -471,6 +499,8 @@ class Grid extends Component {
         })
         this.props.onChange(data)
         this.allData = data;
+
+       
     }
 
     //粘贴至此处
@@ -482,6 +512,18 @@ class Grid extends Component {
             this.props.excludeKeys.forEach(it=>{
                 delete item[it];
             })
+            if(!this.props.exportData){
+                let exportItem = cloneDeep(item)
+                for(let attr in this.selectKeyData){
+                    exportItem[attr] = this.getValue(exportItem[attr],{
+                        renderType:'select',
+                        fieldProps:{
+                            data:this.selectKeyData[attr]
+                        }
+                    })
+                }
+                this.exportData.splice(index,0,exportItem)
+            }
         })
         data.splice(index,0,...selectData);
         data = this.resetChecked(data)
@@ -639,11 +681,7 @@ class Grid extends Component {
             },
             export: {
                 onClick: () => {
-                    if(Object.keys(this.exportData).length>0){
-                        this.grid.exportExcel();
-                    }else{
-                        alert('正在组织数据，请稍后再试')
-                    }
+                    this.grid.exportExcel();
                 },
                 disabled:(!canExport)||disabled
             },

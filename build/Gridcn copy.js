@@ -153,11 +153,11 @@ var Grid = function (_Component) {
         if ('data' in nextProps && !(0, _lodash4["default"])(nextProps.data, this.state.data)) {
             this.setData(nextProps.data, nextProps.exportData);
         }
-        // if('columns' in nextProps&&(!isequal(nextProps.columns,this.state.columns))){
-        //     this.selectKeyData = {};
-        //     this.setColumn(this.props.columns)
-        //     this.setData(this.props.data)
-        // }
+        if ('columns' in nextProps && !(0, _lodash4["default"])(nextProps.columns, this.state.columns)) {
+            this.selectKeyData = {};
+            this.setColumn(this.props.columns);
+            this.setData(this.props.data);
+        }
     };
     //增行
 
@@ -476,6 +476,19 @@ var _initialiseProps = function _initialiseProps() {
         });
         _this2.allData = data;
         _this2.props.onChange(data);
+
+        if (!_this2.props.exportData) {
+            var exportItem = (0, _lodash2["default"])(item);
+            for (var attr in _this2.selectKeyData) {
+                exportItem[attr] = _this2.getValue(exportItem[attr], {
+                    renderType: 'select',
+                    fieldProps: {
+                        data: _this2.selectKeyData[attr]
+                    }
+                });
+            }
+            _this2.exportData.unshift(exportItem);
+        }
     };
 
     this.cancelAdd = function () {
@@ -485,6 +498,9 @@ var _initialiseProps = function _initialiseProps() {
             confirmFn: function confirmFn() {
                 var data = (0, _lodash2["default"])(_this2.state.data);
                 data.splice(0, _this2.state.addNum);
+                if (!_this2.props.exportData) {
+                    _this2.exportData.splice(0, _this2.state.addNum);
+                }
                 _this2.setState({
                     data: data,
                     adding: false,
@@ -604,6 +620,18 @@ var _initialiseProps = function _initialiseProps() {
             _this2.props.excludeKeys.forEach(function (it) {
                 delete item[it];
             });
+            if (!_this2.props.exportData) {
+                var exportItem = (0, _lodash2["default"])(item);
+                for (var attr in _this2.selectKeyData) {
+                    exportItem[attr] = _this2.getValue(exportItem[attr], {
+                        renderType: 'select',
+                        fieldProps: {
+                            data: _this2.selectKeyData[attr]
+                        }
+                    });
+                }
+                _this2.exportData.push(exportItem);
+            }
         });
         data = data.concat(selectData);
         data = _this2.resetChecked(data);
@@ -625,6 +653,18 @@ var _initialiseProps = function _initialiseProps() {
             _this2.props.excludeKeys.forEach(function (it) {
                 delete item[it];
             });
+            if (!_this2.props.exportData) {
+                var exportItem = (0, _lodash2["default"])(item);
+                for (var attr in _this2.selectKeyData) {
+                    exportItem[attr] = _this2.getValue(exportItem[attr], {
+                        renderType: 'select',
+                        fieldProps: {
+                            data: _this2.selectKeyData[attr]
+                        }
+                    });
+                }
+                _this2.exportData.splice(index, 0, exportItem);
+            }
         });
         (_data = data).splice.apply(_data, [index, 0].concat(_toConsumableArray(selectData)));
         data = _this2.resetChecked(data);
@@ -800,11 +840,7 @@ var _initialiseProps = function _initialiseProps() {
             },
             "export": {
                 onClick: function onClick() {
-                    if (Object.keys(_this2.exportData).length > 0) {
-                        _this2.grid.exportExcel();
-                    } else {
-                        alert('正在组织数据，请稍后再试');
-                    }
+                    _this2.grid.exportExcel();
                 },
                 disabled: !canExport || disabled
             },
