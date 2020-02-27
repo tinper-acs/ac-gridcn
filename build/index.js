@@ -17,3 +17,4 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 exports.EditGrid = _Gridcn2["default"];
 exports.Grid = _Grid2["default"];
+exports["default"] = _Grid2["default"];

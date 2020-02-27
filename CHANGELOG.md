@@ -1,6 +1,3 @@
-<a name="0.2.0"></a>
-# [0.2.0](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.11...v0.2.0) (2020-02-27)
-
 
 ### Features
 
