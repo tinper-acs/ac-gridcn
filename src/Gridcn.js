@@ -21,13 +21,7 @@ import AcTips from 'ac-tips';
 
 import { gridDefalutProps,paginationDefaultProps } from './defaultProps'
 
-const editGridDefaultProps = {
-    columnFilterAble:true,//是否显示右侧隐藏行
-    showHeaderMenu:true,//是否显示菜单
-    dragborder:true,//是否调整列宽
-    draggable:true,//是否拖拽
-    syncHover:false,//是否同步状态
-}
+
 
 const defaultProps = {
     data: [],
@@ -694,6 +688,10 @@ class Grid extends Component {
             }
         }
         let gridOptions={
+            syncHover:false,
+            autoCheckedByClickRows:false,
+            multiSelect:{ type:"checkbox" },
+            showFilterMenu:false,
             ...otherProps,
             data:data,
             columns:columns,
@@ -703,8 +701,7 @@ class Grid extends Component {
             hoverContent:this.hoverContent,
             getSelectedDataFunc:this.getSelectedDataFunc,
             onRowHover:this.onRowHover,
-            syncHover:false,
-            autoCheckedByClickRows:false
+            
         }
         gridOptions = Object.assign(gridDefalutProps,gridOptions);
         return (

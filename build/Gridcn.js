@@ -92,14 +92,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //日期组件
 
 
-var editGridDefaultProps = {
-    columnFilterAble: true, //是否显示右侧隐藏行
-    showHeaderMenu: true, //是否显示菜单
-    dragborder: true, //是否调整列宽
-    draggable: true, //是否拖拽
-    syncHover: false //是否同步状态
-};
-
 var defaultProps = {
     data: [],
     excludeKeys: [],
@@ -856,7 +848,12 @@ var _initialiseProps = function _initialiseProps() {
                 }
             };
         }
-        var gridOptions = _extends({}, otherProps, {
+        var gridOptions = _extends({
+            syncHover: false,
+            autoCheckedByClickRows: false,
+            multiSelect: { type: "checkbox" },
+            showFilterMenu: false
+        }, otherProps, {
             data: data,
             columns: columns,
             exportData: _this2.exportData,
@@ -866,9 +863,8 @@ var _initialiseProps = function _initialiseProps() {
             },
             hoverContent: _this2.hoverContent,
             getSelectedDataFunc: _this2.getSelectedDataFunc,
-            onRowHover: _this2.onRowHover,
-            syncHover: false,
-            autoCheckedByClickRows: false
+            onRowHover: _this2.onRowHover
+
         });
         gridOptions = _extends(_defaultProps.gridDefalutProps, gridOptions);
         return _react2["default"].createElement(
