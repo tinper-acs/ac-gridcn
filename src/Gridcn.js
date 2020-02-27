@@ -222,7 +222,7 @@ class Grid extends Component {
                             let displayName = 'name';
                             if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
                             let value = oldRender&&oldRender(text,record,index);
-                            if(typeof text == 'object'&&(!record._edit)){
+                            if(text&&(typeof text == 'object')&&(!record._edit)){
                                 value = oldRender&&oldRender(text[displayName],record,index);
                             }
                             return (

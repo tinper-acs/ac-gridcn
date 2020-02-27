@@ -372,7 +372,7 @@ var _initialiseProps = function _initialiseProps() {
                             var displayName = 'name';
                             if (fieldProps && fieldProps.displayName) name = fieldProps.displayName;
                             var value = oldRender && oldRender(text, record, index);
-                            if ((typeof text === "undefined" ? "undefined" : _typeof(text)) == 'object' && !record._edit) {
+                            if (text && (typeof text === "undefined" ? "undefined" : _typeof(text)) == 'object' && !record._edit) {
                                 value = oldRender && oldRender(text[displayName], record, index);
                             }
                             return record._edit ? _react2["default"].createElement(
