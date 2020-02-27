@@ -1,16 +1,16 @@
 /**
 *
-* @title 使用标题
-* @description 设置 title属性，如果title值为string则使用此组件的title，如果title的值为function，则使用bee-table的title
+* @title 编辑表格基本示例
+* @description 编辑表格基本示例
 *
 */
 import React, { Component } from 'react';
 import data from './data';
-import Grid from '../../src/index'
+import { EditGrid } from '../../src/index'
 import moment from 'moment';
 import Button from 'bee-button';
 
-class Demo1 extends Component {
+class Demo2 extends Component {
     constructor(props){
         super(props);
         this.column = [
@@ -27,21 +27,10 @@ class Demo1 extends Component {
                 width: 120,
                 renderType:'input',
                 required:true,
+                validate:true,
                 fieldProps:{
                     defaultValue:'姓名'
-                }
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='name'//姓名业务组件类型
-                //         value={text}//初始化值
-                //         field='name'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
+                },
             },
             {
                 title: "员工性别",
@@ -50,13 +39,13 @@ class Demo1 extends Component {
                 width: 120,
                 renderType:'select',
                 required:true,
+                validate:true,
                 fieldProps:{
                     allowClear:true,
-                    defaultValue:'男',
+                    defaultValue:'1',
                     data:[{
                         key: "请选择",
                         value: '',
-                        // disabled: true
                     }, {
                         key: "男",
                         value: '1'
@@ -65,53 +54,7 @@ class Demo1 extends Component {
                         value: '0'
                     }]
                 },
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='sex'//性别业务组件类型
-                //         value={record.sex}//初始化值
-                //         field='sex'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
-            // {
-            //     title: "所属部门",
-            //     dataIndex: "deptName",
-            //     key: "deptName",
-            //     width: 120,
-            //     render: (text, record, index) => {
-            //         return <FactoryComp
-            //             type='dept'//性别业务组件类型
-            //             field='dept'//修改的字段
-            //             index={index}//字段的行号
-            //             required={true}//必输项
-            //             record={record}//记录集用于多字段处理
-            //             onChange={this.changeAllData}//回调函数
-            //             onValidate={this.onValidate}//校验的回调
-            //         />
-            //     }
-            // },
-            // {
-            //     title: "职级",
-            //     dataIndex: "levelName",
-            //     key: "levelName",
-            //     width: 120,
-            //     render: (text, record, index) => {
-            //         return <FactoryComp
-            //             type='level'//性别业务组件类型
-            //             field='postLevel'//修改的字段
-            //             index={index}//字段的行号
-            //             required={true}//必输项
-            //             record={record}//记录集用于多字段处理
-            //             onChange={this.changeAllData}//回调函数
-            //             onValidate={this.onValidate}//校验的回调
-            //         />
-            //     }
-            // },
             {
                 title: "工龄",
                 dataIndex: "serviceYears",
@@ -123,18 +66,6 @@ class Demo1 extends Component {
                 fieldProps:{
                     defaultValue:2
                 }
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='serviceYears'//姓名业务组件类型
-                //         value={text}//初始化值
-                //         field='serviceYears'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "司龄",
@@ -144,18 +75,6 @@ class Demo1 extends Component {
                 className: 'column-number-right ', // 靠右对齐
                 renderType:'inputNumber',
                 required:true,
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='serviceYearsCompany'//姓名业务组件类型
-                //         value={text}//初始化值
-                //         field='serviceYearsCompany'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "年份",
@@ -170,18 +89,6 @@ class Demo1 extends Component {
                 render:(text, record, index)=>{
                     return moment(text).format('YYYY');
                 }
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='year'//姓名业务组件类型
-                //         value={text}//初始化值
-                //         field='year'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "月份",
@@ -233,18 +140,6 @@ class Demo1 extends Component {
                         value: 12
                     }]
                 },
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='month'//性别业务组件类型
-                //         value={record.month}//初始化值
-                //         field='month'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "补贴类别",
@@ -269,18 +164,6 @@ class Demo1 extends Component {
                         value: 3
                     }]
                 },
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='allowanceType'//性别业务组件类型
-                //         value={record.allowanceType}//初始化值
-                //         field='allowanceType'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "补贴标准",
@@ -296,18 +179,6 @@ class Demo1 extends Component {
                     step: 1,
                     precision: 2
                 },
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='allowanceStandard'//姓名业务组件类型
-                //         value={text}//初始化值
-                //         field='allowanceStandard'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "实际补贴",
@@ -323,18 +194,6 @@ class Demo1 extends Component {
                     step: 1,
                     precision: 2
                 },
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='allowanceActual'//姓名业务组件类型
-                //         value={text}//初始化值
-                //         field='allowanceActual'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "是否超标",
@@ -356,18 +215,6 @@ class Demo1 extends Component {
                         value: 1
                     }]
                 },
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='exdeeds'//姓名业务组件类型
-                //         value={record.exdeeds}//初始化值
-                //         field='exdeeds'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "领取方式",
@@ -389,18 +236,6 @@ class Demo1 extends Component {
                         value: 2
                     }]
                 },
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='pickType'//姓名业务组件类型
-                //         value={record.pickType}//初始化值
-                //         field='pickType'//修改的字段
-                //         index={index}//字段的行号
-                //         required={true}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             },
             {
                 title: "备注",
@@ -409,20 +244,13 @@ class Demo1 extends Component {
                 width: 100,
                 renderType:'input',
                 required:false,
-                // render: (text, record, index) => {
-                //     return <FactoryComp
-                //         type='remark'//姓名业务组件类型
-                //         value={text}//初始化值
-                //         field='remark'//修改的字段
-                //         index={index}//字段的行号
-                //         required={false}//必输项
-                //         record={record}//记录集用于多字段处理
-                //         onChange={this.changeAllData}//回调函数
-                //         onValidate={this.onValidate}//校验的回调
-                //     />
-                // }
             }
         ];
+        this.state={
+            activePage:1,
+            total:100,
+            items:10
+        }
     }
     /**
      * 跳转指定页码
@@ -468,12 +296,19 @@ class Demo1 extends Component {
             alert('数据校验成功')
         }
     }
+    changPag=()=>{
+        this.setState({
+            activePage:2,
+            total:50,
+            items:20
+        })
+    }
     
     render () {
         let paginationObj = {
-            activePage: 1,//当前页
-            total: 100,//总条数
-            items: 10,
+            activePage: this.state.activePage,//当前页
+            total: this.state.total,//总条数
+            items: this.state.items,
             freshData: this.freshData,//刷新数据
             onDataNumSelect: this.onDataNumSelect,//选择记录行
             // disabled: false//分页条禁用状态
@@ -481,26 +316,18 @@ class Demo1 extends Component {
         return (
             <div className='grid-parent'>
                 <div style={{'marginBottom':'20px'}}>
-                    <Button onClick={this.getAllData} colors="primary" >获得所有数据</Button>
+                    <Button onClick={this.changPag} colors="primary" >改变分页</Button>
+                    <Button onClick={this.getAllData} colors="primary" style={{'marginLeft':'20px'}} >获得所有数据</Button>
                     <Button onClick={this.validate} colors="primary" style={{'marginLeft':'20px'}}>主动校验</Button>
                 </div>
                 
-                <Grid
-                    title='标题'
+                <EditGrid
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
-                    rowKey={r => r.id ? r.id : r.key}
                     columns={this.column}//定义列
                     paginationObj={paginationObj}//分页数据
-                    columnFilterAble={true}//是否显示右侧隐藏行
-                    showHeaderMenu={true}//是否显示菜单
-                    dragborder={true}//是否调整列宽
-                    draggable={true}//是否拖拽
                     getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调
-                    scroll={{ y: 500 }}
                     excludeKeys={['id','ts','lastModified']}
-                    hideSave={true}
-                    isEdit={true}
                     delRow={(selectList)=>{
                         console.log('删除，数据如下-----------',selectList)
                     }}
@@ -512,4 +339,4 @@ class Demo1 extends Component {
         )
     }
 }
-export default Demo1
+export default Demo2

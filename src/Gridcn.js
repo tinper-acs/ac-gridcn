@@ -19,21 +19,17 @@ import DateField from './RowField/DateField';
 
 import AcTips from 'ac-tips';
 
-const defualtPaginationParam = {
-    dataNumSelect: ["5", "10", "15", "20", "25", "50", "All"],
-    horizontalPosition: 'center',
-    verticalPosition: "bottom",
-    dataNum: 4,
-    btnType: {
-        shape: 'border'
-    },
-    noBorder: true,
-    confirmBtn: () => null,
-};
+import { gridDefalutProps,paginationDefaultProps } from './defaultProps'
+
+const editGridDefaultProps = {
+    columnFilterAble:true,//是否显示右侧隐藏行
+    showHeaderMenu:true,//是否显示菜单
+    dragborder:true,//是否调整列宽
+    draggable:true,//是否拖拽
+    syncHover:false,//是否同步状态
+}
+
 const defaultProps = {
-    //   hideBodyScroll: true,
-    headerScroll: false,
-    bordered: false,
     data: [],
     excludeKeys:[],
     delRow:()=>{},//删除回调
@@ -62,11 +58,13 @@ class Grid extends Component {
             allEditing:false,//是否正在修改所有数据
             adding:false,//是否正在新增
             addNum:0,//新增的条数
+            canExport:false,
         }
         this.oldColumns = props.columns;
         this.selectList = [];//选中的数据
         this.allData = [];//表格所有数据
-        this.errors = {}
+        this.errors = {};
+        this.selectKeyData = {};//存select类型字段  key:data(下拉列表)
     }
 
     /**
@@ -109,7 +107,12 @@ class Grid extends Component {
     }
     componentWillReceiveProps(nextProps){
         if('data' in nextProps&&(!isequal(nextProps.data,this.state.data))){
-            this.setData(nextProps.data);
+            this.setData(nextProps.data,nextProps.exportData);
+        }
+        if('columns' in nextProps&&(!isequal(nextProps.columns,this.state.columns))){
+            this.selectKeyData = {};
+            this.setColumn(this.props.columns)
+            this.setData(this.props.data)
         }
     }
     setColumn=(cl)=>{
@@ -119,17 +122,11 @@ class Grid extends Component {
             let {
                 renderType,//渲染类型 input/inputNumber/select/datepicker/year
                 fieldProps={},//传给`field`的属性
-                // customizeRender,//自定义render
                 dataIndex,
                 render:oldRender,
                 component,//参照组件
                 ...other
             } = item;
-            // if(customizeRender){
-            //     item.render=(text,record,index)=>{
-                    
-            //     }
-            // }
             if(!oldRender)oldRender=text=>text;
             if(renderType){
                 if(fieldProps.defaultValue!=undefined){
@@ -176,10 +173,10 @@ class Grid extends Component {
                     break;
                     case 'select':
                         item.render=(text,record,index)=>{
-                            // let selectList = fieldProps.data||[];
-                            // let selected = selectList.find(it=>it.key == text);
-                            // if(selected==undefined)selected = selectList.find(it=>it.value == text);
                             let value = this.getValue(text,item);
+                            if(index==0&&(!this.selectKeyData[item.dataIndex])){
+                                this.selectKeyData[item.dataIndex] = fieldProps.data;
+                            }
                             return (
                                 record._edit?<SelectField 
                                     {...other}
@@ -261,10 +258,20 @@ class Grid extends Component {
         })
         this.oldColumns = columns;
     }
-    setData=(da)=>{
+    setData=(da,exportData)=>{
         let data = cloneDeep(da);
         this.setState({
-            data
+            data,
+            canExport:false
+        },()=>{
+            if(exportData&&(isequal(this.props.exportData,exportData))){
+                
+            }else if(exportData&&(!isequal(this.props.exportData,exportData))){
+                this.getExportData(exportData)
+            }else if(!exportData){
+                this.getExportData(data)
+            }
+            
         })
         this.allData = data;
     }
@@ -577,22 +584,39 @@ class Grid extends Component {
         this.allData = data;
         this.props.getSelectedDataFunc(selectList,record,index,newData);
     }
-
-    
     //打开关闭
     open=()=>{
         this.setState({
             open:!this.state.open
         })
     }
+    
+    //编辑表格导出数据select类型单独处理
+    getExportData=(data)=>{
+        let exportData = cloneDeep(data);
+        exportData.forEach(item=>{
+            for(let attr in this.selectKeyData){
+                item[attr] = this.getValue(item[attr],{
+                    renderType:'select',
+                    fieldProps:{
+                        data:this.selectKeyData[attr]
+                    }
+                })
+            }
+        })
+        this.exportData = exportData;
+        this.setState({
+            canExport:true
+        })
+        
+    }
+
     renderDom=()=>{
-        let { copying,isMax,columns,data,allEditing,adding,open,selectData } = this.state;
+        let { copying,isMax,columns,data,allEditing,adding,open,selectData,canExport } = this.state;
         const { clsfix,paginationObj, exportData,disabled,title,hideSave, isEdit,powerBtns,forcePowerBtns, ...otherProps } = this.props;
         let _paginationObj ='none';
         if(paginationObj!='none'){
-            _paginationObj = {...defualtPaginationParam, ...paginationObj};
-            _paginationObj.gap = true;
-            _paginationObj.size="sm";
+            _paginationObj = {...paginationDefaultProps, ...paginationObj};
             _paginationObj.disabled = paginationObj.disabled !== undefined
                 ? paginationObj.disabled
                 : (data.length === 0||allEditing||copying||adding);
@@ -601,12 +625,11 @@ class Grid extends Component {
                 _paginationObj.disabled = true;
             }
         }
-        let _exportData = exportData || data;
         let btnsObj = {}
         btnsObj= {
             addRow:{
                 onClick:this.addRow,
-                // disabled:allEditing||adding||disabled
+                disabled:disabled
             },
             update:{
                 onClick:this.updateAll,
@@ -622,8 +645,13 @@ class Grid extends Component {
             },
             export: {
                 onClick: () => {
-                    this.grid.exportExcel();
-                }
+                    if(Object.keys(this.exportData).length>0){
+                        this.grid.exportExcel();
+                    }else{
+                        alert('正在组织数据，请稍后再试')
+                    }
+                },
+                disabled:(!canExport)||disabled
             },
             min:{
                 onClick:this.max
@@ -667,10 +695,9 @@ class Grid extends Component {
         }
         let gridOptions={
             ...otherProps,
-            className:"ucf-example-grid",
             data:data,
             columns:columns,
-            exportData:_exportData,
+            exportData:this.exportData,
             paginationObj:_paginationObj,
             ref:el => this.grid = el,
             hoverContent:this.hoverContent,
@@ -679,10 +706,10 @@ class Grid extends Component {
             syncHover:false,
             autoCheckedByClickRows:false
         }
+        gridOptions = Object.assign(gridDefalutProps,gridOptions);
         return (
             <Fragment>
-                {
-                    isEdit?<div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
+                <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
                     {
                         typeof title=='string'?<div className={`${clsfix}-panel ${open?'':'close'}`}>
                         <span onClick={this.open}>
@@ -714,11 +741,7 @@ class Grid extends Component {
                             <BeeGrid {...gridOptions}/>
                         </div>:<BeeGrid {...gridOptions}/>
                     }
-                    </div>:<div className={`${clsfix} ${disabled?'disabled':''}`}>
-                        <BeeGrid {...gridOptions}/>
                     </div>
-                    
-                }
             </Fragment>
         );
     }

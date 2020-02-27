@@ -16309,16 +16309,19 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     color: #555555;
     margin: 8px 48px; }
 
-.ac-gridcn .u-grid.ucf-example-grid {
+.ac-gridcn .u-grid {
   background: #fff;
   overflow: hidden; }
-  .ac-gridcn .u-grid.ucf-example-grid table {
+  .ac-gridcn .u-grid table {
     table-layout: fixed; }
-  .ac-gridcn .u-grid.ucf-example-grid .table-menu {
+  .ac-gridcn .u-grid .table-menu {
     height: 16px;
     line-height: 1; }
-  .ac-gridcn .u-grid.ucf-example-grid .u-table-thead th {
+  .ac-gridcn .u-grid .u-table-thead th {
     background: #ECEFF5; }
+  .ac-gridcn .u-grid .u-table-filter-column-filter-icon {
+    height: 33px;
+    line-height: 33px; }
 
 .ac-gridcn .u-input-group {
   border-spacing: 0; }
@@ -16699,3 +16702,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     background-color: #de2626;
     height: 28px;
     line-height: 22px; }
+
+#filter_column_popover.u-popover {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); }

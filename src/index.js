@@ -1,2 +1,4 @@
-import Gridcn from './Gridcn';
-export default Gridcn;
+import EditGrid from './Gridcn';
+import Grid from './Grid'
+
+export { EditGrid,Grid };

@@ -64,6 +64,8 @@ var _acTips = require("ac-tips");
 
 var _acTips2 = _interopRequireDefault(_acTips);
 
+var _defaultProps = require("./defaultProps");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -90,23 +92,15 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //日期组件
 
 
-var defualtPaginationParam = {
-    dataNumSelect: ["5", "10", "15", "20", "25", "50", "All"],
-    horizontalPosition: 'center',
-    verticalPosition: "bottom",
-    dataNum: 4,
-    btnType: {
-        shape: 'border'
-    },
-    noBorder: true,
-    confirmBtn: function confirmBtn() {
-        return null;
-    }
+var editGridDefaultProps = {
+    columnFilterAble: true, //是否显示右侧隐藏行
+    showHeaderMenu: true, //是否显示菜单
+    dragborder: true, //是否调整列宽
+    draggable: true, //是否拖拽
+    syncHover: false //是否同步状态
 };
+
 var defaultProps = {
-    //   hideBodyScroll: true,
-    headerScroll: false,
-    bordered: false,
     data: [],
     excludeKeys: [],
     delRow: function delRow() {}, //删除回调
@@ -138,11 +132,12 @@ var Grid = function (_Component) {
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
-            defaultValueKeyValue: {} }, _defineProperty(_this$state, "isMax", false), _defineProperty(_this$state, "selectData", []), _defineProperty(_this$state, "allEditing", false), _defineProperty(_this$state, "adding", false), _defineProperty(_this$state, "addNum", 0), _this$state);
+            defaultValueKeyValue: {} }, _defineProperty(_this$state, "isMax", false), _defineProperty(_this$state, "selectData", []), _defineProperty(_this$state, "allEditing", false), _defineProperty(_this$state, "adding", false), _defineProperty(_this$state, "addNum", 0), _defineProperty(_this$state, "canExport", false), _this$state);
         _this.oldColumns = props.columns;
         _this.selectList = []; //选中的数据
         _this.allData = []; //表格所有数据
         _this.errors = {};
+        _this.selectKeyData = {}; //存select类型字段  key:data(下拉列表)
         return _this;
     }
 
@@ -164,7 +159,12 @@ var Grid = function (_Component) {
 
     Grid.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
         if ('data' in nextProps && !(0, _lodash4["default"])(nextProps.data, this.state.data)) {
-            this.setData(nextProps.data);
+            this.setData(nextProps.data, nextProps.exportData);
+        }
+        if ('columns' in nextProps && !(0, _lodash4["default"])(nextProps.columns, this.state.columns)) {
+            this.selectKeyData = {};
+            this.setColumn(this.props.columns);
+            this.setData(this.props.data);
         }
     };
     //增行
@@ -208,8 +208,10 @@ var Grid = function (_Component) {
 
     //数据选择回调
 
-
     //打开关闭
+
+
+    //编辑表格导出数据select类型单独处理
 
 
     Grid.prototype.render = function render() {
@@ -269,12 +271,6 @@ var _initialiseProps = function _initialiseProps() {
                 oldRender = item.render,
                 component = item.component,
                 other = _objectWithoutProperties(item, ["renderType", "fieldProps", "dataIndex", "render", "component"]);
-            // if(customizeRender){
-            //     item.render=(text,record,index)=>{
-
-            //     }
-            // }
-
 
             if (!oldRender) oldRender = function oldRender(text) {
                 return text;
@@ -326,10 +322,10 @@ var _initialiseProps = function _initialiseProps() {
                         break;
                     case 'select':
                         item.render = function (text, record, index) {
-                            // let selectList = fieldProps.data||[];
-                            // let selected = selectList.find(it=>it.key == text);
-                            // if(selected==undefined)selected = selectList.find(it=>it.value == text);
                             var value = _this2.getValue(text, item);
+                            if (index == 0 && !_this2.selectKeyData[item.dataIndex]) {
+                                _this2.selectKeyData[item.dataIndex] = fieldProps.data;
+                            }
                             return record._edit ? _react2["default"].createElement(_SelectField2["default"], _extends({}, other, {
                                 fieldProps: fieldProps,
                                 index: index,
@@ -415,10 +411,17 @@ var _initialiseProps = function _initialiseProps() {
         _this2.oldColumns = columns;
     };
 
-    this.setData = function (da) {
+    this.setData = function (da, exportData) {
         var data = (0, _lodash2["default"])(da);
         _this2.setState({
-            data: data
+            data: data,
+            canExport: false
+        }, function () {
+            if (exportData && (0, _lodash4["default"])(_this2.props.exportData, exportData)) {} else if (exportData && !(0, _lodash4["default"])(_this2.props.exportData, exportData)) {
+                _this2.getExportData(exportData);
+            } else if (!exportData) {
+                _this2.getExportData(data);
+            }
         });
         _this2.allData = data;
     };
@@ -734,6 +737,24 @@ var _initialiseProps = function _initialiseProps() {
         });
     };
 
+    this.getExportData = function (data) {
+        var exportData = (0, _lodash2["default"])(data);
+        exportData.forEach(function (item) {
+            for (var attr in _this2.selectKeyData) {
+                item[attr] = _this2.getValue(item[attr], {
+                    renderType: 'select',
+                    fieldProps: {
+                        data: _this2.selectKeyData[attr]
+                    }
+                });
+            }
+        });
+        _this2.exportData = exportData;
+        _this2.setState({
+            canExport: true
+        });
+    };
+
     this.renderDom = function () {
         var _state = _this2.state,
             copying = _state.copying,
@@ -743,7 +764,8 @@ var _initialiseProps = function _initialiseProps() {
             allEditing = _state.allEditing,
             adding = _state.adding,
             open = _state.open,
-            selectData = _state.selectData;
+            selectData = _state.selectData,
+            canExport = _state.canExport;
 
         var _props = _this2.props,
             clsfix = _props.clsfix,
@@ -759,21 +781,18 @@ var _initialiseProps = function _initialiseProps() {
 
         var _paginationObj = 'none';
         if (paginationObj != 'none') {
-            _paginationObj = _extends({}, defualtPaginationParam, paginationObj);
-            _paginationObj.gap = true;
-            _paginationObj.size = "sm";
+            _paginationObj = _extends({}, _defaultProps.paginationDefaultProps, paginationObj);
             _paginationObj.disabled = paginationObj.disabled !== undefined ? paginationObj.disabled : data.length === 0 || allEditing || copying || adding;
 
             if (data.length === 0 || allEditing || copying || adding) {
                 _paginationObj.disabled = true;
             }
         }
-        var _exportData = exportData || data;
         var btnsObj = {};
         btnsObj = {
             addRow: {
-                onClick: _this2.addRow
-                // disabled:allEditing||adding||disabled
+                onClick: _this2.addRow,
+                disabled: disabled
             },
             update: {
                 onClick: _this2.updateAll,
@@ -789,8 +808,13 @@ var _initialiseProps = function _initialiseProps() {
             },
             "export": {
                 onClick: function onClick() {
-                    _this2.grid.exportExcel();
-                }
+                    if (Object.keys(_this2.exportData).length > 0) {
+                        _this2.grid.exportExcel();
+                    } else {
+                        alert('正在组织数据，请稍后再试');
+                    }
+                },
+                disabled: !canExport || disabled
             },
             min: {
                 onClick: _this2.max
@@ -833,10 +857,9 @@ var _initialiseProps = function _initialiseProps() {
             };
         }
         var gridOptions = _extends({}, otherProps, {
-            className: "ucf-example-grid",
             data: data,
             columns: columns,
-            exportData: _exportData,
+            exportData: _this2.exportData,
             paginationObj: _paginationObj,
             ref: function ref(el) {
                 return _this2.grid = el;
@@ -847,10 +870,11 @@ var _initialiseProps = function _initialiseProps() {
             syncHover: false,
             autoCheckedByClickRows: false
         });
+        gridOptions = _extends(_defaultProps.gridDefalutProps, gridOptions);
         return _react2["default"].createElement(
             _react.Fragment,
             null,
-            isEdit ? _react2["default"].createElement(
+            _react2["default"].createElement(
                 "div",
                 { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') },
                 typeof title == 'string' ? _react2["default"].createElement(
@@ -893,10 +917,6 @@ var _initialiseProps = function _initialiseProps() {
                     { className: clsfix + "-inner " + (open ? 'show' : 'hide') + " " + (isMax ? 'max' : '') },
                     _react2["default"].createElement(_beeComplexGrid2["default"], gridOptions)
                 ) : _react2["default"].createElement(_beeComplexGrid2["default"], gridOptions)
-            ) : _react2["default"].createElement(
-                "div",
-                { className: clsfix + " " + (disabled ? 'disabled' : '') },
-                _react2["default"].createElement(_beeComplexGrid2["default"], gridOptions)
             )
         );
     };

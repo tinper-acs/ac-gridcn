@@ -14,7 +14,7 @@
 
 
 .ac-gridcn {
-    .u-grid.ucf-example-grid {
+    .u-grid {
         background: #fff;
         overflow: hidden;
         table {
@@ -35,6 +35,10 @@
         }
         .u-table-thead th{
             background: #ECEFF5;
+        }
+        .u-table-filter-column-filter-icon{
+            height: 33px;
+            line-height: 33px;
         }
     }
     .u-input-group {
@@ -573,5 +577,11 @@
         height: 28px;
         line-height: 22px;
     }
+}
+
+#filter_column_popover.u-popover{
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 

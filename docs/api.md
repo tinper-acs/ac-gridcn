@@ -17,7 +17,7 @@ import 'ac-gridcn/build/Gridcn.css';
 
 ## API
 
-### Grid
+### EditGrid
 
 在 [bee-complex-grid](http://bee.tinper.org/tinper-acs/bee-complex-grid) 基础上新增如下api
 
@@ -29,7 +29,6 @@ import 'ac-gridcn/build/Gridcn.css';
 |title|标题，如果title值为string则使用此组件的title，如果title的值为function，则使用bee-table的title|string|-|
 |defaultOpen|默认是否展开，需配合title为string使用|bool|true|
 |hideSave|是否隐藏保存按钮，用于全部保存时|bool|false|
-|isEdit|是否需要编辑，true则显示 复制、新增、删除等按钮|bool|false|
 |powerBtns|有权限的按钮，也可作为控制哪些按钮显示使用|array|`['addRow','update','delRow','copyRow','export','min','max','cancel','save','copyToEnd']`|
 |forcePowerBtns|不受权限控制按钮|array|`['cancel']`|
 
