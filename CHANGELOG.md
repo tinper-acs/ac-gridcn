@@ -1,3 +1,13 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.11...v0.2.0) (2020-02-27)
+
+
+### Features
+
+* **ac-gridcn:** grid+editGrid = ac-gridcn ([5ac37ea](https://github.com/tinper-bee/ac-gridcn/commit/5ac37ea))
+
+
+
 <a name="0.1.11"></a>
 ## [0.1.11](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.10...v0.1.11) (2020-02-25)
 
