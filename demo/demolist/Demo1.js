@@ -6,7 +6,8 @@
 */
 import React, { Component } from 'react';
 import data from './data';
-import { Grid } from '../../src/index'
+import { Grid } from '../../src/index';
+import Button from 'bee-button';
 
 class Demo1 extends Component {
     constructor(props){
@@ -26,8 +27,8 @@ class Demo1 extends Component {
             },
             {
                 title: "员工性别",
-                dataIndex: "sex",
-                key: "sex",
+                dataIndex: "sexEnumValue",
+                key: "sexEnumValue",
                 width: 120,
                 
             },
@@ -52,14 +53,14 @@ class Demo1 extends Component {
             },
             {
                 title: "月份",
-                dataIndex: "month",
-                key: "month",
+                dataIndex: "monthEnumValue",
+                key: "monthEnumValue",
                 width: 120,
             },
             {
                 title: "补贴类别",
-                dataIndex: "allowanceType",
-                key: "allowanceType",
+                dataIndex: "allowanceTypeEnumValue",
+                key: "allowanceTypeEnumValue",
                 width: 120,
             },
             {
@@ -76,14 +77,14 @@ class Demo1 extends Component {
             },
             {
                 title: "是否超标",
-                dataIndex: "exdeeds",
-                key: "exdeeds",
+                dataIndex: "exdeedsEnumValue",
+                key: "exdeedsEnumValue",
                 width: 120,
             },
             {
                 title: "领取方式",
-                dataIndex: "pickType",
-                key: "pickType",
+                dataIndex: "pickTypeEnumValue",
+                key: "pickTypeEnumValue",
                 width: 120,
             },
             {
@@ -154,6 +155,9 @@ class Demo1 extends Component {
         }
         return (
             <div className='grid-parent'>
+                <Button onClick={()=>{
+                    this.grid.exportExcel()
+                }}>导出</Button>
                 <Grid
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
