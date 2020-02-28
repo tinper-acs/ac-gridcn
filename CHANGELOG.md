@@ -1,3 +1,13 @@
+<a name="0.2.5"></a>
+## [0.2.5](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.4...v0.2.5) (2020-02-28)
+
+
+### Bug Fixes
+
+* **ac-gridcn:** 普通表格导出和分页bug ([6d1379d](https://github.com/tinper-bee/ac-gridcn/commit/6d1379d))
+
+
+
 <a name="0.2.4"></a>
 ## [0.2.4](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.3...v0.2.4) (2020-02-27)
 
