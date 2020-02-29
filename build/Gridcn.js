@@ -405,6 +405,9 @@ var _initialiseProps = function _initialiseProps() {
 
     this.setData = function (da, exportData) {
         var data = (0, _lodash2["default"])(da);
+        data.forEach(function (item, index) {
+            item._index = index;
+        });
         _this2.setState({
             data: data,
             canExport: false
@@ -465,8 +468,9 @@ var _initialiseProps = function _initialiseProps() {
         item._checked = true;
         data.unshift(item);
         var selectList = [];
-        data.forEach(function (item) {
+        data.forEach(function (item, index) {
             if (item._checked) selectList.push(item);
+            item._index = index;
         });
         _this2.setState({
             data: data,
@@ -474,6 +478,7 @@ var _initialiseProps = function _initialiseProps() {
             addNum: _this2.state.addNum + 1,
             selectData: selectList
         });
+        _this2.selectList = selectList;
         _this2.allData = data;
         _this2.props.onChange(data);
     };
@@ -526,7 +531,17 @@ var _initialiseProps = function _initialiseProps() {
                 title: '温馨提示',
                 content: '单据删除后将不能恢复。',
                 confirmFn: function confirmFn() {
-                    _this2.props.delRow(_this2.selectList);
+                    var data = (0, _lodash2["default"])(_this2.state.data);
+                    _this2.selectList.forEach(function (item, index) {
+                        data.splice(item._index - index, 1);
+                    });
+                    data = _this2.resetChecked(data, true);
+                    _this2.allData = data;
+                    _this2.setState({
+                        data: data
+                    }, function () {
+                        _this2.props.delRow(_this2.selectList, data);
+                    });
                 },
                 cancelFn: function cancelFn() {
                     // console.log('Cancel');
@@ -606,7 +621,7 @@ var _initialiseProps = function _initialiseProps() {
             });
         });
         data = data.concat(selectData);
-        data = _this2.resetChecked(data);
+        data = _this2.resetChecked(data, true);
         _this2.setState({
             data: data,
             copying: false
@@ -627,7 +642,7 @@ var _initialiseProps = function _initialiseProps() {
             });
         });
         (_data = data).splice.apply(_data, [index, 0].concat(_toConsumableArray(selectData)));
-        data = _this2.resetChecked(data);
+        data = _this2.resetChecked(data, true);
         _this2.setState({
             data: data,
             copying: false
@@ -667,10 +682,11 @@ var _initialiseProps = function _initialiseProps() {
         });
     };
 
-    this.resetChecked = function (dataValue) {
+    this.resetChecked = function (dataValue, needIndex) {
         var data = (0, _lodash2["default"])(dataValue);
         data.forEach(function (item, index) {
             item._checked = false;
+            if (needIndex) item._index = index;
         });
         // this.props.onChange(data)
         return data;
@@ -784,29 +800,25 @@ var _initialiseProps = function _initialiseProps() {
         btnsObj = {
             addRow: {
                 onClick: _this2.addRow,
-                disabled: disabled
+                disabled: allEditing || disabled
             },
             update: {
                 onClick: _this2.updateAll,
-                disabled: disabled
+                disabled: data.length == 0 || allEditing || adding || disabled
             },
             delRow: {
                 onClick: _this2.delRow,
-                disabled: selectData.length == 0 || disabled
+                disabled: adding || allEditing || selectData.length == 0 || disabled
             },
             copyRow: {
                 onClick: _this2.copyRow,
-                disabled: selectData.length == 0 || disabled
+                disabled: adding || allEditing || selectData.length == 0 || disabled
             },
             "export": {
                 onClick: function onClick() {
-                    if (Object.keys(_this2.exportData).length > 0) {
-                        _this2.grid.exportExcel();
-                    } else {
-                        alert('正在组织数据，请稍后再试');
-                    }
+                    _this2.grid.exportExcel();
                 },
-                disabled: !canExport || disabled
+                disabled: !canExport || allEditing || adding || disabled
             },
             min: {
                 onClick: _this2.max

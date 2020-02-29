@@ -328,8 +328,9 @@ class Demo2 extends Component {
                     paginationObj={paginationObj}//分页数据
                     getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调
                     excludeKeys={['id','ts','lastModified']}
-                    delRow={(selectList)=>{
+                    delRow={(selectList,newData)=>{
                         console.log('删除，数据如下-----------',selectList)
+                        console.log('新的数据如下-----------',newData)
                     }}
                     save={(selectList)=>{
                         console.log('保存，数据如下-----------',selectList)

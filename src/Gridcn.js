@@ -254,6 +254,9 @@ class Grid extends Component {
     }
     setData=(da,exportData)=>{
         let data = cloneDeep(da);
+        data.forEach((item,index)=>{
+            item._index = index;
+        })
         this.setState({
             data,
             canExport:false
@@ -316,8 +319,9 @@ class Grid extends Component {
         item._checked = true;
         data.unshift(item);
         let selectList = [];
-        data.forEach(item=>{
-            if(item._checked)selectList.push(item)
+        data.forEach((item,index)=>{
+            if(item._checked)selectList.push(item);
+            item._index = index;
         })
         this.setState({
             data,
@@ -325,6 +329,7 @@ class Grid extends Component {
             addNum:this.state.addNum+1,
             selectData:selectList
         })
+        this.selectList = selectList;
         this.allData = data;
         this.props.onChange(data)
     }
@@ -380,7 +385,18 @@ class Grid extends Component {
                 title: '温馨提示',
                 content: '单据删除后将不能恢复。',
                 confirmFn:()=> {
-                    this.props.delRow(this.selectList);
+                    let data = cloneDeep(this.state.data);
+                    this.selectList.forEach((item,index)=>{
+                        data.splice(item._index-index,1);
+                    })
+                    data = this.resetChecked(data,true);
+                    this.allData = data;
+                    this.setState({
+                        data
+                    },()=>{
+                        this.props.delRow(this.selectList,data);
+                    })
+                    
                 },
                 cancelFn:()=> {
                     // console.log('Cancel');
@@ -464,7 +480,7 @@ class Grid extends Component {
             })
         })
         data = data.concat(selectData);
-        data = this.resetChecked(data)
+        data = this.resetChecked(data,true)
         this.setState({
             data,
             copying:false
@@ -484,7 +500,7 @@ class Grid extends Component {
             })
         })
         data.splice(index,0,...selectData);
-        data = this.resetChecked(data)
+        data = this.resetChecked(data,true)
         this.setState({
             data,
             copying:false
@@ -527,10 +543,11 @@ class Grid extends Component {
         
     }
     //全不选
-    resetChecked=(dataValue)=>{
+    resetChecked=(dataValue,needIndex)=>{
         let data = cloneDeep(dataValue);
         data.forEach((item,index)=>{
-            item._checked=false
+            item._checked=false;
+            if(needIndex)item._index = index
         })
         // this.props.onChange(data)
         return data;
@@ -623,29 +640,25 @@ class Grid extends Component {
         btnsObj= {
             addRow:{
                 onClick:this.addRow,
-                disabled:disabled
+                disabled:allEditing||disabled
             },
             update:{
                 onClick:this.updateAll,
-                disabled:disabled
+                disabled:data.length==0||allEditing||adding||disabled
             },
             delRow:{
                 onClick:this.delRow,
-                disabled:selectData.length==0||disabled
+                disabled:adding||allEditing||selectData.length==0||disabled
             },
             copyRow:{
                 onClick:this.copyRow,
-                disabled:selectData.length==0||disabled
+                disabled:adding||allEditing||selectData.length==0||disabled
             },
             export: {
                 onClick: () => {
-                    if(Object.keys(this.exportData).length>0){
-                        this.grid.exportExcel();
-                    }else{
-                        alert('正在组织数据，请稍后再试')
-                    }
+                    this.grid.exportExcel();
                 },
-                disabled:(!canExport)||disabled
+                disabled:(!canExport)||allEditing||adding||disabled
             },
             min:{
                 onClick:this.max
