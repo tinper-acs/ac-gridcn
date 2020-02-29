@@ -1,3 +1,13 @@
+<a name="0.2.6"></a>
+## [0.2.6](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.5...v0.2.6) (2020-02-29)
+
+
+### Features
+
+* **ac-gridncn:** 新增时修改、删除、导出按钮置灰，修改时新增、删除、导出按钮置灰 ([ee08262](https://github.com/tinper-bee/ac-gridcn/commit/ee08262))
+
+
+
 <a name="0.2.5"></a>
 ## [0.2.5](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.4...v0.2.5) (2020-02-28)
 
