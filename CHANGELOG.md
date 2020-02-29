@@ -1,3 +1,13 @@
+<a name="0.2.7"></a>
+## [0.2.7](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.6...v0.2.7) (2020-02-29)
+
+
+### Features
+
+* **ac-gridncn:** 新增修改删除可用 ([c93a5f2](https://github.com/tinper-bee/ac-gridcn/commit/c93a5f2))
+
+
+
 <a name="0.2.6"></a>
 ## [0.2.6](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.5...v0.2.6) (2020-02-29)
 
