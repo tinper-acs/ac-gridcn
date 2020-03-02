@@ -4,7 +4,7 @@ import Btns from 'ac-btns';
 import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
-import Confirm from 'ac-confirm';
+import Modal from 'bee-modal';
 import isequal from 'lodash.isequal';
 //文本输入组件
 import TextField from './RowField/TextField';
@@ -336,10 +336,11 @@ class Grid extends Component {
 
     //取消新增
     cancelAdd=()=>{
-        Confirm.create({
-            title: '温馨提示',
-            content: '数据未保存，确定离开 ?',
-            confirmFn:()=> {
+        Modal.confirm({
+            title:'温馨提示',
+            keyword:'警告',
+            content:"数据未保存，确定离开 ?",
+            onOk:()=> {
                 let data = cloneDeep(this.state.data);
                 data.splice(0,this.state.addNum)
                 this.setState({
@@ -350,11 +351,10 @@ class Grid extends Component {
                 })
                 this.props.onChange(data)
             },
-            cancelFn:()=> {
-                // console.log('Cancel');
+            onCancel:()=>{
             },
+            confirmType:'two'
         })
-        
     }
     //修改
     updateAll=()=>{
@@ -381,10 +381,11 @@ class Grid extends Component {
                 content:"请先选择数据"
             })
         }else{
-            Confirm.create({
-                title: '温馨提示',
-                content: '单据删除后将不能恢复。',
-                confirmFn:()=> {
+            Modal.confirm({
+                title:'温馨提示',
+                keyword:'删除',
+                content:"单据删除后将不能恢复。",
+                onOk:()=> {
                     let data = cloneDeep(this.state.data);
                     this.selectList.forEach((item,index)=>{
                         data.splice(item._index-index,1);
@@ -396,13 +397,11 @@ class Grid extends Component {
                     },()=>{
                         this.props.delRow(this.selectList,data);
                     })
-                    
                 },
-                cancelFn:()=> {
-                    // console.log('Cancel');
+                onCancel:()=>{
                 },
+                confirmType:'two'
             })
-            
         }
     }
 
@@ -518,10 +517,11 @@ class Grid extends Component {
 
     //修改取消
     cancelEdit=()=>{
-        Confirm.create({
-            title: '温馨提示',
-            content: '数据未保存，确定离开 ?',
-            confirmFn:()=> {
+        Modal.confirm({
+            title:'温馨提示',
+            keyword:'警告',
+            content:"数据未保存，确定离开？",
+            onOk:()=> {
                 let data = cloneDeep(this.state.data);
                 data.forEach(item=>{
                     item._edit = false;//是否编辑态
@@ -536,11 +536,10 @@ class Grid extends Component {
                 // this.props.onChange(data)
                 this.allData = data;
             },
-            cancelFn:()=> {
-                // console.log('Cancel');
+            onCancel:()=>{
             },
+            confirmType:'two'
         })
-        
     }
     //全不选
     resetChecked=(dataValue,needIndex)=>{
@@ -648,7 +647,7 @@ class Grid extends Component {
             },
             delRow:{
                 onClick:this.delRow,
-                disabled:selectData.length==0||disabled
+                disabled:adding||allEditing||selectData.length==0||disabled
             },
             copyRow:{
                 onClick:this.copyRow,
