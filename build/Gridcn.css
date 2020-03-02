@@ -14877,6 +14877,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     .ac-btns button.ac-btns-item.u-button.u-button-primary:hover {
       background-color: #d7332c;
       color: #fff; }
+  .ac-btns button.ac-btns-item.u-button.u-button-secondary {
+    background-color: #eceff1;
+    color: #212121;
+    border: 1px solid #eceff1;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); }
+    .ac-btns button.ac-btns-item.u-button.u-button-secondary:hover {
+      border: 1px solid #dfe1e6;
+      background-color: #dfe1e6;
+      color: #212121; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-search, .ac-btns button.ac-btns-item.u-button.ac-btns-clear, .ac-btns button.ac-btns-item.u-button.ac-btns-empty, .ac-btns button.ac-btns-item.u-button.ac-btns-first, .ac-btns button.ac-btns-item.u-button.ac-btns-previous, .ac-btns button.ac-btns-item.u-button.ac-btns-next, .ac-btns button.ac-btns-item.u-button.ac-btns-last, .ac-btns button.ac-btns-item.u-button.ac-btns-max, .ac-btns button.ac-btns-item.u-button.ac-btns-min {
     min-width: 30px;
     padding: 0;
@@ -16244,6 +16253,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     .ac-btns button.ac-btns-item.u-button.u-button-primary:hover {
       background-color: #d7332c;
       color: #fff; }
+  .ac-btns button.ac-btns-item.u-button.u-button-secondary {
+    background-color: #eceff1;
+    color: #212121;
+    border: 1px solid #eceff1;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); }
+    .ac-btns button.ac-btns-item.u-button.u-button-secondary:hover {
+      border: 1px solid #dfe1e6;
+      background-color: #dfe1e6;
+      color: #212121; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-search, .ac-btns button.ac-btns-item.u-button.ac-btns-clear, .ac-btns button.ac-btns-item.u-button.ac-btns-empty, .ac-btns button.ac-btns-item.u-button.ac-btns-first, .ac-btns button.ac-btns-item.u-button.ac-btns-previous, .ac-btns button.ac-btns-item.u-button.ac-btns-next, .ac-btns button.ac-btns-item.u-button.ac-btns-last, .ac-btns button.ac-btns-item.u-button.ac-btns-max, .ac-btns button.ac-btns-item.u-button.ac-btns-min {
     min-width: 30px;
     padding: 0;

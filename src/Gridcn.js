@@ -53,6 +53,7 @@ class Grid extends Component {
             adding:false,//是否正在新增
             addNum:0,//新增的条数
             canExport:false,
+            pasting:false,//正在粘贴
         }
         this.oldColumns = props.columns;
         this.selectList = [];//选中的数据
@@ -454,7 +455,8 @@ class Grid extends Component {
                 data,
                 adding:false,
                 allEditing:false,
-                selectData:[]
+                selectData:[],
+                pasting:false
             })
             // this.props.onChange(data)
             this.allData = data;
@@ -474,6 +476,10 @@ class Grid extends Component {
         let { data } = this.state;
         let selectData = this.selectList;
         selectData.forEach((item,index)=>{
+            item._edit = true;
+            item._status = 'edit';
+            item._checked = true;
+            item._needChecked = true;
             this.props.excludeKeys.forEach(it=>{
                 delete item[it];
             })
@@ -482,7 +488,10 @@ class Grid extends Component {
         data = this.resetChecked(data,true)
         this.setState({
             data,
-            copying:false
+            copying:false,
+            selectData,
+            pasting:true,
+            pasteOldData:this.state.data
         })
         this.props.onChange(data)
         this.allData = data;
@@ -490,21 +499,38 @@ class Grid extends Component {
 
     //粘贴至此处
     copyToHere=()=>{
-        let index = this.currentIndex;
+        let currentIndex = this.currentIndex;//从0开始
         let data = cloneDeep(this.state.data);
         let selectData = this.selectList;
         selectData.forEach((item,index)=>{
+            item._edit = true;
+            item._status = 'edit';
+            item._checked = true;
+            item._needChecked = true;
             this.props.excludeKeys.forEach(it=>{
                 delete item[it];
             })
         })
-        data.splice(index,0,...selectData);
+        data.splice(currentIndex,0,...selectData);
         data = this.resetChecked(data,true)
         this.setState({
             data,
-            copying:false
+            copying:false,
+            pasting:true,
+            pasteOldData:this.state.data
         })
         this.props.onChange(data)
+        this.allData = data;
+    }
+
+    //取消粘贴
+    cancelPaste=()=>{
+        let data = this.state.pasteOldData;
+        this.setState({
+            data,
+            copying:false,
+            pasting:false
+        })
         this.allData = data;
     }
 
@@ -545,7 +571,11 @@ class Grid extends Component {
     resetChecked=(dataValue,needIndex)=>{
         let data = cloneDeep(dataValue);
         data.forEach((item,index)=>{
-            item._checked=false;
+            if(item._needChecked){
+                delete item._needChecked;
+            }else{
+                item._checked=false;
+            }
             if(needIndex)item._index = index
         })
         // this.props.onChange(data)
@@ -560,7 +590,11 @@ class Grid extends Component {
     //粘贴至此处按钮
     hoverContent=()=>{
         if(this.state.copying){
-            return <span onClick={this.copyToHere} className='copy-to-here'>粘贴至此</span>
+            return <Btns btns={{
+                copyToHere:{
+                    onClick: this.copyToHere
+                }
+            }}/>
         }else{
             return ''
         }
@@ -618,11 +652,12 @@ class Grid extends Component {
         this.setState({
             canExport:true
         })
-        
     }
 
+    
+
     renderDom=()=>{
-        let { copying,isMax,columns,data,allEditing,adding,open,selectData,canExport } = this.state;
+        let { copying,isMax,columns,data,allEditing,adding,open,selectData,canExport,pasting } = this.state;
         const { clsfix,paginationObj, exportData,disabled,title,hideSave, isEdit,powerBtns,forcePowerBtns, ...otherProps } = this.props;
         let _paginationObj ='none';
         if(paginationObj!='none'){
@@ -696,6 +731,16 @@ class Grid extends Component {
                 },
                 cancel:{
                     onClick:this.cancelCopy
+                }
+            }
+        }else if(pasting){
+            btnsObj.cancel = {
+                onClick:this.cancelPaste
+            }
+            if(!hideSave){
+                btnsObj.save = {
+                    onClick:this.save,
+                    disabled:selectData.length==0||disabled
                 }
             }
         }

@@ -124,7 +124,7 @@ var Grid = function (_Component) {
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
-            defaultValueKeyValue: {} }, _defineProperty(_this$state, "isMax", false), _defineProperty(_this$state, "selectData", []), _defineProperty(_this$state, "allEditing", false), _defineProperty(_this$state, "adding", false), _defineProperty(_this$state, "addNum", 0), _defineProperty(_this$state, "canExport", false), _this$state);
+            defaultValueKeyValue: {} }, _defineProperty(_this$state, "isMax", false), _defineProperty(_this$state, "selectData", []), _defineProperty(_this$state, "allEditing", false), _defineProperty(_this$state, "adding", false), _defineProperty(_this$state, "addNum", 0), _defineProperty(_this$state, "canExport", false), _defineProperty(_this$state, "pasting", false), _this$state);
         _this.oldColumns = props.columns;
         _this.selectList = []; //选中的数据
         _this.allData = []; //表格所有数据
@@ -182,6 +182,9 @@ var Grid = function (_Component) {
 
 
     //粘贴至此处
+
+
+    //取消粘贴
 
 
     //最大化、最小化
@@ -596,7 +599,8 @@ var _initialiseProps = function _initialiseProps() {
                 data: data,
                 adding: false,
                 allEditing: false,
-                selectData: []
+                selectData: [],
+                pasting: false
             });
             // this.props.onChange(data)
             _this2.allData = data;
@@ -616,6 +620,10 @@ var _initialiseProps = function _initialiseProps() {
 
         var selectData = _this2.selectList;
         selectData.forEach(function (item, index) {
+            item._edit = true;
+            item._status = 'edit';
+            item._checked = true;
+            item._needChecked = true;
             _this2.props.excludeKeys.forEach(function (it) {
                 delete item[it];
             });
@@ -624,7 +632,10 @@ var _initialiseProps = function _initialiseProps() {
         data = _this2.resetChecked(data, true);
         _this2.setState({
             data: data,
-            copying: false
+            copying: false,
+            selectData: selectData,
+            pasting: true,
+            pasteOldData: _this2.state.data
         });
         _this2.props.onChange(data);
         _this2.allData = data;
@@ -633,21 +644,37 @@ var _initialiseProps = function _initialiseProps() {
     this.copyToHere = function () {
         var _data;
 
-        var index = _this2.currentIndex;
+        var currentIndex = _this2.currentIndex; //从0开始
         var data = (0, _lodash2["default"])(_this2.state.data);
         var selectData = _this2.selectList;
         selectData.forEach(function (item, index) {
+            item._edit = true;
+            item._status = 'edit';
+            item._checked = true;
+            item._needChecked = true;
             _this2.props.excludeKeys.forEach(function (it) {
                 delete item[it];
             });
         });
-        (_data = data).splice.apply(_data, [index, 0].concat(_toConsumableArray(selectData)));
+        (_data = data).splice.apply(_data, [currentIndex, 0].concat(_toConsumableArray(selectData)));
         data = _this2.resetChecked(data, true);
         _this2.setState({
             data: data,
-            copying: false
+            copying: false,
+            pasting: true,
+            pasteOldData: _this2.state.data
         });
         _this2.props.onChange(data);
+        _this2.allData = data;
+    };
+
+    this.cancelPaste = function () {
+        var data = _this2.state.pasteOldData;
+        _this2.setState({
+            data: data,
+            copying: false,
+            pasting: false
+        });
         _this2.allData = data;
     };
 
@@ -685,7 +712,11 @@ var _initialiseProps = function _initialiseProps() {
     this.resetChecked = function (dataValue, needIndex) {
         var data = (0, _lodash2["default"])(dataValue);
         data.forEach(function (item, index) {
-            item._checked = false;
+            if (item._needChecked) {
+                delete item._needChecked;
+            } else {
+                item._checked = false;
+            }
             if (needIndex) item._index = index;
         });
         // this.props.onChange(data)
@@ -698,11 +729,11 @@ var _initialiseProps = function _initialiseProps() {
 
     this.hoverContent = function () {
         if (_this2.state.copying) {
-            return _react2["default"].createElement(
-                "span",
-                { onClick: _this2.copyToHere, className: "copy-to-here" },
-                "\u7C98\u8D34\u81F3\u6B64"
-            );
+            return _react2["default"].createElement(_acBtns2["default"], { btns: {
+                    copyToHere: {
+                        onClick: _this2.copyToHere
+                    }
+                } });
         } else {
             return '';
         }
@@ -773,7 +804,8 @@ var _initialiseProps = function _initialiseProps() {
             adding = _state.adding,
             open = _state.open,
             selectData = _state.selectData,
-            canExport = _state.canExport;
+            canExport = _state.canExport,
+            pasting = _state.pasting;
 
         var _props = _this2.props,
             clsfix = _props.clsfix,
@@ -859,6 +891,16 @@ var _initialiseProps = function _initialiseProps() {
                     onClick: _this2.cancelCopy
                 }
             };
+        } else if (pasting) {
+            btnsObj.cancel = {
+                onClick: _this2.cancelPaste
+            };
+            if (!hideSave) {
+                btnsObj.save = {
+                    onClick: _this2.save,
+                    disabled: selectData.length == 0 || disabled
+                };
+            }
         }
         var gridOptions = _extends({
             syncHover: false,
