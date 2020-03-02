@@ -1,3 +1,13 @@
+<a name="0.2.9"></a>
+## [0.2.9](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.8...v0.2.9) (2020-03-02)
+
+
+### Features
+
+* **ac-gridcn:** 复制粘贴逻辑修改 ([2d51001](https://github.com/tinper-bee/ac-gridcn/commit/2d51001))
+
+
+
 <a name="0.2.8"></a>
 ## [0.2.8](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.7...v0.2.8) (2020-03-02)
 
