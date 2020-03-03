@@ -1,3 +1,13 @@
+<a name="0.2.11"></a>
+## [0.2.11](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.10...v0.2.11) (2020-03-03)
+
+
+### Features
+
+* **ac-gridcn:** 数字输入框bug ([b4b317e](https://github.com/tinper-bee/ac-gridcn/commit/b4b317e))
+
+
+
 <a name="0.2.10"></a>
 ## [0.2.10](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.9...v0.2.10) (2020-03-03)
 
