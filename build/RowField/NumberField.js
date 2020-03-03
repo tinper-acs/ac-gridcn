@@ -106,7 +106,7 @@ var NumberField = function (_Component) {
             _this.setState({ value: value, flag: status == 'edit' }, function () {
                 _this.validate();
             });
-            value = parseFloat(value);
+            value = value ? parseFloat(value) : '';
             if (value > max || value < 0) {
                 _this.setState({
                     required: true
@@ -117,7 +117,7 @@ var NumberField = function (_Component) {
                 _this.setState({
                     message: "",
                     error: false,
-                    required: false
+                    required: true
                 });
                 _this._value = value;
                 //回调外部函数
@@ -138,7 +138,7 @@ var NumberField = function (_Component) {
                 error = _this$state.error;
             //设置校验规则
 
-            var descriptor = _defineProperty({}, field, { type: "number", required: "false" });
+            var descriptor = _defineProperty({}, field, { type: "number", required: required });
             var validator = new _asyncValidator2["default"](descriptor);
             validator.validate(_defineProperty({}, field, value), function (errors, fields) {
                 _this.setState({
@@ -251,7 +251,8 @@ var NumberField = function (_Component) {
                 className: className,
                 value: value,
                 onChange: this.handlerChange,
-                size: 'sm'
+                size: 'sm',
+                iconStyle: 'one'
             }))
         );
     };

@@ -745,7 +745,7 @@ class Grid extends Component {
             }
         }
         let gridOptions={
-            syncHover:false,
+            syncHover:true,
             autoCheckedByClickRows:false,
             multiSelect:{ type:"checkbox" },
             showFilterMenu:false,

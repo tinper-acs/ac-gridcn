@@ -14,6 +14,9 @@
 
 
 .ac-gridcn {
+    .u-table .u-checkbox .u-checkbox-label{//参照样式影响
+        position: unset;
+    }
     .u-grid {
         background: #fff;
         overflow: hidden;
@@ -154,6 +157,9 @@
         width: 100%;
         z-index: 2;
         overflow: auto;
+        .ac-gridcn-panel-btns{
+            padding-top: 10px;
+        }
     }
     .ac-btns button.ac-btns-item.u-button.ac-btns-max{
         padding-bottom: 2px;
@@ -166,6 +172,14 @@
         padding-bottom: 10px;
         display: block;
         text-align: right;
+        padding-right: 16px;
+        .ac-btns-cancel,.ac-btns-save{
+            margin-left: 8px!important;
+        }
+        .ac-btns-max .uf,.ac-btns-min .uf{
+            position: relative;
+            bottom: 1px;
+        }
     }
     .u-table-thead th .required {
         display: none;
@@ -185,12 +199,6 @@
         width: 100%;
         z-index: 2;
         overflow: auto;
-        .u-checkbox .u-checkbox-label:before{
-            top: -10px
-        }
-        .u-checkbox .u-checkbox-label:after{
-            top: -10px
-        }
     }
 
 
@@ -261,7 +269,7 @@
 
     .ac-btns button.ac-btns-item.u-button.ac-btns-max,
     .ac-btns button.ac-btns-item.u-button.ac-btns-min {
-        margin-left: 6px;
+        margin-left: 8px;
         border-bottom-left-radius: 3px;
         border-top-left-radius: 3px;
     }
@@ -576,10 +584,12 @@
         .u-pagination-list>li>span {
             background: #fff;
             border-color: #d0d0d0;
+            line-height: 16px;
         }
-        // .u-pagination-total {
-        //     display: none;
-        // }
+        .u-pagination-list a, .u-pagination-list li{
+            height: 16px;
+            line-height: 16px;
+        }
     }
 }
 .u-table-filter-column-pop-cont-item {
@@ -599,6 +609,9 @@
         border-left: 2px solid #ff0000;
         display: inline-block;
         margin-right: 2px;
+    }
+    .container-refer{
+        width: 100%;
     }
     .triangle-element {
         width: 100%;
@@ -631,6 +644,36 @@
         top: 2px;
         left: 2px;
     }
+    .u-input-number-out{
+        height: 26px;
+        .u-input-number{
+            height: 26px;
+            .u-form-control{
+                height: 24px;
+            }
+            .u-input-group-btn{
+                right: 0px!important;
+                border-color:#d5d6d9!important;
+                .icon-group{
+                    height: 24px!important;
+                    overflow: hidden;
+                    .plus,.reduce{
+                        color: #adb4bc!important;
+                    }
+                    .plus{
+                        top: -2px;
+                    }
+                    .reduce{
+                        border-top: 1px solid #d5d6d9!important;
+                        top: 0;
+                    }
+                }
+            }
+            
+        } 
+    }
+    
+    
 }
 
 //行编辑内的错误Tip

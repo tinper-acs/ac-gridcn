@@ -903,7 +903,7 @@ var _initialiseProps = function _initialiseProps() {
             }
         }
         var gridOptions = _extends({
-            syncHover: false,
+            syncHover: true,
             autoCheckedByClickRows: false,
             multiSelect: { type: "checkbox" },
             showFilterMenu: false

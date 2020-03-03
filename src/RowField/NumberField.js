@@ -88,7 +88,7 @@ class NumberField extends Component {
         this.setState({ value, flag: status == 'edit' }, () => {
             this.validate();
         });
-        value = parseFloat(value);
+        value = value?parseFloat(value):'';
         if(value > max || value < 0){
             this.setState({
                 required:true,
@@ -99,7 +99,7 @@ class NumberField extends Component {
             this.setState({
                 message:"",
                 error:false,
-                required:false
+                required:true
             })
             this._value = value;
             //回调外部函数
@@ -116,7 +116,7 @@ class NumberField extends Component {
         let { value ,required,error} = this.state;
         //设置校验规则
         let descriptor = {
-            [field]: { type: "number", required:"false" }
+            [field]: { type: "number", required }
         }
         let validator = new schema(descriptor);
         validator.validate({ [field]: value }, (errors, fields) => {
@@ -173,6 +173,7 @@ class NumberField extends Component {
                     value={value}
                     onChange={this.handlerChange}
                     size='sm'
+                    iconStyle="one"
                 />
             </FieldWrap>
         )

@@ -20,7 +20,7 @@ var paginationDefaultProps = exports.paginationDefaultProps = {
 };
 
 var gridDefalutProps = exports.gridDefalutProps = {
-    syncHover: false, //是否同步状态
+    syncHover: true, //是否同步状态
     autoCheckedByClickRows: false, //是否启用行点击选中
     headerScroll: false, //是否启用表头滚动条
     bordered: false, //是否有边框
