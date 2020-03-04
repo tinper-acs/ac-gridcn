@@ -14872,7 +14872,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   .ac-btns button.ac-btns-item.u-button.u-button-primary {
     background-color: #e14c46;
     color: #fff;
-    border: 1px solid #f53c32;
+    border: 1px solid #e14c46;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); }
     .ac-btns button.ac-btns-item.u-button.u-button-primary:hover {
       background-color: #d7332c;
@@ -14895,7 +14895,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     height: 30px; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-search {
     background-color: #e14c46;
-    color: #fff; }
+    color: #fff;
+    min-width: 52px; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-max {
     padding: 3px;
     min-width: auto; }
@@ -16248,7 +16249,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   .ac-btns button.ac-btns-item.u-button.u-button-primary {
     background-color: #e14c46;
     color: #fff;
-    border: 1px solid #f53c32;
+    border: 1px solid #e14c46;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); }
     .ac-btns button.ac-btns-item.u-button.u-button-primary:hover {
       background-color: #d7332c;
@@ -16271,7 +16272,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     height: 30px; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-search {
     background-color: #e14c46;
-    color: #fff; }
+    color: #fff;
+    min-width: 52px; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-max {
     padding: 3px;
     min-width: auto; }
@@ -16470,6 +16472,11 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     height: 20px;
     line-height: 20px; }
 
+.ac-gridcn .ac-gridcn-panel {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: #fff; }
+
 .ac-gridcn.max {
   position: absolute;
   top: 0;
@@ -16478,21 +16485,22 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   width: 100%;
   z-index: 2;
   overflow: auto; }
-  .ac-gridcn.max .ac-gridcn-panel-btns {
+  .ac-gridcn.max .ac-gridcn-panel {
     padding-top: 10px; }
 
 .ac-gridcn .ac-btns button.ac-btns-item.u-button.ac-btns-max {
   padding-bottom: 2px; }
 
-.ac-gridcn .copy-to-here {
-  cursor: pointer;
-  color: #0073E1; }
+.ac-gridcn .ac-btns button.ac-btns-item.u-button.ac-btns-copyToHere {
+  height: 26px;
+  padding-bottom: 0;
+  padding-top: 0;
+  line-height: 26px;
+  min-height: auto; }
 
 .ac-gridcn .ac-gridcn-panel-btns {
-  padding-bottom: 10px;
   display: block;
-  text-align: right;
-  padding-right: 16px; }
+  text-align: right; }
   .ac-gridcn .ac-gridcn-panel-btns .ac-btns-cancel, .ac-gridcn .ac-gridcn-panel-btns .ac-btns-save {
     margin-left: 8px !important; }
   .ac-gridcn .ac-gridcn-panel-btns .ac-btns-max .uf, .ac-gridcn .ac-gridcn-panel-btns .ac-btns-min .uf {
@@ -16520,11 +16528,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   display: flex;
   justify-content: space-between;
   background: #fff;
-  height: 40px;
+  height: 50px;
   cursor: pointer;
-  line-height: 40px;
-  padding-left: 12px;
-  padding-right: 20px; }
+  padding-left: 16px;
+  padding-right: 16px; }
   .ac-gridcn-panel-btns button.u-button.u-button[disabled],
   .ac-gridcn-panel-btns button.u-button.u-button[disabled]:hover {
     background: #fff;
@@ -16653,13 +16660,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     top: 2px;
     left: 2px; }
 
-.ac-gridcn .u-table tr td .inline-edit-tooltip {
-  line-height: 1 !important; }
-  .ac-gridcn .u-table tr td .inline-edit-tooltip div.tooltip-inner {
-    background-color: #de2626;
-    height: 28px;
-    line-height: 22px; }
-
 .ac-gridcn .u-table tr td .ac-input-number {
   margin: 0;
   padding: 0;
@@ -16749,40 +16749,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     color: #999;
     border-color: #d9d9d9; }
 
-.ac-gridcn .u-pagination {
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  padding-top: 9px;
-  padding-left: 12px; }
-  .ac-gridcn .u-pagination .u-select {
-    width: 85px; }
-    .ac-gridcn .u-pagination .u-select .u-select-selection {
-      border-color: #d0d0d0; }
-  .ac-gridcn .u-pagination .u-pagination-list > .active > a,
-  .ac-gridcn .u-pagination .u-pagination-list > .active > a:focus,
-  .ac-gridcn .u-pagination .u-pagination-list > .active > a:hover,
-  .ac-gridcn .u-pagination .u-pagination-list > .active > span,
-  .ac-gridcn .u-pagination .u-pagination-list > .active > span:focus,
-  .ac-gridcn .u-pagination .u-pagination-list > .active > span:hover {
-    color: #E14C46;
-    background: #fff;
-    border-color: #E14C46; }
-  .ac-gridcn .u-pagination .u-pagination-list > .disabled > a,
-  .ac-gridcn .u-pagination .u-pagination-list > .disabled > a:focus,
-  .ac-gridcn .u-pagination .u-pagination-list > .disabled > a:hover,
-  .ac-gridcn .u-pagination .u-pagination-list > .disabled > span,
-  .ac-gridcn .u-pagination .u-pagination-list > .disabled > span:focus,
-  .ac-gridcn .u-pagination .u-pagination-list > .disabled > span:hover,
-  .ac-gridcn .u-pagination .u-pagination-list > li > a,
-  .ac-gridcn .u-pagination .u-pagination-list > li > span {
-    background: #fff;
-    border-color: #d0d0d0;
-    line-height: 16px; }
-  .ac-gridcn .u-pagination .u-pagination-list a, .ac-gridcn .u-pagination .u-pagination-list li {
-    height: 16px;
-    line-height: 16px; }
-
 .u-table-filter-column-pop-cont-item > span {
   margin: 0 !important; }
 
@@ -16833,7 +16799,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
         height: 24px; }
       .triangle-flag .u-input-number-out .u-input-number .u-input-group-btn {
         right: 0px !important;
-        border-color: #d5d6d9 !important; }
+        border-color: #d5d6d9 !important;
+        top: 0px !important; }
         .triangle-flag .u-input-number-out .u-input-number .u-input-group-btn .icon-group {
           height: 24px !important;
           overflow: hidden; }
@@ -16843,10 +16810,12 @@ li.rc-time-picker-panel-select-option-disabled:hover {
             top: -2px; }
           .triangle-flag .u-input-number-out .u-input-number .u-input-group-btn .icon-group .reduce {
             border-top: 1px solid #d5d6d9 !important;
-            top: 0; }
+            top: -1px; }
 
 .inline-edit-tooltip {
   line-height: 1 !important; }
+  .inline-edit-tooltip div.tooltip-arrow {
+    border-bottom-color: #de2626 !important; }
   .inline-edit-tooltip div.tooltip-inner {
     background-color: #de2626;
     height: 28px;

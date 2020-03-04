@@ -679,6 +679,9 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     this.max = function () {
+        if (!_this2.state.isMax) {
+            window.scrollTo(0, 0);
+        }
         _this2.setState({
             isMax: !_this2.state.isMax
         });
@@ -945,7 +948,7 @@ var _initialiseProps = function _initialiseProps() {
                         )
                     ),
                     open ? _react2["default"].createElement(
-                        "span",
+                        "div",
                         { className: clsfix + "-panel-btns" },
                         _react2["default"].createElement(
                             _beeButtonGroup2["default"],
@@ -954,12 +957,17 @@ var _initialiseProps = function _initialiseProps() {
                         )
                     ) : ''
                 ) : _react2["default"].createElement(
-                    "span",
-                    { className: "ac-gridcn-panel-btns" },
+                    "div",
+                    { className: clsfix + "-panel" },
+                    _react2["default"].createElement("div", null),
                     _react2["default"].createElement(
-                        _beeButtonGroup2["default"],
-                        null,
-                        _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
+                        "div",
+                        { className: "ac-gridcn-panel-btns" },
+                        _react2["default"].createElement(
+                            _beeButtonGroup2["default"],
+                            null,
+                            _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
+                        )
                     )
                 ),
                 typeof title == 'string' ? _react2["default"].createElement(

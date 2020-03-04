@@ -536,6 +536,9 @@ class Grid extends Component {
 
     //最大化、最小化
     max=()=>{
+        if(!this.state.isMax){
+            window.scrollTo(0,0)
+        }
         this.setState({
             isMax:!this.state.isMax
         })
@@ -777,18 +780,22 @@ class Grid extends Component {
                             </span>
                         </span>
                         {
-                            open?<span className={`${clsfix}-panel-btns`}>
+                            open?<div className={`${clsfix}-panel-btns`}>
+                                    <ButtonGroup>
+                                        <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
+                                    </ButtonGroup>
+                                </div>:''
+                        }
+                        
+                        </div>:
+                        <div className={`${clsfix}-panel`}>
+                            <div></div>
+                            <div className='ac-gridcn-panel-btns'>
                                 <ButtonGroup>
                                     <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                 </ButtonGroup>
-                            </span>:''
-                        }
-                        
-                        </div>:<span className='ac-gridcn-panel-btns'>
-                            <ButtonGroup>
-                                <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
-                            </ButtonGroup>
-                        </span>
+                            </div>
+                        </div>
                     }
                     {
                         typeof title=='string'?<div className={`${clsfix}-inner ${open?'show':'hide'} ${isMax?'max':''}`}>

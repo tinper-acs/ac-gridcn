@@ -149,6 +149,11 @@
 
 
     }
+    .ac-gridcn-panel{
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background: #fff;
+    }
     &.max {
         position: absolute;
         top: 0;
@@ -157,22 +162,23 @@
         width: 100%;
         z-index: 2;
         overflow: auto;
-        .ac-gridcn-panel-btns{
+        .ac-gridcn-panel{
             padding-top: 10px;
         }
     }
     .ac-btns button.ac-btns-item.u-button.ac-btns-max{
         padding-bottom: 2px;
     }
-    .copy-to-here {
-        cursor: pointer;
-        color: #0073E1;
+    .ac-btns button.ac-btns-item.u-button.ac-btns-copyToHere {
+        height: 26px;
+        padding-bottom: 0;
+        padding-top: 0;
+        line-height: 26px;
+        min-height: auto;
     }
     .ac-gridcn-panel-btns{
-        padding-bottom: 10px;
         display: block;
         text-align: right;
-        padding-right: 16px;
         .ac-btns-cancel,.ac-btns-save{
             margin-left: 8px!important;
         }
@@ -207,11 +213,10 @@
         display: flex;
         justify-content: space-between;
         background: #fff;
-        height: 40px;
+        height: 50px;
         cursor: pointer;
-        line-height: 40px;
-        padding-left: 12px;
-        padding-right: 20px;
+        padding-left: 16px;
+        padding-right: 16px;
 
         &-btns {
 
@@ -399,20 +404,6 @@
             }
         }
 
-
-        //行编辑内的错误Tip
-        .inline-edit-tooltip {
-            line-height: 1 !important;
-
-            div.tooltip-arrow {}
-
-            div.tooltip-inner {
-                background-color: #de2626;
-                height: 28px;
-                line-height: 22px;
-            }
-        }
-
         .ac-input-number {
             margin: 0;
             padding: 0;
@@ -549,48 +540,6 @@
         }
         
     }
-    .u-pagination {
-        height: 50px;
-        display: flex;
-        justify-content: space-between;
-        padding-top: 9px;
-        padding-left: 12px;
-    
-        .u-select {
-            width: 85px;
-            .u-select-selection{
-                border-color: #d0d0d0;
-            }
-        }
-    
-        .u-pagination-list>.active>a,
-        .u-pagination-list>.active>a:focus,
-        .u-pagination-list>.active>a:hover,
-        .u-pagination-list>.active>span,
-        .u-pagination-list>.active>span:focus,
-        .u-pagination-list>.active>span:hover {
-            color: #E14C46;
-            background: #fff;
-            border-color: #E14C46;
-        }
-    
-        .u-pagination-list>.disabled>a,
-        .u-pagination-list>.disabled>a:focus,
-        .u-pagination-list>.disabled>a:hover,
-        .u-pagination-list>.disabled>span,
-        .u-pagination-list>.disabled>span:focus,
-        .u-pagination-list>.disabled>span:hover,
-        .u-pagination-list>li>a,
-        .u-pagination-list>li>span {
-            background: #fff;
-            border-color: #d0d0d0;
-            line-height: 16px;
-        }
-        .u-pagination-list a, .u-pagination-list li{
-            height: 16px;
-            line-height: 16px;
-        }
-    }
 }
 .u-table-filter-column-pop-cont-item {
     &>span {
@@ -654,6 +603,7 @@
             .u-input-group-btn{
                 right: 0px!important;
                 border-color:#d5d6d9!important;
+                top: 0px!important;
                 .icon-group{
                     height: 24px!important;
                     overflow: hidden;
@@ -665,7 +615,7 @@
                     }
                     .reduce{
                         border-top: 1px solid #d5d6d9!important;
-                        top: 0;
+                        top: -1px;
                     }
                 }
             }
@@ -680,6 +630,7 @@
 .inline-edit-tooltip {
     line-height: 1 !important;
     div.tooltip-arrow {
+        border-bottom-color: #de2626!important;
     }
     div.tooltip-inner {
         background-color: #de2626;
