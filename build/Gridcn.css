@@ -16310,7 +16310,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .ac-gridcn .ac-gridcn-panel {
   padding-top: 10px;
   padding-bottom: 10px;
-  background: #fff; }
+  background: #fff;
+  user-select: none; }
 
 .ac-gridcn.max {
   position: absolute;
@@ -16366,7 +16367,6 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   justify-content: space-between;
   background: #fff;
   height: 50px;
-  cursor: pointer;
   padding-left: 16px;
   padding-right: 16px; }
   .ac-gridcn-panel-btns button.u-button.u-button[disabled],

@@ -155,6 +155,7 @@
         padding-top: 10px;
         padding-bottom: 10px;
         background: #fff;
+        user-select: none;
     }
     &.max {
         position: absolute;
@@ -218,10 +219,8 @@
         justify-content: space-between;
         background: #fff;
         height: 50px;
-        cursor: pointer;
         padding-left: 16px;
         padding-right: 16px;
-
         &-btns {
 
             button.u-button.u-button[disabled],
