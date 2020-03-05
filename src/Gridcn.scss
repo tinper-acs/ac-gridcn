@@ -9,7 +9,6 @@
 @import "../node_modules/ac-btns/src/Btns.scss";
 @import "../node_modules/ac-tips/src/AcTips.scss";
 @import "../node_modules/bee-modal/src/Modal.scss";
-@import "../node_modules/ac-confirm/src/Confirm.scss";
 
 
 
@@ -147,6 +146,9 @@
             }
         }
 
+        .u-table-row.sumrow{
+            background: #fffbf3;
+        }
 
     }
     .ac-gridcn-panel{
