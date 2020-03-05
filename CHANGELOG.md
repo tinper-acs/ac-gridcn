@@ -1,3 +1,13 @@
+<a name="0.2.14"></a>
+## [0.2.14](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.13...v0.2.14) (2020-03-05)
+
+
+### Features
+
+* **ac-gridcn:** 选中行样式 ([6bb2a10](https://github.com/tinper-bee/ac-gridcn/commit/6bb2a10))
+
+
+
 <a name="0.2.13"></a>
 ## [0.2.13](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.12...v0.2.13) (2020-03-04)
 
