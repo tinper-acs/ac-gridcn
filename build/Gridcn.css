@@ -16331,7 +16331,9 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   padding-bottom: 0;
   padding-top: 0;
   line-height: 26px;
-  min-height: auto; }
+  min-height: auto;
+  position: relative;
+  top: -1px; }
 
 .ac-gridcn .ac-gridcn-panel-btns {
   display: block;
