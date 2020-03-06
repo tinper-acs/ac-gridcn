@@ -926,8 +926,6 @@ var _initialiseProps = function _initialiseProps() {
 
         });
         gridOptions = _extends(_defaultProps.gridDefalutProps, gridOptions);
-        console.log('btn1', btns1);
-        console.log('btnsObj', btnsObj);
         return _react2["default"].createElement(
             _react.Fragment,
             null,

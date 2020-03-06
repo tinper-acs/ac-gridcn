@@ -766,8 +766,6 @@ class Grid extends Component {
             
         }
         gridOptions = Object.assign(gridDefalutProps,gridOptions);
-        console.log('btn1',btns1)
-        console.log('btnsObj',btnsObj)
         return (
             <Fragment>
                 <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
