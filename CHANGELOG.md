@@ -1,3 +1,13 @@
+<a name="0.2.19"></a>
+## [0.2.19](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.18...v0.2.19) (2020-03-06)
+
+
+### Features
+
+* **ac-gridcn:** 去掉console ([fd5367e](https://github.com/tinper-bee/ac-gridcn/commit/fd5367e))
+
+
+
 <a name="0.2.18"></a>
 ## [0.2.18](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.17...v0.2.18) (2020-03-06)
 
