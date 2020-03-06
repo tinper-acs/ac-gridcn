@@ -766,6 +766,8 @@ class Grid extends Component {
             
         }
         gridOptions = Object.assign(gridDefalutProps,gridOptions);
+        console.log('btn1',btns1)
+        console.log('btnsObj',btnsObj)
         return (
             <Fragment>
                 <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
@@ -784,8 +786,9 @@ class Grid extends Component {
                         {
                             open?<div className={`${clsfix}-panel-btns`}>
                                     <ButtonGroup>
-                                        <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
+                                        <Btns btns={btns1} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                     </ButtonGroup>
+                                    <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                 </div>:''
                         }
                         

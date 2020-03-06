@@ -926,6 +926,8 @@ var _initialiseProps = function _initialiseProps() {
 
         });
         gridOptions = _extends(_defaultProps.gridDefalutProps, gridOptions);
+        console.log('btn1', btns1);
+        console.log('btnsObj', btnsObj);
         return _react2["default"].createElement(
             _react.Fragment,
             null,
@@ -955,8 +957,9 @@ var _initialiseProps = function _initialiseProps() {
                         _react2["default"].createElement(
                             _beeButtonGroup2["default"],
                             null,
-                            _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
-                        )
+                            _react2["default"].createElement(_acBtns2["default"], { btns: btns1, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
+                        ),
+                        _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                     ) : ''
                 ) : _react2["default"].createElement(
                     "div",
