@@ -673,8 +673,8 @@ class Grid extends Component {
                 _paginationObj.disabled = true;
             }
         }
-        let btnsObj = {}
-        btnsObj= {
+        let btns1 = {}
+        btns1= {
             addRow:{
                 onClick:this.addRow,
                 disabled:allEditing||disabled
@@ -696,11 +696,13 @@ class Grid extends Component {
                     this.grid.exportExcel();
                 },
                 disabled:(!canExport)||allEditing||adding||disabled
-            },
+            }
+        }
+        let btnsObj = {
             min:{
                 onClick:this.max
             }
-        }
+        };
         if(!isMax){
             delete btnsObj.min;
             btnsObj.max = {
@@ -792,8 +794,9 @@ class Grid extends Component {
                             <div></div>
                             <div className='ac-gridcn-panel-btns'>
                                 <ButtonGroup>
-                                    <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
+                                    <Btns btns={btns1} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                 </ButtonGroup>
+                                <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                             </div>
                         </div>
                     }

@@ -831,8 +831,8 @@ var _initialiseProps = function _initialiseProps() {
                 _paginationObj.disabled = true;
             }
         }
-        var btnsObj = {};
-        btnsObj = {
+        var btns1 = {};
+        btns1 = {
             addRow: {
                 onClick: _this2.addRow,
                 disabled: allEditing || disabled
@@ -854,7 +854,9 @@ var _initialiseProps = function _initialiseProps() {
                     _this2.grid.exportExcel();
                 },
                 disabled: !canExport || allEditing || adding || disabled
-            },
+            }
+        };
+        var btnsObj = {
             min: {
                 onClick: _this2.max
             }
@@ -966,8 +968,9 @@ var _initialiseProps = function _initialiseProps() {
                         _react2["default"].createElement(
                             _beeButtonGroup2["default"],
                             null,
-                            _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
-                        )
+                            _react2["default"].createElement(_acBtns2["default"], { btns: btns1, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
+                        ),
+                        _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                     )
                 ),
                 typeof title == 'string' ? _react2["default"].createElement(

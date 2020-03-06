@@ -191,6 +191,9 @@
             position: relative;
             bottom: 1px;
         }
+        .ac-btns-max,.ac-btns-cancel,.ac-btns-min,.ac-btns-max{
+            margin-right: 0!important;
+        }
     }
     .u-table-thead th .required {
         display: none;
