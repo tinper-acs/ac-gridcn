@@ -1,3 +1,13 @@
+<a name="0.2.20"></a>
+## [0.2.20](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.19...v0.2.20) (2020-03-11)
+
+
+### Bug Fixes
+
+* **ac-gridcn:** 新增编辑取消清空校验错误信息 ([531d87d](https://github.com/tinper-bee/ac-gridcn/commit/531d87d))
+
+
+
 <a name="0.2.19"></a>
 ## [0.2.19](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.18...v0.2.19) (2020-03-06)
 
