@@ -343,7 +343,8 @@ class Grid extends Component {
             content:"数据未保存，确定离开 ?",
             onOk:()=> {
                 let data = cloneDeep(this.state.data);
-                data.splice(0,this.state.addNum)
+                data.splice(0,this.state.addNum);
+                for(let i = 0;i<this.state.addNum;i++)delete this.errors[i]
                 this.setState({
                     data,
                     adding:false,
@@ -560,10 +561,12 @@ class Grid extends Component {
                 this.setState({
                     data,
                     allEditing:false,
-                    selectData:[]
+                    selectData:[],
+                    errors:{}
                 })
                 // this.props.onChange(data)
                 this.allData = data;
+                this.errors = {};
             },
             onCancel:()=>{
             },

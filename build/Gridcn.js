@@ -494,7 +494,9 @@ var _initialiseProps = function _initialiseProps() {
             onOk: function onOk() {
                 var data = (0, _lodash2["default"])(_this2.state.data);
                 data.splice(0, _this2.state.addNum);
-                _this2.setState({
+                for (var i = 0; i < _this2.state.addNum; i++) {
+                    delete _this2.errors[i];
+                }_this2.setState({
                     data: data,
                     adding: false,
                     addNum: 0,
@@ -702,10 +704,12 @@ var _initialiseProps = function _initialiseProps() {
                 _this2.setState({
                     data: data,
                     allEditing: false,
-                    selectData: []
+                    selectData: [],
+                    errors: {}
                 });
                 // this.props.onChange(data)
                 _this2.allData = data;
+                _this2.errors = {};
             },
             onCancel: function onCancel() {},
             confirmType: 'two'
