@@ -280,15 +280,24 @@ class Demo2 extends Component {
     onPageSelect = (value, type) => {
         console.log('onPageSelect')
     }
-    getSelectedDataFunc=()=>{
-        console.log('getSelectedDataFunc')
-    }
 
     getAllData=()=>{
         console.log(this.grid.allData)
     }
+    getSelectData=()=>{
+        console.log(this.grid.selectList)
+    }
     validate=()=>{
         let error = this.grid.validate();
+        if(error){
+            alert('数据校验失败，错误信息见控制台');
+            console.log(error)
+        }else{
+            alert('数据校验成功')
+        }
+    }
+    validateSelect=()=>{
+        let error = this.grid.validateSelect();
         if(error){
             alert('数据校验失败，错误信息见控制台');
             console.log(error)
@@ -318,15 +327,17 @@ class Demo2 extends Component {
                 <div style={{'marginBottom':'20px'}}>
                     <Button onClick={this.changPag} colors="primary" >改变分页</Button>
                     <Button onClick={this.getAllData} colors="primary" style={{'marginLeft':'20px'}} >获得所有数据</Button>
+                    <Button onClick={this.getSelectData} colors="primary" style={{'marginLeft':'20px'}} >获得选中数据</Button>
                     <Button onClick={this.validate} colors="primary" style={{'marginLeft':'20px'}}>主动校验</Button>
+                    <Button onClick={this.validateSelect} colors="primary" style={{'marginLeft':'20px'}}>主动校验选中数据</Button>
                 </div>
                 
                 <EditGrid
+                    defaultChecked={true}
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
                     columns={this.column}//定义列
                     paginationObj={paginationObj}//分页数据
-                    getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调
                     excludeKeys={['id','ts','lastModified']}
                     delRow={(selectList,newData)=>{
                         console.log('删除，数据如下-----------',selectList)

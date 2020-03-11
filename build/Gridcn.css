@@ -14840,11 +14840,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   border-bottom: none; }
 
 .ac-btns .ac-btns-item {
-  margin-right: 6px;
+  margin-right: 8px;
   cursor: pointer; }
 
 .ac-btns span.ac-btns-item {
-  margin-right: 6px;
   color: #0073e1;
   font-size: 13px; }
   .ac-btns span.ac-btns-item[disabled] {
@@ -14913,6 +14912,11 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     border-color: #d0d0d0;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); }
 
+.ac-btns .icon.ac-btns-add, .ac-btns .icon.ac-btns-update, .ac-btns .icon.ac-btns-delete {
+  color: #e14c46; }
+  .ac-btns .icon.ac-btns-add .uf, .ac-btns .icon.ac-btns-update .uf, .ac-btns .icon.ac-btns-delete .uf {
+    padding: 0; }
+
 .u-button-group .ac-btns .u-button {
   float: left;
   min-width: 25px;
@@ -14950,6 +14954,9 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .ac-btns-dropdown .u-dropdown-menu > .u-dropdown-menu-item-selected:hover {
   background-color: #ebecf0; }
+
+.ac-btns-dropdown .icon.ac-btns-add, .ac-btns-dropdown .icon.ac-btns-update, .ac-btns-dropdown .icon.ac-btns-delete {
+  color: #e14c46; }
 
 .ac-tips-out {
   box-shadow: 0px 3px 12px 0px #4a515d40;

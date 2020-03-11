@@ -128,7 +128,7 @@ var Grid = function (_Component) {
         _this.oldColumns = props.columns;
         _this.selectList = []; //选中的数据
         _this.allData = []; //表格所有数据
-        _this.errors = {};
+        _this.errors = {}; //整个表格的校验错误信息
         _this.selectKeyData = {}; //存select类型字段  key:data(下拉列表)
         return _this;
     }
@@ -146,19 +146,16 @@ var Grid = function (_Component) {
 
     Grid.prototype.componentWillMount = function componentWillMount() {
         this.setColumn(this.props.columns);
-        this.setData(this.props.data);
+        this.setData(this.props.data, this.props.exportData);
     };
 
     Grid.prototype.componentWillReceiveProps = function componentWillReceiveProps(nextProps) {
         if ('data' in nextProps && !(0, _lodash4["default"])(nextProps.data, this.state.data)) {
             this.setData(nextProps.data, nextProps.exportData);
         }
-        // if('columns' in nextProps&&(!isequal(nextProps.columns,this.state.columns))){
-        //     this.selectKeyData = {};
-        //     this.setColumn(this.props.columns)
-        //     this.setData(this.props.data)
-        // }
     };
+    //校验选中数据
+
     //增行
 
 
@@ -408,11 +405,16 @@ var _initialiseProps = function _initialiseProps() {
 
     this.setData = function (da, exportData) {
         var data = (0, _lodash2["default"])(da);
+        var selectData = [];
         data.forEach(function (item, index) {
             item._index = index;
+            if (item._checked) selectData.push(item);
         });
+        _this2.allData = data;
+        _this2.selectList = selectData;
         _this2.setState({
             data: data,
+            selectData: selectData,
             canExport: false
         }, function () {
             if (exportData && (0, _lodash4["default"])(_this2.props.exportData, exportData)) {} else if (exportData && !(0, _lodash4["default"])(_this2.props.exportData, exportData)) {
@@ -421,7 +423,6 @@ var _initialiseProps = function _initialiseProps() {
                 _this2.getExportData(data);
             }
         });
-        _this2.allData = data;
     };
 
     this.onValidate = function (filed, errors, index) {
@@ -441,6 +442,24 @@ var _initialiseProps = function _initialiseProps() {
     this.validate = function () {
         if (Object.keys(_this2.errors).length) {
             return _this2.errors;
+        } else {
+            return null;
+        }
+    };
+
+    this.validateSelect = function () {
+        if (Object.keys(_this2.errors).length) {
+            var newError = {};
+            _this2.selectList.forEach(function (item) {
+                if (_this2.errors[item._index]) {
+                    newError[item._index] = _this2.errors[item._index];
+                }
+            });
+            if (Object.keys(newError).length) {
+                return newError;
+            } else {
+                return null;
+            }
         } else {
             return null;
         }
@@ -502,6 +521,7 @@ var _initialiseProps = function _initialiseProps() {
                     addNum: 0,
                     selectData: []
                 });
+                _this2.selectList = [];
                 _this2.props.onChange(data);
             },
             onCancel: function onCancel() {},
@@ -710,6 +730,7 @@ var _initialiseProps = function _initialiseProps() {
                 // this.props.onChange(data)
                 _this2.allData = data;
                 _this2.errors = {};
+                _this2.selectList = [];
             },
             onCancel: function onCancel() {},
             confirmType: 'two'

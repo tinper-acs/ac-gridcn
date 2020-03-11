@@ -58,7 +58,7 @@ class Grid extends Component {
         this.oldColumns = props.columns;
         this.selectList = [];//选中的数据
         this.allData = [];//表格所有数据
-        this.errors = {};
+        this.errors = {};//整个表格的校验错误信息
         this.selectKeyData = {};//存select类型字段  key:data(下拉列表)
     }
 
@@ -98,17 +98,12 @@ class Grid extends Component {
 
     componentWillMount(){
         this.setColumn(this.props.columns)
-        this.setData(this.props.data)
+        this.setData(this.props.data,this.props.exportData)
     }
     componentWillReceiveProps(nextProps){
         if('data' in nextProps&&(!isequal(nextProps.data,this.state.data))){
             this.setData(nextProps.data,nextProps.exportData);
         }
-        // if('columns' in nextProps&&(!isequal(nextProps.columns,this.state.columns))){
-        //     this.selectKeyData = {};
-        //     this.setColumn(this.props.columns)
-        //     this.setData(this.props.data)
-        // }
     }
     setColumn=(cl)=>{
         let columns = cloneDeep(cl);
@@ -255,12 +250,17 @@ class Grid extends Component {
     }
     setData=(da,exportData)=>{
         let data = cloneDeep(da);
+        let selectData = [];
         data.forEach((item,index)=>{
             item._index = index;
+            if(item._checked)selectData.push(item)
         })
+        this.allData = data;
+        this.selectList = selectData;
         this.setState({
             data,
-            canExport:false
+            selectData,
+            canExport:false,
         },()=>{
             if(exportData&&(isequal(this.props.exportData,exportData))){
                 
@@ -271,7 +271,7 @@ class Grid extends Component {
             }
             
         })
-        this.allData = data;
+        
     }
 
     onValidate=(filed,errors,index)=>{
@@ -290,6 +290,24 @@ class Grid extends Component {
     validate = ()=>{
         if(Object.keys(this.errors).length){
             return this.errors;
+        }else{
+            return null;
+        }
+    }
+    //校验选中数据
+    validateSelect = () =>{
+        if(Object.keys(this.errors).length){
+            let newError = {};
+            this.selectList.forEach(item=>{
+                if(this.errors[item._index]){
+                    newError[item._index] = this.errors[item._index]
+                }
+            })
+            if(Object.keys(newError).length){
+                return newError;
+            }else{
+                return null
+            }
         }else{
             return null;
         }
@@ -351,6 +369,7 @@ class Grid extends Component {
                     addNum:0,
                     selectData:[]
                 })
+                this.selectList = [];
                 this.props.onChange(data)
             },
             onCancel:()=>{
@@ -567,6 +586,7 @@ class Grid extends Component {
                 // this.props.onChange(data)
                 this.allData = data;
                 this.errors = {};
+                this.selectList = [];
             },
             onCancel:()=>{
             },

@@ -7,7 +7,6 @@
 import React, { Component } from 'react';
 import data from './data';
 import { Grid } from '../../src/index';
-import Button from 'bee-button';
 
 class Demo1 extends Component {
     constructor(props){
@@ -155,9 +154,6 @@ class Demo1 extends Component {
         }
         return (
             <div className='grid-parent'>
-                <Button onClick={()=>{
-                    this.grid.exportExcel()
-                }}>导出</Button>
                 <Grid
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
