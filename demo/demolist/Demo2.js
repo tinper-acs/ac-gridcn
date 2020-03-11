@@ -333,7 +333,6 @@ class Demo2 extends Component {
                 </div>
                 
                 <EditGrid
-                    defaultChecked={true}
                     ref={(el) => this.grid = el}//ref用于调用内部方法
                     data={data}//数据
                     columns={this.column}//定义列

@@ -708,7 +708,7 @@ class Grid extends Component {
             },
             delRow:{
                 onClick:this.delRow,
-                disabled:adding||allEditing||selectData.length==0||disabled
+                disabled:selectData.length==0||disabled
             },
             copyRow:{
                 onClick:this.copyRow,

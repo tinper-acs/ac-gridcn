@@ -868,7 +868,7 @@ var _initialiseProps = function _initialiseProps() {
             },
             delRow: {
                 onClick: _this2.delRow,
-                disabled: adding || allEditing || selectData.length == 0 || disabled
+                disabled: selectData.length == 0 || disabled
             },
             copyRow: {
                 onClick: _this2.copyRow,
