@@ -1,3 +1,13 @@
+<a name="0.2.23"></a>
+## [0.2.23](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.22...v0.2.23) (2020-03-13)
+
+
+### Features
+
+* **ac-gridcn:** 全表编辑的必输标识改成必输的星号放在表头展示,css调整,按钮顺序调整 ([eae4a33](https://github.com/tinper-bee/ac-gridcn/commit/eae4a33))
+
+
+
 <a name="0.2.22"></a>
 ## [0.2.22](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.21...v0.2.22) (2020-03-11)
 
