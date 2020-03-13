@@ -19,6 +19,8 @@ import DateField from './RowField/DateField';
 
 import AcTips from 'ac-tips';
 
+import classnames from 'classnames';
+
 import { gridDefalutProps,paginationDefaultProps } from './defaultProps'
 
 
@@ -34,7 +36,7 @@ const defaultProps = {
     hideSave:false,//是否隐藏保存按钮
     isEdit:false,//是否需要表格编辑
     powerBtns:['addRow','update','delRow','copyRow','export','min','max','cancel','save','copyToEnd'],
-    forcePowerBtns:['cancel'],//不受按钮权限控制的按钮
+    forcePowerBtns:['cancel','save'],//不受按钮权限控制的按钮
 };
 
 class Grid extends Component {
@@ -119,6 +121,9 @@ class Grid extends Component {
             } = item;
             if(!oldRender)oldRender=text=>text;
             if(renderType){
+                if(item.required){
+                item.title = <span className='ac-gridcn-required'>{item.title}</span>
+                }
                 if(fieldProps.defaultValue!=undefined){
                     defaultValueKeyValue[dataIndex]=fieldProps.defaultValue;
                 }else{
@@ -696,29 +701,24 @@ class Grid extends Component {
                 _paginationObj.disabled = true;
             }
         }
-        let btns1 = {}
+        let btns1 = {};
+        let btnSave = {};
         btns1= {
             addRow:{
                 onClick:this.addRow,
-                disabled:allEditing||disabled
+                disabled:copying||allEditing||pasting||disabled
             },
             update:{
                 onClick:this.updateAll,
-                disabled:data.length==0||allEditing||adding||disabled
+                disabled:data.length==0||copying||allEditing||adding||pasting||disabled
             },
             delRow:{
                 onClick:this.delRow,
-                disabled:selectData.length==0||disabled
+                disabled:pasting||copying||selectData.length==0||disabled
             },
             copyRow:{
                 onClick:this.copyRow,
-                disabled:adding||allEditing||selectData.length==0||disabled
-            },
-            export: {
-                onClick: () => {
-                    this.grid.exportExcel();
-                },
-                disabled:(!canExport)||allEditing||adding||disabled
+                disabled:copying||adding||pasting||allEditing||selectData.length==0||disabled
             }
         }
         let btnsObj = {
@@ -733,43 +733,44 @@ class Grid extends Component {
             };
         }
         if(allEditing){
-            btnsObj.cancel = {
+            if(!hideSave){
+                btnSave.save = {
+                    onClick:this.save,
+                    disabled:selectData.length==0||disabled
+                }
+            }
+            btnSave.cancel = {
                 onClick:this.cancelEdit
             }
+        }else if(adding){
             if(!hideSave){
-                btnsObj.save = {
+                btnSave.save = {
                     onClick:this.save,
                     disabled:selectData.length==0||disabled
                 }
             }
-        }else if(adding){
-            btnsObj.cancel = {
+            btnSave.cancel = {
                 onClick:this.cancelAdd
             }
-            if(!hideSave){
-                btnsObj.save = {
-                    onClick:this.save,
-                    disabled:selectData.length==0||disabled
-                }
-            }
         }else if(copying){
-            btnsObj={
-                copyToEnd:{
-                    onClick:this.copyToEnd
-                },
+            delete btns1.copyRow;
+            btns1.copyToEnd = {
+                onClick:this.copyToEnd
+            }
+            btnSave = {
                 cancel:{
                     onClick:this.cancelCopy
                 }
             }
         }else if(pasting){
-            btnsObj.cancel = {
-                onClick:this.cancelPaste
-            }
             if(!hideSave){
-                btnsObj.save = {
+                btnSave.save = {
                     onClick:this.save,
                     disabled:selectData.length==0||disabled
                 }
+            }
+            btnSave.cancel = {
+                onClick:this.cancelPaste
             }
         }
         let gridOptions={
@@ -791,7 +792,7 @@ class Grid extends Component {
         gridOptions = Object.assign(gridDefalutProps,gridOptions);
         return (
             <Fragment>
-                <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''}`}>
+                <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''} ${adding||allEditing||copying||pasting?'isEdit':''}`}>
                     {
                         typeof title=='string'?<div className={`${clsfix}-panel ${open?'':'close'}`}>
                         <span onClick={this.open} style={{'cursor':'pointer'}}>
@@ -809,6 +810,15 @@ class Grid extends Component {
                                     <ButtonGroup>
                                         <Btns btns={btns1} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                     </ButtonGroup>
+                                    <Btns btns={btnSave} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
+                                    <Btns btns={{
+                                            export: {
+                                                onClick: () => {
+                                                    this.grid.exportExcel();
+                                                },
+                                                disabled:(!canExport)||allEditing||adding||disabled
+                                            },
+                                        }} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                     <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                 </div>:''
                         }
@@ -820,6 +830,16 @@ class Grid extends Component {
                                 <ButtonGroup>
                                     <Btns btns={btns1} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                 </ButtonGroup>
+                                <Btns btns={btnSave} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
+
+                                <Btns btns={{
+                                    export: {
+                                        onClick: () => {
+                                            this.grid.exportExcel();
+                                        },
+                                        disabled:(!canExport)||allEditing||adding||disabled
+                                    },
+                                }} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                                 <Btns btns={btnsObj} powerBtns={powerBtns} forcePowerBtns={forcePowerBtns}/>
                             </div>
                         </div>

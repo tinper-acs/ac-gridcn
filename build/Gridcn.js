@@ -64,6 +64,10 @@ var _acTips = require("ac-tips");
 
 var _acTips2 = _interopRequireDefault(_acTips);
 
+var _classnames = require("classnames");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _defaultProps = require("./defaultProps");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
@@ -103,7 +107,7 @@ var defaultProps = {
     hideSave: false, //是否隐藏保存按钮
     isEdit: false, //是否需要表格编辑
     powerBtns: ['addRow', 'update', 'delRow', 'copyRow', 'export', 'min', 'max', 'cancel', 'save', 'copyToEnd'],
-    forcePowerBtns: ['cancel'] //不受按钮权限控制的按钮
+    forcePowerBtns: ['cancel', 'save'] //不受按钮权限控制的按钮
 };
 
 var Grid = function (_Component) {
@@ -268,6 +272,13 @@ var _initialiseProps = function _initialiseProps() {
                 return text;
             };
             if (renderType) {
+                if (item.required) {
+                    item.title = _react2["default"].createElement(
+                        "span",
+                        { className: "ac-gridcn-required" },
+                        item.title
+                    );
+                }
                 if (fieldProps.defaultValue != undefined) {
                     defaultValueKeyValue[dataIndex] = fieldProps.defaultValue;
                 } else {
@@ -857,28 +868,23 @@ var _initialiseProps = function _initialiseProps() {
             }
         }
         var btns1 = {};
+        var btnSave = {};
         btns1 = {
             addRow: {
                 onClick: _this2.addRow,
-                disabled: allEditing || disabled
+                disabled: copying || allEditing || pasting || disabled
             },
             update: {
                 onClick: _this2.updateAll,
-                disabled: data.length == 0 || allEditing || adding || disabled
+                disabled: data.length == 0 || copying || allEditing || adding || pasting || disabled
             },
             delRow: {
                 onClick: _this2.delRow,
-                disabled: selectData.length == 0 || disabled
+                disabled: pasting || copying || selectData.length == 0 || disabled
             },
             copyRow: {
                 onClick: _this2.copyRow,
-                disabled: adding || allEditing || selectData.length == 0 || disabled
-            },
-            "export": {
-                onClick: function onClick() {
-                    _this2.grid.exportExcel();
-                },
-                disabled: !canExport || allEditing || adding || disabled
+                disabled: copying || adding || pasting || allEditing || selectData.length == 0 || disabled
             }
         };
         var btnsObj = {
@@ -893,44 +899,45 @@ var _initialiseProps = function _initialiseProps() {
             };
         }
         if (allEditing) {
-            btnsObj.cancel = {
+            if (!hideSave) {
+                btnSave.save = {
+                    onClick: _this2.save,
+                    disabled: selectData.length == 0 || disabled
+                };
+            }
+            btnSave.cancel = {
                 onClick: _this2.cancelEdit
             };
+        } else if (adding) {
             if (!hideSave) {
-                btnsObj.save = {
+                btnSave.save = {
                     onClick: _this2.save,
                     disabled: selectData.length == 0 || disabled
                 };
             }
-        } else if (adding) {
-            btnsObj.cancel = {
+            btnSave.cancel = {
                 onClick: _this2.cancelAdd
             };
-            if (!hideSave) {
-                btnsObj.save = {
-                    onClick: _this2.save,
-                    disabled: selectData.length == 0 || disabled
-                };
-            }
         } else if (copying) {
-            btnsObj = {
-                copyToEnd: {
-                    onClick: _this2.copyToEnd
-                },
+            delete btns1.copyRow;
+            btns1.copyToEnd = {
+                onClick: _this2.copyToEnd
+            };
+            btnSave = {
                 cancel: {
                     onClick: _this2.cancelCopy
                 }
             };
         } else if (pasting) {
-            btnsObj.cancel = {
-                onClick: _this2.cancelPaste
-            };
             if (!hideSave) {
-                btnsObj.save = {
+                btnSave.save = {
                     onClick: _this2.save,
                     disabled: selectData.length == 0 || disabled
                 };
             }
+            btnSave.cancel = {
+                onClick: _this2.cancelPaste
+            };
         }
         var gridOptions = _extends({
             syncHover: true,
@@ -956,7 +963,7 @@ var _initialiseProps = function _initialiseProps() {
             null,
             _react2["default"].createElement(
                 "div",
-                { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') },
+                { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') + " " + (adding || allEditing || copying || pasting ? 'isEdit' : '') },
                 typeof title == 'string' ? _react2["default"].createElement(
                     "div",
                     { className: clsfix + "-panel " + (open ? '' : 'close') },
@@ -982,6 +989,15 @@ var _initialiseProps = function _initialiseProps() {
                             null,
                             _react2["default"].createElement(_acBtns2["default"], { btns: btns1, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                         ),
+                        _react2["default"].createElement(_acBtns2["default"], { btns: btnSave, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns }),
+                        _react2["default"].createElement(_acBtns2["default"], { btns: {
+                                "export": {
+                                    onClick: function onClick() {
+                                        _this2.grid.exportExcel();
+                                    },
+                                    disabled: !canExport || allEditing || adding || disabled
+                                }
+                            }, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns }),
                         _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                     ) : ''
                 ) : _react2["default"].createElement(
@@ -996,6 +1012,15 @@ var _initialiseProps = function _initialiseProps() {
                             null,
                             _react2["default"].createElement(_acBtns2["default"], { btns: btns1, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                         ),
+                        _react2["default"].createElement(_acBtns2["default"], { btns: btnSave, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns }),
+                        _react2["default"].createElement(_acBtns2["default"], { btns: {
+                                "export": {
+                                    onClick: function onClick() {
+                                        _this2.grid.exportExcel();
+                                    },
+                                    disabled: !canExport || allEditing || adding || disabled
+                                }
+                            }, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns }),
                         _react2["default"].createElement(_acBtns2["default"], { btns: btnsObj, powerBtns: powerBtns, forcePowerBtns: forcePowerBtns })
                     )
                 ),
