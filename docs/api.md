@@ -1,4 +1,4 @@
-# 复杂表格 AcGrids
+# 复杂表格全编辑 AcGrids
 
 简单表格、编辑表格，项目中需要引入`tinper-bee`的样式文件
 
@@ -8,7 +8,7 @@
 
 ```js
 
-import Gridcn from 'ac-gridcn';
+import { Grid, EditGrid } from 'ac-gridcn';
 import 'ac-gridcn/build/Gridcn.css';
 
 ```
@@ -16,6 +16,10 @@ import 'ac-gridcn/build/Gridcn.css';
 ## 代码演示
 
 ## API
+
+### Grid
+
+等于 [bee-complex-grid](http://bee.tinper.org/tinper-acs/bee-complex-grid) 
 
 ### EditGrid
 
