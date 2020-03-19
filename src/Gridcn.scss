@@ -381,6 +381,7 @@ $borderColor2:#d0d0d0;
                 height: 26px;
                 text-align: left;
                 font-size: 13px;
+                padding: 0 8px;
             }
 
             input,
@@ -420,9 +421,13 @@ $borderColor2:#d0d0d0;
 
                 .u-select-selection-rendered {
                     line-height: 26px;
+                    margin-left: 0;
+                    margin-right: 0;
 
                     .u-select-selection-selected-value {
                         font-size: 13px;
+                        padding-left: 8px;
+                        padding-right: 8px;
                     }
                 }
 
@@ -631,6 +636,13 @@ $borderColor2:#d0d0d0;
         padding-top: 9px;
         padding-left: 12px;
         background: #f6f6f6;
+        margin-bottom: 0px;
+        .u-pagination-gap>li>a{
+            margin: 0 4px;
+        }
+        .u-pagination-sm>li>a{
+            padding: 4px 8px;
+        }
         .u-select {
             width: 85px;
             .u-select-selection {

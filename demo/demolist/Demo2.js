@@ -345,6 +345,7 @@ class Demo2 extends Component {
                     save={(selectList)=>{
                         console.log('保存，数据如下-----------',selectList)
                     }}
+                    // headerScroll={true}
                 />
             </div>
         )
