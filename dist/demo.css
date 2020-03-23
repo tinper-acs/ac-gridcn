@@ -13476,6 +13476,9 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   .ac-gridcn .ac-gridcn-panel-btns .ac-btns-max,
   .ac-gridcn .ac-gridcn-panel-btns .ac-btns-min {
     margin-right: 0 !important; }
+    .ac-gridcn .ac-gridcn-panel-btns .ac-btns-max .uf,
+    .ac-gridcn .ac-gridcn-panel-btns .ac-btns-min .uf {
+      font-size: 16px !important; }
 
 .ac-gridcn .u-table-thead th .required {
   display: none; }
