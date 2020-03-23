@@ -122,7 +122,7 @@ class Grid extends Component {
             if(!oldRender)oldRender=text=>text;
             if(renderType){
                 if(item.required){
-                item.title = <span className='ac-gridcn-required'>{item.title}</span>
+                    item.className="required"
                 }
                 if(fieldProps.defaultValue!=undefined){
                     defaultValueKeyValue[dataIndex]=fieldProps.defaultValue;

@@ -13783,12 +13783,12 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     height: 16px;
     line-height: 16px; }
 
-.ac-gridcn.isEdit .ac-gridcn-required::before {
-  content: "*";
-  color: #e14c46;
+.ac-gridcn.isEdit .u-table-thead th .required {
+  display: inline-block;
   position: relative;
   top: 2px;
-  margin-right: 4px; }
+  margin-right: 4px;
+  color: #e14c46; }
 
 .u-table-filter-column-pop-cont-item > span {
   margin: 0 !important; }

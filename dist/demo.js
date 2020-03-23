@@ -35809,11 +35809,7 @@
 	            };
 	            if (renderType) {
 	                if (item.required) {
-	                    item.title = _react2["default"].createElement(
-	                        "span",
-	                        { className: "ac-gridcn-required" },
-	                        item.title
-	                    );
+	                    item.className = "required";
 	                }
 	                if (fieldProps.defaultValue != undefined) {
 	                    defaultValueKeyValue[dataIndex] = fieldProps.defaultValue;
