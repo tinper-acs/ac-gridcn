@@ -346,6 +346,7 @@ class Demo2 extends Component {
                         console.log('保存，数据如下-----------',selectList)
                     }}
                     // headerScroll={true}
+                    title="我是头"
                 />
             </div>
         )

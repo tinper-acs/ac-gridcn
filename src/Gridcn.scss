@@ -274,7 +274,11 @@ $borderColor2:#d0d0d0;
         height: 50px;
         padding-left: 16px;
         padding-right: 16px;
+        &-header{
+            cursor: pointer;
+            line-height: 30px;
 
+        }
         &-btns {
 
             button.u-button.u-button[disabled],

@@ -965,7 +965,7 @@ var _initialiseProps = function _initialiseProps() {
                     { className: clsfix + "-panel " + (open ? '' : 'close') },
                     _react2["default"].createElement(
                         "span",
-                        { onClick: _this2.open, style: { 'cursor': 'pointer' } },
+                        { onClick: _this2.open, className: clsfix + "-panel-header" },
                         _react2["default"].createElement(
                             "span",
                             { className: clsfix + "-panel-icon" },

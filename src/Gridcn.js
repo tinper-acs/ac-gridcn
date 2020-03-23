@@ -795,7 +795,7 @@ class Grid extends Component {
                 <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''} ${adding||allEditing||copying||pasting?'isEdit':''}`}>
                     {
                         typeof title=='string'?<div className={`${clsfix}-panel ${open?'':'close'}`}>
-                        <span onClick={this.open} style={{'cursor':'pointer'}}>
+                        <span onClick={this.open} className={`${clsfix}-panel-header`}>
                             <span className={`${clsfix}-panel-icon`}>
                                 {
                                     open?<Icon type='uf-triangle-down'/>:<Icon type='uf-triangle-right'/>
