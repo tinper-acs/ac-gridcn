@@ -1,3 +1,13 @@
+<a name="0.2.25"></a>
+## [0.2.25](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.24...v0.2.25) (2020-03-23)
+
+
+### Bug Fixes
+
+* **ac-gridncn:** 导出bug ([195c148](https://github.com/tinper-bee/ac-gridcn/commit/195c148))
+
+
+
 <a name="0.2.24"></a>
 ## [0.2.24](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.23...v0.2.24) (2020-03-19)
 
