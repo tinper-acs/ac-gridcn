@@ -787,12 +787,11 @@ class Grid extends Component {
             hoverContent:this.hoverContent,
             getSelectedDataFunc:this.getSelectedDataFunc,
             onRowHover:this.onRowHover,
-            
         }
         gridOptions = Object.assign(gridDefalutProps,gridOptions);
         return (
             <Fragment>
-                <div className={`${clsfix} ${disabled?'disabled':''} ${isMax?'max':''} ${adding||allEditing||copying||pasting?'isEdit':''}`}>
+                <div className={`${clsfix} ${disabled?'disabled':''} ${gridOptions.headerScroll?'header-scroll':''} ${isMax?'max':''} ${adding||allEditing||copying||pasting?'isEdit':''}`}>
                     {
                         typeof title=='string'?<div className={`${clsfix}-panel ${open?'':'close'}`}>
                         <span onClick={this.open} className={`${clsfix}-panel-header`}>

@@ -951,7 +951,6 @@ var _initialiseProps = function _initialiseProps() {
             hoverContent: _this2.hoverContent,
             getSelectedDataFunc: _this2.getSelectedDataFunc,
             onRowHover: _this2.onRowHover
-
         });
         gridOptions = _extends(_defaultProps.gridDefalutProps, gridOptions);
         return _react2["default"].createElement(
@@ -959,7 +958,7 @@ var _initialiseProps = function _initialiseProps() {
             null,
             _react2["default"].createElement(
                 "div",
-                { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (isMax ? 'max' : '') + " " + (adding || allEditing || copying || pasting ? 'isEdit' : '') },
+                { className: clsfix + " " + (disabled ? 'disabled' : '') + " " + (gridOptions.headerScroll ? 'header-scroll' : '') + " " + (isMax ? 'max' : '') + " " + (adding || allEditing || copying || pasting ? 'isEdit' : '') },
                 typeof title == 'string' ? _react2["default"].createElement(
                     "div",
                     { className: clsfix + "-panel " + (open ? '' : 'close') },

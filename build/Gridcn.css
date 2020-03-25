@@ -15133,6 +15133,16 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   margin-right: 4px;
   color: #e14c46; }
 
+.ac-gridcn.isEdit .u-table-thead th .required {
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-right: 4px;
+  color: #e14c46; }
+
+.ac-gridcn.isEdit.header-scroll .ac-btns button.ac-btns-item.u-button.ac-btns-copyToHere {
+  top: 7px; }
+
 .u-table-filter-column-pop-cont-item > span {
   margin: 0 !important; }
 
