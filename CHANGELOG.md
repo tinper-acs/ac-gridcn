@@ -1,3 +1,13 @@
+<a name="2.2.28"></a>
+## [2.2.28](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.27...v2.2.28) (2020-03-25)
+
+
+### Bug Fixes
+
+* **ac-gridcn:** headerScroll true 样式错乱 ([c325e5f](https://github.com/tinper-bee/ac-gridcn/commit/c325e5f))
+
+
+
 <a name="0.2.27"></a>
 ## [0.2.27](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.26...v0.2.27) (2020-03-23)
 
