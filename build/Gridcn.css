@@ -15143,6 +15143,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 .ac-gridcn.isEdit.header-scroll .ac-btns button.ac-btns-item.u-button.ac-btns-copyToHere {
   top: 7px; }
 
+.ac-gridcn.isEdit .u-pagination {
+  opacity: 0;
+  pointer-events: none; }
+
 .u-table-filter-column-pop-cont-item > span {
   margin: 0 !important; }
 

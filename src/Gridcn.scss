@@ -613,6 +613,10 @@ $borderColor2:#d0d0d0;
     &.header-scroll .ac-btns button.ac-btns-item.u-button.ac-btns-copyToHere{
         top: 7px;
     }
+    .u-pagination{
+        opacity: 0;
+        pointer-events: none;
+    }
 }
 .u-table-filter-column-pop-cont-item {
     &>span {
