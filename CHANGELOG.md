@@ -1,3 +1,13 @@
+<a name="0.2.29"></a>
+## [0.2.29](https://github.com/tinper-bee/ac-gridcn/compare/v2.2.28...v0.2.29) (2020-03-26)
+
+
+### Features
+
+* **ac-gridcn:** 编辑态隐藏分页 ([a77f86e](https://github.com/tinper-bee/ac-gridcn/commit/a77f86e))
+
+
+
 <a name="2.2.28"></a>
 ## [2.2.28](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.27...v2.2.28) (2020-03-25)
 
