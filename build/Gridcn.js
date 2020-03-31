@@ -307,7 +307,7 @@ var _initialiseProps = function _initialiseProps() {
                             return record._edit ? _react2["default"].createElement(_NumberField2["default"], _extends({}, other, {
                                 fieldProps: fieldProps,
                                 index: index,
-                                value: oldRender && oldRender(text, record, index),
+                                value: value,
                                 field: item.dataIndex,
                                 onChange: _this2.onChange,
                                 status: record._status,
@@ -315,7 +315,7 @@ var _initialiseProps = function _initialiseProps() {
                             })) : _react2["default"].createElement(
                                 "div",
                                 null,
-                                oldRender && oldRender(text, record, index)
+                                oldRender && oldRender(value, record, index)
                             );
                         };
                         break;

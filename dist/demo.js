@@ -35843,7 +35843,7 @@
 	                            return record._edit ? _react2["default"].createElement(_NumberField2["default"], _extends({}, other, {
 	                                fieldProps: fieldProps,
 	                                index: index,
-	                                value: oldRender && oldRender(text, record, index),
+	                                value: value,
 	                                field: item.dataIndex,
 	                                onChange: _this2.onChange,
 	                                status: record._status,
@@ -35851,7 +35851,7 @@
 	                            })) : _react2["default"].createElement(
 	                                "div",
 	                                null,
-	                                oldRender && oldRender(text, record, index)
+	                                oldRender && oldRender(value, record, index)
 	                            );
 	                        };
 	                        break;
@@ -99746,6 +99746,7 @@
 	                //回调外部函数
 	                onChange && onChange(field, value, index);
 	            }
+	            console.log(value);
 	        };
 	
 	        _this.onChangeValidate = function () {
@@ -99825,6 +99826,7 @@
 	        if (nextProps.validate == true) {
 	            this.validate();
 	        }
+	        console.log('nextProps.value:' + nextProps.value);
 	        if ('value' in nextProps && !(0, _lodash2['default'])(nextProps.value, this.state.value)) {
 	            this.setState({
 	                value: nextProps.value

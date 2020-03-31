@@ -70,6 +70,7 @@ class NumberField extends Component {
         if (nextProps.validate == true) {
             this.validate();
         }
+        console.log('nextProps.value:'+nextProps.value)
         if('value' in nextProps&&(!isequal(nextProps.value,this.state.value))){
             this.setState({
                 value:nextProps.value
@@ -105,6 +106,7 @@ class NumberField extends Component {
             //回调外部函数
             onChange && onChange(field, value, index);
         }
+        console.log(value)
     }
 
     /**

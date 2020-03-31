@@ -157,12 +157,12 @@ class Grid extends Component {
                                     {...other}
                                     fieldProps={fieldProps}
                                     index = {index}
-                                    value = {oldRender&&oldRender(text,record,index)}
+                                    value = {value}
                                     field = {item.dataIndex}
                                     onChange = {this.onChange}
                                     status = {record._status}
                                     onValidate={this.onValidate}
-                                />:<div>{oldRender&&oldRender(text,record,index)}</div>
+                                />:<div>{oldRender&&oldRender(value,record,index)}</div>
                             )
                         }
                     break;
