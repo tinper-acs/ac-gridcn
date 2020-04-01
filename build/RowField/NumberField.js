@@ -123,7 +123,6 @@ var NumberField = function (_Component) {
                 //回调外部函数
                 onChange && onChange(field, value, index);
             }
-            console.log(value);
         };
 
         _this.onChangeValidate = function () {
@@ -203,7 +202,6 @@ var NumberField = function (_Component) {
         if (nextProps.validate == true) {
             this.validate();
         }
-        console.log('nextProps.value:' + nextProps.value);
         if ('value' in nextProps && !(0, _lodash2["default"])(nextProps.value, this.state.value)) {
             this.setState({
                 value: nextProps.value

@@ -99746,7 +99746,6 @@
 	                //回调外部函数
 	                onChange && onChange(field, value, index);
 	            }
-	            console.log(value);
 	        };
 	
 	        _this.onChangeValidate = function () {
@@ -99826,7 +99825,6 @@
 	        if (nextProps.validate == true) {
 	            this.validate();
 	        }
-	        console.log('nextProps.value:' + nextProps.value);
 	        if ('value' in nextProps && !(0, _lodash2['default'])(nextProps.value, this.state.value)) {
 	            this.setState({
 	                value: nextProps.value
@@ -100264,7 +100262,7 @@
 	            var value = _this.state.value;
 	            //设置校验规则
 	
-	            var descriptor = _defineProperty({}, field, { type: "object", required: required });
+	            var descriptor = _defineProperty({}, field, { type: "any", required: required });
 	            if (pattern) {
 	                descriptor[field].push({
 	                    pattern: pattern, message: message
