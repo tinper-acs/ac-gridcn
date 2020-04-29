@@ -301,9 +301,6 @@ var _initialiseProps = function _initialiseProps() {
                     case 'inputNumber':
                         item.render = function (text, record, index) {
                             var value = text;
-                            if (fieldProps.precision && fieldProps.precision > 0) {
-                                value = typeof text === 'number' ? text.toFixed(fieldProps.precision) : "";
-                            }
                             return record._edit ? _react2["default"].createElement(_NumberField2["default"], _extends({}, other, {
                                 fieldProps: fieldProps,
                                 index: index,

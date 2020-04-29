@@ -149,9 +149,6 @@ class Grid extends Component {
                     case 'inputNumber':
                         item.render=(text,record,index)=>{
                             let value = text;
-                            if (fieldProps.precision && fieldProps.precision > 0) {
-                                value = (typeof text) === 'number' ? text.toFixed(fieldProps.precision) : ""
-                            } 
                             return (
                                 record._edit?<NumberField 
                                     {...other}
