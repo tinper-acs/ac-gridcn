@@ -1,3 +1,13 @@
+<a name="0.2.33"></a>
+## [0.2.33](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.32...v0.2.33) (2020-05-13)
+
+
+### Bug Fixes
+
+* **ac-gridcn:** yearPicker值为空时显示错误 ([de8f917](https://github.com/tinper-bee/ac-gridcn/commit/de8f917))
+
+
+
 <a name="0.2.32"></a>
 ## [0.2.32](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.31...v0.2.32) (2020-04-29)
 
