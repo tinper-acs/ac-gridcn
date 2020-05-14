@@ -220,17 +220,21 @@ class Grid extends Component {
                             let displayName = 'name';
                             if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
                             let value = null;
-                            if(typeof text == 'string'&&record._edit){
-                                try {
-                                    value = JSON.parse(text);
-                                } catch (error) {
+                            if(record._edit){
+                                if(typeof text == 'string'){
+                                    try {
+                                        value = JSON.parse(text);
+                                    } catch (error) {
+                                        value = text
+                                    }
+                                }else if(Array.isArray(text)){
+                                    value = text
+                                }else if(typeof text == 'object'){
                                     value = text
                                 }
                             }else{
-                                value = oldRender&&oldRender(text,record,index);
                                 text = oldRender&&oldRender(text,record,index);
                                 if(text&&(typeof text == 'object')&&(!record._edit)){
-                                    value = oldRender&&oldRender(text[displayName],record,index);
                                     text = oldRender&&oldRender(text[displayName],record,index);
                                 }
                             }
