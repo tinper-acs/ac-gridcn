@@ -1,3 +1,13 @@
+<a name="0.2.34"></a>
+## [0.2.34](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.33...v0.2.34) (2020-05-14)
+
+
+### Features
+
+* **ac-gridcn:** 多选回显 ([0c3a067](https://github.com/tinper-bee/ac-gridcn/commit/0c3a067))
+
+
+
 <a name="0.2.33"></a>
 ## [0.2.33](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.32...v0.2.33) (2020-05-13)
 
