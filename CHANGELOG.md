@@ -1,3 +1,8 @@
+<a name="0.2.35"></a>
+## [0.2.35](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.34...v0.2.35) (2020-05-14)
+
+
+
 <a name="0.2.34"></a>
 ## [0.2.34](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.33...v0.2.34) (2020-05-14)
 
