@@ -219,10 +219,22 @@ class Grid extends Component {
                         item.render=(text,record,index)=>{
                             let displayName = 'name';
                             if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
-                            let value = oldRender&&oldRender(text,record,index);
-                            if(text&&(typeof text == 'object')&&(!record._edit)){
-                                value = oldRender&&oldRender(text[displayName],record,index);
+                            let value = null;
+                            if(typeof text == 'string'&&record._edit){
+                                try {
+                                    value = JSON.parse(text);
+                                } catch (error) {
+                                    value = text
+                                }
+                            }else{
+                                value = oldRender&&oldRender(text,record,index);
+                                text = oldRender&&oldRender(text,record,index);
+                                if(text&&(typeof text == 'object')&&(!record._edit)){
+                                    value = oldRender&&oldRender(text[displayName],record,index);
+                                    text = oldRender&&oldRender(text[displayName],record,index);
+                                }
                             }
+                            
                             return (
                                 record._edit?<span>
                                     {
@@ -237,7 +249,7 @@ class Grid extends Component {
                                             onValidate:this.onValidate
                                         })
                                     }
-                                </span>:<div>{value}</div>
+                                </span>:<div>{text}</div>
                             )
                         }
                     break;
