@@ -1,3 +1,13 @@
+<a name="0.2.36"></a>
+## [0.2.36](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.35...v0.2.36) (2020-05-19)
+
+
+### Features
+
+* 参照回选问题 ([76a90ad](https://github.com/tinper-bee/ac-gridcn/commit/76a90ad))
+
+
+
 <a name="0.2.35"></a>
 ## [0.2.35](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.34...v0.2.35) (2020-05-14)
 
