@@ -219,26 +219,10 @@ class Grid extends Component {
                         item.render=(text,record,index)=>{
                             let displayName = 'name';
                             if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
-                            let value = null;
-                            if(record._edit){
-                                if(typeof text == 'string'){
-                                    try {
-                                        value = JSON.parse(text);
-                                    } catch (error) {
-                                        value = text
-                                    }
-                                }else if(Array.isArray(text)){
-                                    value = text
-                                }else if(typeof text == 'object'){
-                                    value = text
-                                }
-                            }else{
-                                text = oldRender&&oldRender(text,record,index);
-                                if(text&&(typeof text == 'object')&&(!record._edit)){
-                                    text = oldRender&&oldRender(text[displayName],record,index);
-                                }
+                            let value = oldRender&&oldRender(text,record,index);
+                            if(text&&(typeof text == 'object')&&(!record._edit)){
+                                value = oldRender&&oldRender(text[displayName],record,index);
                             }
-                            
                             return (
                                 record._edit?<span>
                                     {
@@ -250,10 +234,11 @@ class Grid extends Component {
                                             field :item.dataIndex,
                                             onChange :this.onChange,
                                             status :record._status,
-                                            onValidate:this.onValidate
+                                            onValidate:this.onValidate,
+                                            text:item.listKey?record[item.listKey]:value
                                         })
                                     }
-                                </span>:<div>{text}</div>
+                                </span>:<div>{item.listKey?record[item.listKey]:value}</div>
                             )
                         }
                     break;
