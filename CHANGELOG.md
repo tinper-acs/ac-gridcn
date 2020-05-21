@@ -1,3 +1,13 @@
+<a name="0.2.37"></a>
+## [0.2.37](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.36...v0.2.37) (2020-05-21)
+
+
+### Features
+
+* **ac-gridcn:** 删除出发onChange ([71b6f7c](https://github.com/tinper-bee/ac-gridcn/commit/71b6f7c))
+
+
+
 <a name="0.2.36"></a>
 ## [0.2.36](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.35...v0.2.36) (2020-05-19)
 
