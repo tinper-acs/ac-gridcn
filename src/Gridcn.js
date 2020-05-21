@@ -416,6 +416,7 @@ class Grid extends Component {
                     })
                     data = this.resetChecked(data,true);
                     this.allData = data;
+                    this.props.onChange(data)
                     this.setState({
                         data
                     },()=>{

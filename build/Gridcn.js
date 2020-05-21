@@ -568,6 +568,7 @@ var _initialiseProps = function _initialiseProps() {
                     });
                     data = _this2.resetChecked(data, true);
                     _this2.allData = data;
+                    _this2.props.onChange(data);
                     _this2.setState({
                         data: data
                     }, function () {
