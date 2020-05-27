@@ -278,6 +278,9 @@ class Grid extends Component {
     }
 
     onValidate=(filed,errors,index)=>{
+        if(filed=='_delete'){
+            delete this.errors[index]
+        }
         let current = this.errors[index]||{};
         if(errors){
             current[filed] = errors[filed][0].message;
@@ -413,7 +416,9 @@ class Grid extends Component {
                     let data = cloneDeep(this.state.data);
                     this.selectList.forEach((item,index)=>{
                         data.splice(item._index-index,1);
+                        this.onValidate('_delete','',item._index)
                     })
+                    
                     data = this.resetChecked(data,true);
                     this.allData = data;
                     this.props.onChange(data)

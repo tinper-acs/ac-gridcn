@@ -431,6 +431,9 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     this.onValidate = function (filed, errors, index) {
+        if (filed == '_delete') {
+            delete _this2.errors[index];
+        }
         var current = _this2.errors[index] || {};
         if (errors) {
             current[filed] = errors[filed][0].message;
@@ -565,7 +568,9 @@ var _initialiseProps = function _initialiseProps() {
                     var data = (0, _lodash2["default"])(_this2.state.data);
                     _this2.selectList.forEach(function (item, index) {
                         data.splice(item._index - index, 1);
+                        _this2.onValidate('_delete', '', item._index);
                     });
+
                     data = _this2.resetChecked(data, true);
                     _this2.allData = data;
                     _this2.props.onChange(data);
