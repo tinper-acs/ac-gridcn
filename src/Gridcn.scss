@@ -578,9 +578,9 @@ $borderColor2:#d0d0d0;
         .u-pagination-list>.active>span,
         .u-pagination-list>.active>span:focus,
         .u-pagination-list>.active>span:hover {
-            color: #E14C46;
-            background: #fff;
-            border-color: #E14C46;
+            color: #fff;
+            background: #adb4bc;
+            border-color: #adb4bc;
         }
 
         .u-pagination-list>.disabled>a,
@@ -594,6 +594,9 @@ $borderColor2:#d0d0d0;
             background: #fff;
             border-color: $borderColor2;
             line-height: 16px;
+        }
+        .u-pagination-list>li>a:hover {
+            border-color: #505766;
         }
 
         .u-pagination-list a,

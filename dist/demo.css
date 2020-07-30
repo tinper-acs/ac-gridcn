@@ -13804,9 +13804,9 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   .ac-gridcn .u-pagination .u-pagination-list > .active > span,
   .ac-gridcn .u-pagination .u-pagination-list > .active > span:focus,
   .ac-gridcn .u-pagination .u-pagination-list > .active > span:hover {
-    color: #E14C46;
-    background: #fff;
-    border-color: #E14C46; }
+    color: #fff;
+    background: #adb4bc;
+    border-color: #adb4bc; }
   .ac-gridcn .u-pagination .u-pagination-list > .disabled > a,
   .ac-gridcn .u-pagination .u-pagination-list > .disabled > a:focus,
   .ac-gridcn .u-pagination .u-pagination-list > .disabled > a:hover,
@@ -13818,6 +13818,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     background: #fff;
     border-color: #d0d0d0;
     line-height: 16px; }
+  .ac-gridcn .u-pagination .u-pagination-list > li > a:hover {
+    border-color: #505766; }
   .ac-gridcn .u-pagination .u-pagination-list a,
   .ac-gridcn .u-pagination .u-pagination-list li {
     height: 16px;
