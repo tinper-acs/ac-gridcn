@@ -12009,6 +12009,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
   padding: 0 10px;
   min-height: 28px;
   line-height: 28px; }
+  .ac-btns button.ac-btns-item.u-button.u-button-sm {
+    min-width: 44px;
+    min-height: 22px;
+    line-height: 22px; }
   .ac-btns button.ac-btns-item.u-button:last-child {
     margin-right: 0; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-write {
@@ -12037,6 +12041,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       border: 1px solid #dfe1e6;
       background-color: #dfe1e6;
       color: #212121; }
+  .ac-btns button.ac-btns-item.u-button.ac-btns-write.u-button-dark {
+    background-color: #505766;
+    color: #fff;
+    border: 1px solid #505766;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); }
+    .ac-btns button.ac-btns-item.u-button.ac-btns-write.u-button-dark:hover {
+      border: 1px solid #616875;
+      background-color: #616875;
+      color: #fff; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-search, .ac-btns button.ac-btns-item.u-button.ac-btns-clear, .ac-btns button.ac-btns-item.u-button.ac-btns-empty, .ac-btns button.ac-btns-item.u-button.ac-btns-first, .ac-btns button.ac-btns-item.u-button.ac-btns-previous, .ac-btns button.ac-btns-item.u-button.ac-btns-next, .ac-btns button.ac-btns-item.u-button.ac-btns-last, .ac-btns button.ac-btns-item.u-button.ac-btns-max, .ac-btns button.ac-btns-item.u-button.ac-btns-min {
     min-width: 30px;
     padding: 0;
@@ -13451,11 +13464,11 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .ac-gridcn .u-table th {
   padding: 8px 8px;
-  height: 35px; }
+  height: 30px; }
 
 .ac-gridcn .u-table td {
   padding: 0 8px;
-  height: 30px;
+  height: 35px;
   border-color: #dbe0e5; }
 
 .ac-gridcn .u-table th {
