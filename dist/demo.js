@@ -76,7 +76,7 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
 	
-	var Demo1 = __webpack_require__(287);var Demo2 = __webpack_require__(695);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 普通表格基本示例", "code": "/**\n*\n* @title 普通表格基本示例\n* @description 普通表格基本示例\n*\n*/\nimport React, { Component } from 'react';\nimport data from './data';\nimport { Grid } from 'ac-gridcn/bulid/index';\n\nclass Demo1 extends Component {\n    constructor(props){\n        super(props);\n        this.column = [\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工姓名\",\n                dataIndex: \"name\",\n                key: \"name\",\n                width: 120,\n            },\n            {\n                title: \"员工性别\",\n                dataIndex: \"sexEnumValue\",\n                key: \"sexEnumValue\",\n                width: 120,\n                \n            },\n            {\n                title: \"工龄\",\n                dataIndex: \"serviceYears\",\n                key: \"serviceYears\",\n                width: 130,\n                \n            },\n            {\n                title: \"司龄\",\n                dataIndex: \"serviceYearsCompany\",\n                key: \"serviceYearsCompany\",\n                width: 130,\n            },\n            {\n                title: \"年份\",\n                dataIndex: \"year\",\n                key: \"year\",\n                width: 100,\n            },\n            {\n                title: \"月份\",\n                dataIndex: \"monthEnumValue\",\n                key: \"monthEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"补贴类别\",\n                dataIndex: \"allowanceTypeEnumValue\",\n                key: \"allowanceTypeEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"补贴标准\",\n                dataIndex: \"allowanceStandard\",\n                key: \"allowanceStandard\",\n                width: 120,\n            },\n            {\n                title: \"实际补贴\",\n                dataIndex: \"allowanceActual\",\n                key: \"allowanceActual\",\n                width: 120,\n            },\n            {\n                title: \"是否超标\",\n                dataIndex: \"exdeedsEnumValue\",\n                key: \"exdeedsEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"领取方式\",\n                dataIndex: \"pickTypeEnumValue\",\n                key: \"pickTypeEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"备注\",\n                dataIndex: \"remark\",\n                key: \"remark\",\n                width: 100,\n            }\n        ];\n        this.state={\n            activePage:1,\n            total:100,\n            items:10\n        }\n    }\n    /**\n     * 跳转指定页码\n     *\n     * @param {*} pageIndex\n     */\n    freshData = (pageIndex) => {\n        console.log('freshData')\n    }\n\n    /**\n     * 分页  跳转指定页数和设置一页数据条数\n     *\n     * @param {*} index\n     * @param {*} value\n     */\n    onDataNumSelect = (index, value) => {\n        console.log('onDataNumSelect')\n    }\n\n    /**\n     * type为0标识为pageIndex,为1标识pageSize\n     *\n     * @param {*} value\n     * @param {*} type\n     */\n    onPageSelect = (value, type) => {\n        console.log('onPageSelect')\n    }\n    getSelectedDataFunc=()=>{\n        console.log('getSelectedDataFunc')\n    }\n\n    getAllData=()=>{\n        console.log(this.grid.allData)\n    }\n    \n    changPag=()=>{\n        this.setState({\n            activePage:2,\n            total:50,\n            items:20\n        })\n    }\n    \n    render () {\n        let paginationObj = {\n            activePage: this.state.activePage,//当前页\n            total: this.state.total,//总条数\n            items: this.state.items,\n            freshData: this.freshData,//刷新数据\n            onDataNumSelect: this.onDataNumSelect,//选择记录行\n            // disabled: false//分页条禁用状态\n        }\n        return (\n            <div className='grid-parent'>\n                <Grid\n                    ref={(el) => this.grid = el}//ref用于调用内部方法\n                    data={data}//数据\n                    columns={this.column}//定义列\n                    paginationObj={paginationObj}//分页数据\n                    getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调\n                />\n            </div>\n        )\n    }\n}\nexport default Demo1", "desc": " 普通表格基本示例" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 编辑表格基本示例", "code": "/**\n*\n* @title 编辑表格基本示例\n* @description 编辑表格基本示例\n*\n*/\nimport React, { Component } from 'react';\nimport { Button } from 'tinper-bee';\nimport data from './data';\nimport { EditGrid } from 'ac-gridcn/bulid/index'\nimport moment from 'moment';\n\nclass Demo2 extends Component {\n    constructor(props){\n        super(props);\n        this.column = [\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工姓名\",\n                dataIndex: \"name\",\n                key: \"name\",\n                width: 120,\n                renderType:'input',\n                required:true,\n                validate:true,\n                fieldProps:{\n                    defaultValue:'姓名'\n                },\n            },\n            {\n                title: \"员工性别\",\n                dataIndex: \"sex\",\n                key: \"sex\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                validate:true,\n                fieldProps:{\n                    allowClear:true,\n                    defaultValue:'1',\n                    data:[{\n                        key: \"请选择\",\n                        value: '',\n                    }, {\n                        key: \"男\",\n                        value: '1'\n                    }, {\n                        key: \"女\",\n                        value: '0'\n                    }]\n                },\n            },\n            {\n                title: \"工龄\",\n                dataIndex: \"serviceYears\",\n                key: \"serviceYears\",\n                width: 130,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n                fieldProps:{\n                    defaultValue:2\n                }\n            },\n            {\n                title: \"司龄\",\n                dataIndex: \"serviceYearsCompany\",\n                key: \"serviceYearsCompany\",\n                width: 130,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n            },\n            {\n                title: \"年份\",\n                dataIndex: \"year\",\n                key: \"year\",\n                width: 100,\n                renderType:'year',\n                required:true,\n                fieldProps:{\n                    defaultValue:'2018'\n                },\n                render:(text, record, index)=>{\n                    return moment(text).format('YYYY');\n                }\n            },\n            {\n                title: \"月份\",\n                dataIndex: \"month\",\n                key: \"month\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                fieldProps:{\n                    data:[{//月份\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"一月\",\n                        value: 1\n                    }, {\n                        key: \"二月\",\n                        value: 2\n                    }, {\n                        key: \"三月\",\n                        value: 3\n                    }, {\n                        key: \"四月\",\n                        value: 4\n                    }, {\n                        key: \"五月\",\n                        value: 5\n                    }, {\n                        key: \"六月\",\n                        value: 6\n                    }, {\n                        key: \"七月\",\n                        value: 7\n                    }, {\n                        key: \"八月\",\n                        value: 8\n                    }, {\n                        key: \"九月\",\n                        value: 9\n                    }, {\n                        key: \"十月\",\n                        value: 10\n                    }, {\n                        key: \"十一月\",\n                        value: 11\n                    }, {\n                        key: \"十二月\",\n                        value: 12\n                    }]\n                },\n            },\n            {\n                title: \"补贴类别\",\n                dataIndex: \"allowanceType\",\n                key: \"allowanceType\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                fieldProps:{\n                    data:[{\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"电脑补助\",\n                        value: 1\n                    }, {\n                        key: \"住宿补助\",\n                        value: 2\n                    }, {\n                        key: \"交通补助\",\n                        value: 3\n                    }]\n                },\n            },\n            {\n                title: \"补贴标准\",\n                dataIndex: \"allowanceStandard\",\n                key: \"allowanceStandard\",\n                width: 120,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n                fieldProps:{\n                    max: 999999,\n                    min: 0,\n                    step: 1,\n                    precision: 2\n                },\n            },\n            {\n                title: \"实际补贴\",\n                dataIndex: \"allowanceActual\",\n                key: \"allowanceActual\",\n                width: 120,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n                fieldProps:{\n                    max: 999999,\n                    min: 0,\n                    step: 1,\n                    precision: 2\n                },\n            },\n            {\n                title: \"是否超标\",\n                dataIndex: \"exdeeds\",\n                key: \"exdeeds\",\n                width: 120,\n                required:true,\n                renderType:'select',\n                fieldProps:{\n                    data:[{\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"未超标\",\n                        value: 0\n                    }, {\n                        key: \"超标\",\n                        value: 1\n                    }]\n                },\n            },\n            {\n                title: \"领取方式\",\n                dataIndex: \"pickType\",\n                key: \"pickType\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                fieldProps:{\n                    data:[{\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"转账\",\n                        value: 1\n                    }, {\n                        key: \"现金\",\n                        value: 2\n                    }]\n                },\n            },\n            {\n                title: \"备注\",\n                dataIndex: \"remark\",\n                key: \"remark\",\n                width: 100,\n                renderType:'input',\n                required:false,\n            }\n        ];\n        this.state={\n            activePage:1,\n            total:100,\n            items:10\n        }\n    }\n    /**\n     * 跳转指定页码\n     *\n     * @param {*} pageIndex\n     */\n    freshData = (pageIndex) => {\n        console.log('freshData')\n    }\n\n    /**\n     * 分页  跳转指定页数和设置一页数据条数\n     *\n     * @param {*} index\n     * @param {*} value\n     */\n    onDataNumSelect = (index, value) => {\n        console.log('onDataNumSelect')\n    }\n\n    /**\n     * type为0标识为pageIndex,为1标识pageSize\n     *\n     * @param {*} value\n     * @param {*} type\n     */\n    onPageSelect = (value, type) => {\n        console.log('onPageSelect')\n    }\n\n    getAllData=()=>{\n        console.log(this.grid.allData)\n    }\n    getSelectData=()=>{\n        console.log(this.grid.selectList)\n    }\n    validate=()=>{\n        let error = this.grid.validate();\n        if(error){\n            alert('数据校验失败，错误信息见控制台');\n            console.log(error)\n        }else{\n            alert('数据校验成功')\n        }\n    }\n    validateSelect=()=>{\n        let error = this.grid.validateSelect();\n        if(error){\n            alert('数据校验失败，错误信息见控制台');\n            console.log(error)\n        }else{\n            alert('数据校验成功')\n        }\n    }\n    changPag=()=>{\n        this.setState({\n            activePage:2,\n            total:50,\n            items:20\n        })\n    }\n    \n    render () {\n        let paginationObj = {\n            activePage: this.state.activePage,//当前页\n            total: this.state.total,//总条数\n            items: this.state.items,\n            freshData: this.freshData,//刷新数据\n            onDataNumSelect: this.onDataNumSelect,//选择记录行\n            // disabled: false//分页条禁用状态\n        }\n        return (\n            <div className='grid-parent'>\n                <div style={{'marginBottom':'20px'}}>\n                    <Button onClick={this.changPag} colors=\"primary\" >改变分页</Button>\n                    <Button onClick={this.getAllData} colors=\"primary\" style={{'marginLeft':'20px'}} >获得所有数据</Button>\n                    <Button onClick={this.getSelectData} colors=\"primary\" style={{'marginLeft':'20px'}} >获得选中数据</Button>\n                    <Button onClick={this.validate} colors=\"primary\" style={{'marginLeft':'20px'}}>主动校验</Button>\n                    <Button onClick={this.validateSelect} colors=\"primary\" style={{'marginLeft':'20px'}}>主动校验选中数据</Button>\n                </div>\n                \n                <EditGrid\n                    ref={(el) => this.grid = el}//ref用于调用内部方法\n                    data={data}//数据\n                    columns={this.column}//定义列\n                    paginationObj={paginationObj}//分页数据\n                    excludeKeys={['id','ts','lastModified']}\n                    delRow={(selectList,newData)=>{\n                        console.log('删除，数据如下-----------',selectList)\n                        console.log('新的数据如下-----------',newData)\n                    }}\n                    save={(selectList)=>{\n                        console.log('保存，数据如下-----------',selectList)\n                    }}\n                    headerScroll={true}\n                    title=\"我是标题\"\n                />\n            </div>\n        )\n    }\n}\nexport default Demo2", "desc": " 编辑表格基本示例" }];
+	var Demo1 = __webpack_require__(287);var Demo2 = __webpack_require__(704);var DemoArray = [{ "example": _react2['default'].createElement(Demo1, null), "title": " 普通表格基本示例", "code": "/**\n*\n* @title 普通表格基本示例\n* @description 普通表格基本示例\n*\n*/\nimport React, { Component } from 'react';\nimport data from './data';\nimport { Grid } from 'ac-gridcn/bulid/index';\n\nclass Demo1 extends Component {\n    constructor(props){\n        super(props);\n        this.column = [\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工姓名\",\n                dataIndex: \"name\",\n                key: \"name\",\n                width: 120,\n            },\n            {\n                title: \"员工性别\",\n                dataIndex: \"sexEnumValue\",\n                key: \"sexEnumValue\",\n                width: 120,\n                \n            },\n            {\n                title: \"工龄\",\n                dataIndex: \"serviceYears\",\n                key: \"serviceYears\",\n                width: 130,\n                \n            },\n            {\n                title: \"司龄\",\n                dataIndex: \"serviceYearsCompany\",\n                key: \"serviceYearsCompany\",\n                width: 130,\n            },\n            {\n                title: \"年份\",\n                dataIndex: \"year\",\n                key: \"year\",\n                width: 100,\n            },\n            {\n                title: \"月份\",\n                dataIndex: \"monthEnumValue\",\n                key: \"monthEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"补贴类别\",\n                dataIndex: \"allowanceTypeEnumValue\",\n                key: \"allowanceTypeEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"补贴标准\",\n                dataIndex: \"allowanceStandard\",\n                key: \"allowanceStandard\",\n                width: 120,\n            },\n            {\n                title: \"实际补贴\",\n                dataIndex: \"allowanceActual\",\n                key: \"allowanceActual\",\n                width: 120,\n            },\n            {\n                title: \"是否超标\",\n                dataIndex: \"exdeedsEnumValue\",\n                key: \"exdeedsEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"领取方式\",\n                dataIndex: \"pickTypeEnumValue\",\n                key: \"pickTypeEnumValue\",\n                width: 120,\n            },\n            {\n                title: \"备注\",\n                dataIndex: \"remark\",\n                key: \"remark\",\n                width: 100,\n            }\n        ];\n        this.state={\n            activePage:1,\n            total:100,\n            items:10\n        }\n    }\n    /**\n     * 跳转指定页码\n     *\n     * @param {*} pageIndex\n     */\n    freshData = (pageIndex) => {\n        console.log('freshData')\n    }\n\n    /**\n     * 分页  跳转指定页数和设置一页数据条数\n     *\n     * @param {*} index\n     * @param {*} value\n     */\n    onDataNumSelect = (index, value) => {\n        console.log('onDataNumSelect')\n    }\n\n    /**\n     * type为0标识为pageIndex,为1标识pageSize\n     *\n     * @param {*} value\n     * @param {*} type\n     */\n    onPageSelect = (value, type) => {\n        console.log('onPageSelect')\n    }\n    getSelectedDataFunc=()=>{\n        console.log('getSelectedDataFunc')\n    }\n\n    getAllData=()=>{\n        console.log(this.grid.allData)\n    }\n    \n    changPag=()=>{\n        this.setState({\n            activePage:2,\n            total:50,\n            items:20\n        })\n    }\n    \n    render () {\n        let paginationObj = {\n            activePage: this.state.activePage,//当前页\n            total: this.state.total,//总条数\n            items: this.state.items,\n            freshData: this.freshData,//刷新数据\n            onDataNumSelect: this.onDataNumSelect,//选择记录行\n            // disabled: false//分页条禁用状态\n        }\n        return (\n            <div className='grid-parent'>\n                <Grid\n                    ref={(el) => this.grid = el}//ref用于调用内部方法\n                    data={data}//数据\n                    columns={this.column}//定义列\n                    paginationObj={paginationObj}//分页数据\n                    getSelectedDataFunc={this.getSelectedDataFunc}//选择数据后的回调\n                />\n            </div>\n        )\n    }\n}\nexport default Demo1", "desc": " 普通表格基本示例" }, { "example": _react2['default'].createElement(Demo2, null), "title": " 编辑表格基本示例", "code": "/**\n*\n* @title 编辑表格基本示例\n* @description 编辑表格基本示例\n*\n*/\nimport React, { Component } from 'react';\nimport { Button } from 'tinper-bee';\nimport data from './data';\nimport { EditGrid } from 'ac-gridcn/bulid/index'\nimport moment from 'moment';\n\nclass Demo2 extends Component {\n    constructor(props){\n        super(props);\n        this.column = [\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工编号\",\n                dataIndex: \"code\",\n                key: \"code\",\n                width: 150\n            },\n            {\n                title: \"员工姓名\",\n                dataIndex: \"name\",\n                key: \"name\",\n                width: 120,\n                renderType:'input',\n                required:true,\n                validate:true,\n                fieldProps:{\n                    defaultValue:'姓名'\n                },\n            },\n            {\n                title: \"员工性别\",\n                dataIndex: \"sex\",\n                key: \"sex\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                validate:true,\n                fieldProps:{\n                    allowClear:true,\n                    defaultValue:'1',\n                    data:[{\n                        key: \"请选择\",\n                        value: '',\n                    }, {\n                        key: \"男\",\n                        value: '1'\n                    }, {\n                        key: \"女\",\n                        value: '0'\n                    }]\n                },\n            },\n            {\n                title: \"工龄\",\n                dataIndex: \"serviceYears\",\n                key: \"serviceYears\",\n                width: 130,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n                fieldProps:{\n                    defaultValue:2\n                }\n            },\n            {\n                title: \"司龄\",\n                dataIndex: \"serviceYearsCompany\",\n                key: \"serviceYearsCompany\",\n                width: 130,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n            },\n            {\n                title: \"年份\",\n                dataIndex: \"year\",\n                key: \"year\",\n                width: 100,\n                renderType:'year',\n                required:true,\n                fieldProps:{\n                    defaultValue:'2018'\n                },\n                render:(text, record, index)=>{\n                    return moment(text).format('YYYY');\n                }\n            },\n            {\n                title: \"月份\",\n                dataIndex: \"month\",\n                key: \"month\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                fieldProps:{\n                    data:[{//月份\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"一月\",\n                        value: 1\n                    }, {\n                        key: \"二月\",\n                        value: 2\n                    }, {\n                        key: \"三月\",\n                        value: 3\n                    }, {\n                        key: \"四月\",\n                        value: 4\n                    }, {\n                        key: \"五月\",\n                        value: 5\n                    }, {\n                        key: \"六月\",\n                        value: 6\n                    }, {\n                        key: \"七月\",\n                        value: 7\n                    }, {\n                        key: \"八月\",\n                        value: 8\n                    }, {\n                        key: \"九月\",\n                        value: 9\n                    }, {\n                        key: \"十月\",\n                        value: 10\n                    }, {\n                        key: \"十一月\",\n                        value: 11\n                    }, {\n                        key: \"十二月\",\n                        value: 12\n                    }]\n                },\n            },\n            {\n                title: \"补贴类别\",\n                dataIndex: \"allowanceType\",\n                key: \"allowanceType\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                fieldProps:{\n                    data:[{\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"电脑补助\",\n                        value: 1\n                    }, {\n                        key: \"住宿补助\",\n                        value: 2\n                    }, {\n                        key: \"交通补助\",\n                        value: 3\n                    }]\n                },\n            },\n            {\n                title: \"补贴标准\",\n                dataIndex: \"allowanceStandard\",\n                key: \"allowanceStandard\",\n                width: 120,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n                fieldProps:{\n                    max: 999999,\n                    min: 0,\n                    step: 1,\n                    precision: 2\n                },\n            },\n            {\n                title: \"实际补贴\",\n                dataIndex: \"allowanceActual\",\n                key: \"allowanceActual\",\n                width: 120,\n                className: 'column-number-right ', // 靠右对齐\n                renderType:'inputNumber',\n                required:true,\n                fieldProps:{\n                    max: 999999,\n                    min: 0,\n                    step: 1,\n                    precision: 2\n                },\n            },\n            {\n                title: \"是否超标\",\n                dataIndex: \"exdeeds\",\n                key: \"exdeeds\",\n                width: 120,\n                required:true,\n                renderType:'select',\n                fieldProps:{\n                    data:[{\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"未超标\",\n                        value: 0\n                    }, {\n                        key: \"超标\",\n                        value: 1\n                    }]\n                },\n            },\n            {\n                title: \"领取方式\",\n                dataIndex: \"pickType\",\n                key: \"pickType\",\n                width: 120,\n                renderType:'select',\n                required:true,\n                fieldProps:{\n                    data:[{\n                        key: \"请选择\",\n                        value: \"\",\n                        disabled: true\n                    }, {\n                        key: \"转账\",\n                        value: 1\n                    }, {\n                        key: \"现金\",\n                        value: 2\n                    }]\n                },\n            },\n            {\n                title: \"备注\",\n                dataIndex: \"remark\",\n                key: \"remark\",\n                width: 100,\n                renderType:'input',\n                required:false,\n            }\n        ];\n        this.state={\n            activePage:1,\n            total:100,\n            items:10\n        }\n    }\n    /**\n     * 跳转指定页码\n     *\n     * @param {*} pageIndex\n     */\n    freshData = (pageIndex) => {\n        console.log('freshData')\n    }\n\n    /**\n     * 分页  跳转指定页数和设置一页数据条数\n     *\n     * @param {*} index\n     * @param {*} value\n     */\n    onDataNumSelect = (index, value) => {\n        console.log('onDataNumSelect')\n    }\n\n    /**\n     * type为0标识为pageIndex,为1标识pageSize\n     *\n     * @param {*} value\n     * @param {*} type\n     */\n    onPageSelect = (value, type) => {\n        console.log('onPageSelect')\n    }\n\n    getAllData=()=>{\n        console.log(this.grid.allData)\n    }\n    getSelectData=()=>{\n        console.log(this.grid.selectList)\n    }\n    validate=()=>{\n        let error = this.grid.validate();\n        if(error){\n            alert('数据校验失败，错误信息见控制台');\n            console.log(error)\n        }else{\n            alert('数据校验成功')\n        }\n    }\n    validateSelect=()=>{\n        let error = this.grid.validateSelect();\n        if(error){\n            alert('数据校验失败，错误信息见控制台');\n            console.log(error)\n        }else{\n            alert('数据校验成功')\n        }\n    }\n    changPag=()=>{\n        this.setState({\n            activePage:2,\n            total:50,\n            items:20\n        })\n    }\n    \n    render () {\n        let paginationObj = {\n            activePage: this.state.activePage,//当前页\n            total: this.state.total,//总条数\n            items: this.state.items,\n            freshData: this.freshData,//刷新数据\n            onDataNumSelect: this.onDataNumSelect,//选择记录行\n            // disabled: false//分页条禁用状态\n        }\n        return (\n            <div className='grid-parent'>\n                <div style={{'marginBottom':'20px'}}>\n                    <Button onClick={this.changPag} colors=\"primary\" >改变分页</Button>\n                    <Button onClick={this.getAllData} colors=\"primary\" style={{'marginLeft':'20px'}} >获得所有数据</Button>\n                    <Button onClick={this.getSelectData} colors=\"primary\" style={{'marginLeft':'20px'}} >获得选中数据</Button>\n                    <Button onClick={this.validate} colors=\"primary\" style={{'marginLeft':'20px'}}>主动校验</Button>\n                    <Button onClick={this.validateSelect} colors=\"primary\" style={{'marginLeft':'20px'}}>主动校验选中数据</Button>\n                </div>\n                \n                <EditGrid\n                    ref={(el) => this.grid = el}//ref用于调用内部方法\n                    data={data}//数据\n                    columns={this.column}//定义列\n                    paginationObj={paginationObj}//分页数据\n                    excludeKeys={['id','ts','lastModified']}\n                    delRow={(selectList,newData)=>{\n                        console.log('删除，数据如下-----------',selectList)\n                        console.log('新的数据如下-----------',newData)\n                    }}\n                    save={(selectList)=>{\n                        console.log('保存，数据如下-----------',selectList)\n                    }}\n                    headerScroll={true}\n                    title=\"我是标题\"\n                />\n            </div>\n        )\n    }\n}\nexport default Demo2", "desc": " 编辑表格基本示例" }];
 	
 	var Demo = function (_Component) {
 	    _inherits(Demo, _Component);
@@ -36815,7 +36815,7 @@
 	};
 	
 	var defaultProps = {
-	    title: "提示信息",
+	    // title: "提示信息",
 	    onOk: function onOk() {},
 	    onCancel: function onCancel() {},
 	    content: "确认要删除吗 ?",
@@ -36868,7 +36868,7 @@
 	                    resizable: true,
 	                    width: 400
 	                },
-	                _react2["default"].createElement(
+	                title ? _react2["default"].createElement(
 	                    _Modal2["default"].Header,
 	                    { closeButton: true, className: 'ac-confirm-header' },
 	                    _react2["default"].createElement(
@@ -36876,7 +36876,7 @@
 	                        { className: 'ac-confirm-header-title' },
 	                        title
 	                    )
-	                ),
+	                ) : null,
 	                _react2["default"].createElement(
 	                    _Modal2["default"].Body,
 	                    { className: 'ac-confirm-body' },
@@ -36911,7 +36911,7 @@
 	                    ),
 	                    _react2["default"].createElement(
 	                        _beeButton2["default"],
-	                        { bordered: true, onClick: function onClick() {
+	                        { colors: 'secondary', onClick: function onClick() {
 	                                _this2.setState({
 	                                    show: false
 	                                });
@@ -39789,7 +39789,7 @@
 	
 	var _Gridcn2 = _interopRequireDefault(_Gridcn);
 	
-	var _Grid = __webpack_require__(694);
+	var _Grid = __webpack_require__(703);
 	
 	var _Grid2 = _interopRequireDefault(_Grid);
 	
@@ -39873,7 +39873,7 @@
 	
 	var _classnames2 = _interopRequireDefault(_classnames);
 	
-	var _defaultProps = __webpack_require__(693);
+	var _defaultProps = __webpack_require__(702);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -40320,7 +40320,7 @@
 	
 	    this.cancelAdd = function () {
 	        _beeModal2["default"].confirm({
-	            title: '温馨提示',
+	            // title:'温馨提示',
 	            keyword: '警告',
 	            content: "数据未保存，确定离开 ?",
 	            onOk: function onOk() {
@@ -40366,7 +40366,7 @@
 	            });
 	        } else {
 	            _beeModal2["default"].confirm({
-	                title: '温馨提示',
+	                // title:'温馨提示',
 	                keyword: '删除',
 	                content: "单据删除后将不能恢复。",
 	                onOk: function onOk() {
@@ -40527,7 +40527,7 @@
 	
 	    this.cancelEdit = function () {
 	        _beeModal2["default"].confirm({
-	            title: '温馨提示',
+	            // title:'温馨提示',
 	            keyword: '警告',
 	            content: "数据未保存，确定离开？",
 	            onOk: function onOk() {
@@ -41041,12 +41041,18 @@
 	        //分页
 	
 	        if (nextProps.paginationObj && nextProps.paginationObj !== 'none') {
-	            this.setState({
-	                activePage: nextProps.paginationObj.activePage,
-	                total: nextProps.paginationObj.total,
-	                pageItems: nextProps.paginationObj.items,
-	                dataNum: nextProps.paginationObj.dataNum
-	            });
+	            var _nextProps$pagination = nextProps.paginationObj,
+	                activePage = _nextProps$pagination.activePage,
+	                total = _nextProps$pagination.total,
+	                items = _nextProps$pagination.items,
+	                dataNum = _nextProps$pagination.dataNum;
+	
+	            var obj = {};
+	            if (activePage != this.state.activePage) obj.activePage = activePage;
+	            if (total != this.state.total) obj.total = total;
+	            if (items != this.state.pageItems) obj.pageItems = items;
+	            if (dataNum != this.state.dataNum) obj.activePage = dataNum;
+	            this.setState(obj);
 	        }
 	        if (nextProps.columns && nextProps.columns !== this.columns) {
 	            var newColumns = [],
@@ -51857,11 +51863,15 @@
 	          targetIndex = i;
 	        }
 	      });
-	      data = _this.swapArray(data, currentIndex, targetIndex);
-	      _this.props.onDropRow && _this.props.onDropRow(data, record);
-	      _this.setState({
-	        data: data
-	      });
+	      if (currentIndex > -1) {
+	        data = _this.swapArray(data, currentIndex, targetIndex);
+	        _this.props.onDropRow && _this.props.onDropRow(data, record, targetIndex);
+	        _this.setState({
+	          data: data
+	        });
+	      } else {
+	        _this.props.onDropRow && _this.props.onDropRow(data, record, targetIndex);
+	      }
 	    };
 	
 	    _this.swapArray = function (arr, index1, index2) {
@@ -106973,13 +106983,13 @@
 	  value: true
 	});
 	
-	var _AcTips = __webpack_require__(686);
+	var _YsTips = __webpack_require__(686);
 	
-	var _AcTips2 = _interopRequireDefault(_AcTips);
+	var _YsTips2 = _interopRequireDefault(_YsTips);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	exports["default"] = _AcTips2["default"];
+	exports["default"] = _YsTips2["default"];
 	module.exports = exports['default'];
 
 /***/ }),
@@ -106998,67 +107008,101 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(2);
+	var _beeIcon = __webpack_require__(67);
 	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
+	var _beeIcon2 = _interopRequireDefault(_beeIcon);
 	
-	var _uuid = __webpack_require__(687);
+	var _rcNotification = __webpack_require__(687);
 	
-	var _uuid2 = _interopRequireDefault(_uuid);
+	var _rcNotification2 = _interopRequireDefault(_rcNotification);
 	
-	var _Tips = __webpack_require__(692);
+	var _classnames = __webpack_require__(5);
 	
-	var _Tips2 = _interopRequireDefault(_Tips);
+	var _classnames2 = _interopRequireDefault(_classnames);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
+	function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; } /**
+	                                                                                                                                                                                                                              * YS 风格 tips
+	                                                                                                                                                                                                                              * Created by Yang Chenchen on July 31, 2020
+	                                                                                                                                                                                                                              */
+	
+	
+	var notification = null;
 	var AcTips = {
-	    toastList: [],
-	    top: 50,
-	    hide: function hide() {},
-	    destory: function destory(id) {
-	        var index = AcTips.toastList.indexOf(id);
-	        var toast = document.getElementById(id);
-	        if (toast) {
-	            toast.style.right = 0;
-	            _reactDom2["default"].unmountComponentAtNode(toast);
-	            document.body.removeChild(toast);
-	            AcTips.toastList.splice(index, 1);
-	            for (var i = index; i < AcTips.toastList.length; i++) {
-	                var item = document.getElementById(AcTips.toastList[i]);
-	                item.style.top = i * 50 + AcTips.top + 'px';
-	            }
-	        }
-	    },
 	    create: function create(options) {
 	        var _options$type = options.type,
 	            type = _options$type === undefined ? 'success' : _options$type,
-	            _options$top = options.top,
-	            top = _options$top === undefined ? 50 : _options$top,
-	            zIndex = options.zIndex;
+	            content = options.content,
+	            style = options.style,
+	            duration = options.duration,
+	            others = _objectWithoutProperties(options, ['type', 'content', 'style', 'duration']);
 	
-	        AcTips.top = top;
-	        var id = (0, _uuid2["default"])();
-	        AcTips.toastList.push(id);
-	        var toast = document.createElement('div');
-	        toast.className = 'ac-tips-out ' + type;
-	        toast.id = id;
-	        toast.style.top = AcTips.toastList.length * 50 + top + 'px';
-	        if (zIndex) toast.style['z-index'] = zIndex;
-	        document.body.appendChild(toast);
-	        _reactDom2["default"].render(_react2["default"].createElement(_Tips2["default"], _extends({}, options, { destory: AcTips.destory, id: id })), toast);
-	        setTimeout(function () {
-	            toast.style.right = '5px';
-	        }, 0);
+	        duration = duration ? duration : type === 'error' ? 5 : 2;
+	        if (notification == null) {
+	            var toast = document.createElement('div');
+	            _rcNotification2["default"].newInstance({
+	                getContainer: function getContainer() {
+	                    return toast;
+	                },
+	                prefixCls: 'uretail-message',
+	                style: style
+	            }, function (hooksRef) {
+	                notification = hooksRef;
+	            });
+	            document.body.appendChild(toast);
+	        }
+	        var key = options.key || Date.now();
+	        var iconType = '';
+	        var NoticeIcon = void 0;
+	        switch (type) {
+	            case 'success':
+	                iconType = 'uf-correct-2';
+	                break;
+	            case 'info':
+	                iconType = 'uf-i-c';
+	                break;
+	            case 'error':
+	                iconType = 'uf-close-c';
+	                break;
+	            case 'warning':
+	                iconType = 'uf-exc-c-2';
+	                break;
+	            default:
+	                iconType = 'uf-i-c';
+	        }
+	        NoticeIcon = _react2["default"].createElement(_beeIcon2["default"], { type: iconType });
+	        notification.notice(_extends({
+	            type: type,
+	            content: _react2["default"].createElement(
+	                'div',
+	                { className: (0, _classnames2["default"])('uretail-message-custom-content uretail-message-' + type + ' ') },
+	                _react2["default"].createElement(
+	                    'div',
+	                    { className: 'anticon' },
+	                    NoticeIcon
+	                ),
+	                _react2["default"].createElement(
+	                    'div',
+	                    { className: 'anticon-circle' },
+	                    content
+	                )
+	            ),
+	            key: key,
+	            duration: duration
+	        }, others));
+	    },
+	    destory: function destory() {
+	        if (notification) {
+	            notification.destroy();
+	            notification = null;
+	        }
 	    },
 	    destoryAll: function destoryAll() {
-	        AcTips.toastList.forEach(function (id) {
-	            var toast = document.getElementById(id);
-	            toast.style.right = 0;
-	            _reactDom2["default"].unmountComponentAtNode(toast);
-	            document.body.removeChild(toast);
-	        });
-	        AcTips.toastList = [];
+	        if (notification) {
+	            notification.destroy();
+	            notification = null;
+	        }
 	    }
 	};
 	
@@ -107069,385 +107113,690 @@
 /* 687 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var v1 = __webpack_require__(688);
-	var v4 = __webpack_require__(691);
+	"use strict";
 	
-	var uuid = v4;
-	uuid.v1 = v1;
-	uuid.v4 = v4;
+	var _interopRequireDefault = __webpack_require__(14);
 	
-	module.exports = uuid;
-
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = void 0;
+	
+	var _Notification = _interopRequireDefault(__webpack_require__(688));
+	
+	var _default = _Notification.default;
+	exports.default = _default;
 
 /***/ }),
 /* 688 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var rng = __webpack_require__(689);
-	var bytesToUuid = __webpack_require__(690);
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 	
-	// **`v1()` - Generate time-based UUID**
-	//
-	// Inspired by https://github.com/LiosK/UUID.js
-	// and http://docs.python.org/library/uuid.html
+	var _interopRequireWildcard = __webpack_require__(204);
 	
-	var _nodeId;
-	var _clockseq;
+	var _interopRequireDefault = __webpack_require__(14);
 	
-	// Previous uuid creation time
-	var _lastMSecs = 0;
-	var _lastNSecs = 0;
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = void 0;
 	
-	// See https://github.com/uuidjs/uuid for API details
-	function v1(options, buf, offset) {
-	  var i = buf && offset || 0;
-	  var b = buf || [];
+	var _objectWithoutProperties2 = _interopRequireDefault(__webpack_require__(689));
 	
-	  options = options || {};
-	  var node = options.node || _nodeId;
-	  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq;
+	var _defineProperty2 = _interopRequireDefault(__webpack_require__(278));
 	
-	  // node and clockseq need to be initialized to random values if they're not
-	  // specified.  We do this lazily to minimize issues related to insufficient
-	  // system entropy.  See #189
-	  if (node == null || clockseq == null) {
-	    var seedBytes = rng();
-	    if (node == null) {
-	      // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)
-	      node = _nodeId = [
-	        seedBytes[0] | 0x01,
-	        seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]
-	      ];
-	    }
-	    if (clockseq == null) {
-	      // Per 4.2.2, randomize (14 bit) clockseq
-	      clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3fff;
-	    }
-	  }
+	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(271));
 	
-	  // UUID timestamps are 100 nano-second units since the Gregorian epoch,
-	  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so
-	  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'
-	  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.
-	  var msecs = options.msecs !== undefined ? options.msecs : new Date().getTime();
+	var _createClass2 = _interopRequireDefault(__webpack_require__(272));
 	
-	  // Per 4.2.1.2, use count of uuid's generated during the current clock
-	  // cycle to simulate higher resolution clock
-	  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1;
+	var _inherits2 = _interopRequireDefault(__webpack_require__(273));
 	
-	  // Time since last uuid creation (in msecs)
-	  var dt = (msecs - _lastMSecs) + (nsecs - _lastNSecs)/10000;
+	var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(275));
 	
-	  // Per 4.2.1.2, Bump clockseq on clock regression
-	  if (dt < 0 && options.clockseq === undefined) {
-	    clockseq = clockseq + 1 & 0x3fff;
-	  }
+	var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(276));
 	
-	  // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new
-	  // time interval
-	  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {
-	    nsecs = 0;
-	  }
+	var _react = _interopRequireWildcard(__webpack_require__(1));
 	
-	  // Per 4.2.1.2 Throw error if too many uuids are requested
-	  if (nsecs >= 10000) {
-	    throw new Error('uuid.v1(): Can\'t create more than 10M uuids/sec');
-	  }
+	var _reactDom = _interopRequireDefault(__webpack_require__(2));
 	
-	  _lastMSecs = msecs;
-	  _lastNSecs = nsecs;
-	  _clockseq = clockseq;
+	var _rcAnimate = _interopRequireDefault(__webpack_require__(371));
 	
-	  // Per 4.1.4 - Convert from unix epoch to Gregorian epoch
-	  msecs += 12219292800000;
+	var _createChainedFunction = _interopRequireDefault(__webpack_require__(313));
 	
-	  // `time_low`
-	  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;
-	  b[i++] = tl >>> 24 & 0xff;
-	  b[i++] = tl >>> 16 & 0xff;
-	  b[i++] = tl >>> 8 & 0xff;
-	  b[i++] = tl & 0xff;
+	var _classnames = _interopRequireDefault(__webpack_require__(5));
 	
-	  // `time_mid`
-	  var tmh = (msecs / 0x100000000 * 10000) & 0xfffffff;
-	  b[i++] = tmh >>> 8 & 0xff;
-	  b[i++] = tmh & 0xff;
+	var _Notice = _interopRequireDefault(__webpack_require__(690));
 	
-	  // `time_high_and_version`
-	  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version
-	  b[i++] = tmh >>> 16 & 0xff;
+	var _useNotification2 = _interopRequireDefault(__webpack_require__(691));
 	
-	  // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)
-	  b[i++] = clockseq >>> 8 | 0x80;
+	function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 	
-	  // `clock_seq_low`
-	  b[i++] = clockseq & 0xff;
+	function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 	
-	  // `node`
-	  for (var n = 0; n < 6; ++n) {
-	    b[i + n] = node[n];
-	  }
+	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
 	
-	  return buf ? buf : bytesToUuid(b);
+	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+	
+	var seed = 0;
+	var now = Date.now();
+	
+	function getUuid() {
+	  var id = seed;
+	  seed += 1;
+	  return "rcNotification_".concat(now, "_").concat(id);
 	}
 	
-	module.exports = v1;
-
+	var Notification = /*#__PURE__*/function (_Component) {
+	  (0, _inherits2.default)(Notification, _Component);
+	
+	  var _super = _createSuper(Notification);
+	
+	  function Notification() {
+	    var _this;
+	
+	    (0, _classCallCheck2.default)(this, Notification);
+	    _this = _super.apply(this, arguments);
+	    _this.state = {
+	      notices: []
+	    };
+	    _this.hookRefs = new Map();
+	
+	    _this.add = function (notice, holderCallback) {
+	      // eslint-disable-next-line no-param-reassign
+	      notice.key = notice.key || getUuid();
+	      var key = notice.key;
+	      var maxCount = _this.props.maxCount;
+	
+	      _this.setState(function (previousState) {
+	        var notices = previousState.notices;
+	        var noticeIndex = notices.map(function (v) {
+	          return v.notice.key;
+	        }).indexOf(key);
+	        var updatedNotices = notices.concat();
+	
+	        if (noticeIndex !== -1) {
+	          updatedNotices.splice(noticeIndex, 1, {
+	            notice: notice,
+	            holderCallback: holderCallback
+	          });
+	        } else {
+	          if (maxCount && notices.length >= maxCount) {
+	            // XXX, use key of first item to update new added (let React to move exsiting
+	            // instead of remove and mount). Same key was used before for both a) external
+	            // manual control and b) internal react 'key' prop , which is not that good.
+	            // eslint-disable-next-line no-param-reassign
+	            notice.updateKey = updatedNotices[0].notice.updateKey || updatedNotices[0].notice.key;
+	            updatedNotices.shift();
+	          }
+	
+	          updatedNotices.push({
+	            notice: notice,
+	            holderCallback: holderCallback
+	          });
+	        }
+	
+	        return {
+	          notices: updatedNotices
+	        };
+	      });
+	    };
+	
+	    _this.remove = function (key) {
+	      _this.setState(function (previousState) {
+	        return {
+	          notices: previousState.notices.filter(function (_ref) {
+	            var notice = _ref.notice;
+	            return notice.key !== key;
+	          })
+	        };
+	      });
+	    };
+	
+	    return _this;
+	  }
+	
+	  (0, _createClass2.default)(Notification, [{
+	    key: "getTransitionName",
+	    value: function getTransitionName() {
+	      var _this$props = this.props,
+	          prefixCls = _this$props.prefixCls,
+	          animation = _this$props.animation;
+	      var transitionName = this.props.transitionName;
+	
+	      if (!transitionName && animation) {
+	        transitionName = "".concat(prefixCls, "-").concat(animation);
+	      }
+	
+	      return transitionName;
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var notices = this.state.notices;
+	      var _this$props2 = this.props,
+	          prefixCls = _this$props2.prefixCls,
+	          className = _this$props2.className,
+	          closeIcon = _this$props2.closeIcon,
+	          style = _this$props2.style;
+	      var noticeNodes = notices.map(function (_ref2, index) {
+	        var notice = _ref2.notice,
+	            holderCallback = _ref2.holderCallback;
+	        var update = Boolean(index === notices.length - 1 && notice.updateKey);
+	        var key = notice.updateKey ? notice.updateKey : notice.key;
+	        var onClose = (0, _createChainedFunction.default)(_this2.remove.bind(_this2, notice.key), notice.onClose);
+	
+	        var noticeProps = _objectSpread(_objectSpread(_objectSpread({
+	          prefixCls: prefixCls,
+	          closeIcon: closeIcon
+	        }, notice), notice.props), {}, {
+	          key: key,
+	          update: update,
+	          onClose: onClose,
+	          onClick: notice.onClick,
+	          children: notice.content
+	        });
+	
+	        if (holderCallback) {
+	          return _react.default.createElement("div", {
+	            key: key,
+	            className: "".concat(prefixCls, "-hook-holder"),
+	            ref: function ref(div) {
+	              if (typeof key === 'undefined') {
+	                return;
+	              }
+	
+	              if (div) {
+	                _this2.hookRefs.set(key, div);
+	
+	                holderCallback(div, noticeProps);
+	              } else {
+	                _this2.hookRefs.delete(key);
+	              }
+	            }
+	          });
+	        }
+	
+	        return _react.default.createElement(_Notice.default, Object.assign({}, noticeProps));
+	      });
+	      return _react.default.createElement("div", {
+	        className: (0, _classnames.default)(prefixCls, className),
+	        style: style
+	      }, _react.default.createElement(_rcAnimate.default, {
+	        transitionName: this.getTransitionName()
+	      }, noticeNodes));
+	    }
+	  }]);
+	  return Notification;
+	}(_react.Component);
+	
+	Notification.defaultProps = {
+	  prefixCls: 'rc-notification',
+	  animation: 'fade',
+	  style: {
+	    top: 65,
+	    left: '50%'
+	  }
+	};
+	
+	Notification.newInstance = function newNotificationInstance(properties, callback) {
+	  var _ref3 = properties || {},
+	      getContainer = _ref3.getContainer,
+	      props = (0, _objectWithoutProperties2.default)(_ref3, ["getContainer"]);
+	
+	  var div = document.createElement('div');
+	
+	  if (getContainer) {
+	    var root = getContainer();
+	    root.appendChild(div);
+	  } else {
+	    document.body.appendChild(div);
+	  }
+	
+	  var called = false;
+	
+	  function ref(notification) {
+	    if (called) {
+	      return;
+	    }
+	
+	    called = true;
+	    callback({
+	      notice: function notice(noticeProps) {
+	        notification.add(noticeProps);
+	      },
+	      removeNotice: function removeNotice(key) {
+	        notification.remove(key);
+	      },
+	      component: notification,
+	      destroy: function destroy() {
+	        _reactDom.default.unmountComponentAtNode(div);
+	
+	        if (div.parentNode) {
+	          div.parentNode.removeChild(div);
+	        }
+	      },
+	      // Hooks
+	      useNotification: function useNotification() {
+	        return (0, _useNotification2.default)(notification);
+	      }
+	    });
+	  } // Only used for test case usage
+	
+	
+	  if (process.env.NODE_ENV === 'test' && properties.TEST_RENDER) {
+	    properties.TEST_RENDER(_react.default.createElement(Notification, Object.assign({}, props, {
+	      ref: ref
+	    })));
+	    return;
+	  }
+	
+	  _reactDom.default.render(_react.default.createElement(Notification, Object.assign({}, props, {
+	    ref: ref
+	  })), div);
+	};
+	
+	var _default = Notification;
+	exports.default = _default;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)))
 
 /***/ }),
 /* 689 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	// Unique ID creation requires a high quality random # generator.  In the
-	// browser this is a little complicated due to unknown quality of Math.random()
-	// and inconsistent support for the `crypto` API.  We do the best we can via
-	// feature-detection
+	var objectWithoutPropertiesLoose = __webpack_require__(212);
 	
-	// getRandomValues needs to be invoked in a context where "this" is a Crypto
-	// implementation. Also, find the complete implementation of crypto on IE11.
-	var getRandomValues = (typeof(crypto) != 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto)) ||
-	                      (typeof(msCrypto) != 'undefined' && typeof window.msCrypto.getRandomValues == 'function' && msCrypto.getRandomValues.bind(msCrypto));
+	function _objectWithoutProperties(source, excluded) {
+	  if (source == null) return {};
+	  var target = objectWithoutPropertiesLoose(source, excluded);
+	  var key, i;
 	
-	if (getRandomValues) {
-	  // WHATWG crypto RNG - http://wiki.whatwg.org/wiki/Crypto
-	  var rnds8 = new Uint8Array(16); // eslint-disable-line no-undef
+	  if (Object.getOwnPropertySymbols) {
+	    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
 	
-	  module.exports = function whatwgRNG() {
-	    getRandomValues(rnds8);
-	    return rnds8;
-	  };
-	} else {
-	  // Math.random()-based (RNG)
-	  //
-	  // If all else fails, use Math.random().  It's fast, but is of unspecified
-	  // quality.
-	  var rnds = new Array(16);
-	
-	  module.exports = function mathRNG() {
-	    for (var i = 0, r; i < 16; i++) {
-	      if ((i & 0x03) === 0) r = Math.random() * 0x100000000;
-	      rnds[i] = r >>> ((i & 0x03) << 3) & 0xff;
+	    for (i = 0; i < sourceSymbolKeys.length; i++) {
+	      key = sourceSymbolKeys[i];
+	      if (excluded.indexOf(key) >= 0) continue;
+	      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
+	      target[key] = source[key];
 	    }
+	  }
 	
-	    return rnds;
-	  };
+	  return target;
 	}
-
+	
+	module.exports = _objectWithoutProperties;
 
 /***/ }),
 /* 690 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-	/**
-	 * Convert array of 16 byte values to UUID string format of the form:
-	 * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
-	 */
-	var byteToHex = [];
-	for (var i = 0; i < 256; ++i) {
-	  byteToHex[i] = (i + 0x100).toString(16).substr(1);
-	}
+	"use strict";
 	
-	function bytesToUuid(buf, offset) {
-	  var i = offset || 0;
-	  var bth = byteToHex;
-	  // join used to fix memory issue caused by concatenation: https://bugs.chromium.org/p/v8/issues/detail?id=3175#c4
-	  return ([
-	    bth[buf[i++]], bth[buf[i++]],
-	    bth[buf[i++]], bth[buf[i++]], '-',
-	    bth[buf[i++]], bth[buf[i++]], '-',
-	    bth[buf[i++]], bth[buf[i++]], '-',
-	    bth[buf[i++]], bth[buf[i++]], '-',
-	    bth[buf[i++]], bth[buf[i++]],
-	    bth[buf[i++]], bth[buf[i++]],
-	    bth[buf[i++]], bth[buf[i++]]
-	  ]).join('');
-	}
+	var _interopRequireWildcard = __webpack_require__(204);
 	
-	module.exports = bytesToUuid;
-
+	var _interopRequireDefault = __webpack_require__(14);
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = void 0;
+	
+	var _defineProperty2 = _interopRequireDefault(__webpack_require__(278));
+	
+	var _classCallCheck2 = _interopRequireDefault(__webpack_require__(271));
+	
+	var _createClass2 = _interopRequireDefault(__webpack_require__(272));
+	
+	var _inherits2 = _interopRequireDefault(__webpack_require__(273));
+	
+	var _possibleConstructorReturn2 = _interopRequireDefault(__webpack_require__(275));
+	
+	var _getPrototypeOf2 = _interopRequireDefault(__webpack_require__(276));
+	
+	var _react = _interopRequireWildcard(__webpack_require__(1));
+	
+	var _reactDom = _interopRequireDefault(__webpack_require__(2));
+	
+	var _classnames = _interopRequireDefault(__webpack_require__(5));
+	
+	function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function () { var Super = (0, _getPrototypeOf2.default)(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = (0, _getPrototypeOf2.default)(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return (0, _possibleConstructorReturn2.default)(this, result); }; }
+	
+	function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+	
+	var Notice = /*#__PURE__*/function (_Component) {
+	  (0, _inherits2.default)(Notice, _Component);
+	
+	  var _super = _createSuper(Notice);
+	
+	  function Notice() {
+	    var _this;
+	
+	    (0, _classCallCheck2.default)(this, Notice);
+	    _this = _super.apply(this, arguments);
+	    _this.closeTimer = null;
+	
+	    _this.close = function (e) {
+	      if (e) {
+	        e.stopPropagation();
+	      }
+	
+	      _this.clearCloseTimer();
+	
+	      var onClose = _this.props.onClose;
+	
+	      if (onClose) {
+	        onClose();
+	      }
+	    };
+	
+	    _this.startCloseTimer = function () {
+	      if (_this.props.duration) {
+	        _this.closeTimer = window.setTimeout(function () {
+	          _this.close();
+	        }, _this.props.duration * 1000);
+	      }
+	    };
+	
+	    _this.clearCloseTimer = function () {
+	      if (_this.closeTimer) {
+	        clearTimeout(_this.closeTimer);
+	        _this.closeTimer = null;
+	      }
+	    };
+	
+	    return _this;
+	  }
+	
+	  (0, _createClass2.default)(Notice, [{
+	    key: "componentDidMount",
+	    value: function componentDidMount() {
+	      this.startCloseTimer();
+	    }
+	  }, {
+	    key: "componentDidUpdate",
+	    value: function componentDidUpdate(prevProps) {
+	      if (this.props.duration !== prevProps.duration || this.props.update) {
+	        this.restartCloseTimer();
+	      }
+	    }
+	  }, {
+	    key: "componentWillUnmount",
+	    value: function componentWillUnmount() {
+	      this.clearCloseTimer();
+	    }
+	  }, {
+	    key: "restartCloseTimer",
+	    value: function restartCloseTimer() {
+	      this.clearCloseTimer();
+	      this.startCloseTimer();
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var _this$props = this.props,
+	          prefixCls = _this$props.prefixCls,
+	          className = _this$props.className,
+	          closable = _this$props.closable,
+	          closeIcon = _this$props.closeIcon,
+	          style = _this$props.style,
+	          onClick = _this$props.onClick,
+	          children = _this$props.children,
+	          holder = _this$props.holder;
+	      var componentClass = "".concat(prefixCls, "-notice");
+	      var dataOrAriaAttributeProps = Object.keys(this.props).reduce(function (acc, key) {
+	        if (key.substr(0, 5) === 'data-' || key.substr(0, 5) === 'aria-' || key === 'role') {
+	          acc[key] = _this2.props[key];
+	        }
+	
+	        return acc;
+	      }, {});
+	
+	      var node = _react.default.createElement("div", Object.assign({
+	        className: (0, _classnames.default)(componentClass, className, (0, _defineProperty2.default)({}, "".concat(componentClass, "-closable"), closable)),
+	        style: style,
+	        onMouseEnter: this.clearCloseTimer,
+	        onMouseLeave: this.startCloseTimer,
+	        onClick: onClick
+	      }, dataOrAriaAttributeProps), _react.default.createElement("div", {
+	        className: "".concat(componentClass, "-content")
+	      }, children), closable ? _react.default.createElement("a", {
+	        tabIndex: 0,
+	        onClick: this.close,
+	        className: "".concat(componentClass, "-close")
+	      }, closeIcon || _react.default.createElement("span", {
+	        className: "".concat(componentClass, "-close-x")
+	      })) : null);
+	
+	      if (holder) {
+	        return _reactDom.default.createPortal(node, holder);
+	      }
+	
+	      return node;
+	    }
+	  }]);
+	  return Notice;
+	}(_react.Component);
+	
+	exports.default = Notice;
+	Notice.defaultProps = {
+	  onClose: function onClose() {},
+	  duration: 1.5,
+	  style: {
+	    right: '50%'
+	  }
+	};
 
 /***/ }),
 /* 691 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var rng = __webpack_require__(689);
-	var bytesToUuid = __webpack_require__(690);
+	"use strict";
 	
-	function v4(options, buf, offset) {
-	  var i = buf && offset || 0;
+	var _interopRequireWildcard = __webpack_require__(204);
 	
-	  if (typeof(options) == 'string') {
-	    buf = options === 'binary' ? new Array(16) : null;
-	    options = null;
+	var _interopRequireDefault = __webpack_require__(14);
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = useNotification;
+	
+	var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(692));
+	
+	var _slicedToArray2 = _interopRequireDefault(__webpack_require__(698));
+	
+	var React = _interopRequireWildcard(__webpack_require__(1));
+	
+	var _Notice = _interopRequireDefault(__webpack_require__(690));
+	
+	function useNotification(notificationInstance) {
+	  var createdRef = React.useRef({});
+	
+	  var _React$useState = React.useState([]),
+	      _React$useState2 = (0, _slicedToArray2.default)(_React$useState, 2),
+	      elements = _React$useState2[0],
+	      setElements = _React$useState2[1];
+	
+	  function notify(noticeProps) {
+	    notificationInstance.add(noticeProps, function (div, props) {
+	      var key = props.key;
+	
+	      if (div && !createdRef.current[key]) {
+	        var noticeEle = React.createElement(_Notice.default, Object.assign({}, props, {
+	          holder: div
+	        }));
+	        createdRef.current[key] = noticeEle;
+	        setElements(function (originElements) {
+	          return [].concat((0, _toConsumableArray2.default)(originElements), [noticeEle]);
+	        });
+	      }
+	    });
 	  }
-	  options = options || {};
 	
-	  var rnds = options.random || (options.rng || rng)();
-	
-	  // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-	  rnds[6] = (rnds[6] & 0x0f) | 0x40;
-	  rnds[8] = (rnds[8] & 0x3f) | 0x80;
-	
-	  // Copy bytes to buffer, if provided
-	  if (buf) {
-	    for (var ii = 0; ii < 16; ++ii) {
-	      buf[i + ii] = rnds[ii];
-	    }
-	  }
-	
-	  return buf || bytesToUuid(rnds);
+	  return [notify, React.createElement(React.Fragment, null, elements)];
 	}
-	
-	module.exports = v4;
-
 
 /***/ }),
 /* 692 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var arrayWithoutHoles = __webpack_require__(693);
 	
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
+	var iterableToArray = __webpack_require__(695);
 	
-	var _react = __webpack_require__(1);
+	var unsupportedIterableToArray = __webpack_require__(696);
 	
-	var _react2 = _interopRequireDefault(_react);
+	var nonIterableSpread = __webpack_require__(697);
 	
-	var _propTypes = __webpack_require__(6);
+	function _toConsumableArray(arr) {
+	  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+	}
 	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _beeIcon = __webpack_require__(67);
-	
-	var _beeIcon2 = _interopRequireDefault(_beeIcon);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _defaults(obj, defaults) { var keys = Object.getOwnPropertyNames(defaults); for (var i = 0; i < keys.length; i++) { var key = keys[i]; var value = Object.getOwnPropertyDescriptor(defaults, key); if (value && value.configurable && obj[key] === undefined) { Object.defineProperty(obj, key, value); } } return obj; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : _defaults(subClass, superClass); }
-	
-	var propTypes = {
-	    clsfix: _propTypes2["default"].string,
-	    content: _propTypes2["default"].node,
-	    duration: _propTypes2["default"].number,
-	    type: _propTypes2["default"].oneOfType[('success', 'error', 'warning')]
-	};
-	var defaultProps = {
-	    clsfix: 'ac-tips',
-	    content: '',
-	    type: 'success',
-	    duration: 5000
-	};
-	
-	var Tips = function (_Component) {
-	    _inherits(Tips, _Component);
-	
-	    function Tips(props) {
-	        _classCallCheck(this, Tips);
-	
-	        var _this = _possibleConstructorReturn(this, _Component.call(this, props));
-	
-	        _this.hide = function () {
-	            _this.setState({
-	                hide: true
-	            });
-	        };
-	
-	        _this.onMouseEnter = function () {
-	            if (!_this.state.hide) return;
-	            _this.setState({
-	                hide: false
-	            });
-	            _this.timer && clearTimeout(_this.timer);
-	            _this.timer = setTimeout(function () {
-	                _this.timer = setTimeout(function () {
-	                    _this.hide();
-	                }, _this.props.duration);
-	            });
-	        };
-	
-	        _this.state = {
-	            hide: false
-	        };
-	        return _this;
-	    }
-	
-	    Tips.prototype.componentDidMount = function componentDidMount() {
-	        var _this2 = this;
-	
-	        var _props = this.props,
-	            duration = _props.duration,
-	            destory = _props.destory,
-	            type = _props.type,
-	            id = _props.id;
-	
-	        if (duration) {
-	            this.timer && clearTimeout(this.timer);
-	            if (type == 'success' || type == 'warning') {
-	                this.timer = setTimeout(function () {
-	                    destory(id);
-	                }, duration);
-	            } else {
-	                this.timer = setTimeout(function () {
-	                    _this2.hide();
-	                }, duration);
-	            }
-	        }
-	    };
-	
-	    Tips.prototype.render = function render() {
-	        var IconTypes = {
-	            warning: 'uf-exc-c',
-	            error: 'uf-close-c',
-	            success: 'uf-correct'
-	        };
-	        var _props2 = this.props,
-	            clsfix = _props2.clsfix,
-	            content = _props2.content,
-	            type = _props2.type,
-	            destory = _props2.destory,
-	            id = _props2.id;
-	        var hide = this.state.hide;
-	
-	        return _react2["default"].createElement(
-	            'div',
-	            { className: clsfix + ' ' + type, onMouseEnter: this.onMouseEnter },
-	            _react2["default"].createElement(_beeIcon2["default"], { type: IconTypes[type] }),
-	            hide ? '' : _react2["default"].createElement(
-	                'span',
-	                { className: clsfix + '-inner' },
-	                content
-	            ),
-	            hide ? '' : _react2["default"].createElement(
-	                'span',
-	                { className: clsfix + '-close', onClick: function onClick() {
-	                        destory(id);
-	                    } },
-	                '\u5173\u95ED'
-	            )
-	        );
-	    };
-	
-	    return Tips;
-	}(_react.Component);
-	
-	;
-	
-	Tips.propTypes = propTypes;
-	Tips.defaultProps = defaultProps;
-	
-	exports["default"] = Tips;
-	module.exports = exports['default'];
+	module.exports = _toConsumableArray;
 
 /***/ }),
 /* 693 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var arrayLikeToArray = __webpack_require__(694);
+	
+	function _arrayWithoutHoles(arr) {
+	  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+	}
+	
+	module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 694 */
+/***/ (function(module, exports) {
+
+	function _arrayLikeToArray(arr, len) {
+	  if (len == null || len > arr.length) len = arr.length;
+	
+	  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+	    arr2[i] = arr[i];
+	  }
+	
+	  return arr2;
+	}
+	
+	module.exports = _arrayLikeToArray;
+
+/***/ }),
+/* 695 */
+/***/ (function(module, exports) {
+
+	function _iterableToArray(iter) {
+	  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+	}
+	
+	module.exports = _iterableToArray;
+
+/***/ }),
+/* 696 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var arrayLikeToArray = __webpack_require__(694);
+	
+	function _unsupportedIterableToArray(o, minLen) {
+	  if (!o) return;
+	  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+	  var n = Object.prototype.toString.call(o).slice(8, -1);
+	  if (n === "Object" && o.constructor) n = o.constructor.name;
+	  if (n === "Map" || n === "Set") return Array.from(o);
+	  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+	}
+	
+	module.exports = _unsupportedIterableToArray;
+
+/***/ }),
+/* 697 */
+/***/ (function(module, exports) {
+
+	function _nonIterableSpread() {
+	  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	}
+	
+	module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 698 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var arrayWithHoles = __webpack_require__(699);
+	
+	var iterableToArrayLimit = __webpack_require__(700);
+	
+	var unsupportedIterableToArray = __webpack_require__(696);
+	
+	var nonIterableRest = __webpack_require__(701);
+	
+	function _slicedToArray(arr, i) {
+	  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+	}
+	
+	module.exports = _slicedToArray;
+
+/***/ }),
+/* 699 */
+/***/ (function(module, exports) {
+
+	function _arrayWithHoles(arr) {
+	  if (Array.isArray(arr)) return arr;
+	}
+	
+	module.exports = _arrayWithHoles;
+
+/***/ }),
+/* 700 */
+/***/ (function(module, exports) {
+
+	function _iterableToArrayLimit(arr, i) {
+	  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+	  var _arr = [];
+	  var _n = true;
+	  var _d = false;
+	  var _e = undefined;
+	
+	  try {
+	    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+	      _arr.push(_s.value);
+	
+	      if (i && _arr.length === i) break;
+	    }
+	  } catch (err) {
+	    _d = true;
+	    _e = err;
+	  } finally {
+	    try {
+	      if (!_n && _i["return"] != null) _i["return"]();
+	    } finally {
+	      if (_d) throw _e;
+	    }
+	  }
+	
+	  return _arr;
+	}
+	
+	module.exports = _iterableToArrayLimit;
+
+/***/ }),
+/* 701 */
+/***/ (function(module, exports) {
+
+	function _nonIterableRest() {
+	  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+	}
+	
+	module.exports = _nonIterableRest;
+
+/***/ }),
+/* 702 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -107490,7 +107839,7 @@
 	};
 
 /***/ }),
-/* 694 */
+/* 703 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -107509,7 +107858,7 @@
 	
 	var _beeComplexGrid2 = _interopRequireDefault(_beeComplexGrid);
 	
-	var _defaultProps = __webpack_require__(693);
+	var _defaultProps = __webpack_require__(702);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -107586,7 +107935,7 @@
 	module.exports = exports["default"];
 
 /***/ }),
-/* 695 */
+/* 704 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
