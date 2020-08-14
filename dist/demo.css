@@ -11998,13 +11998,13 @@ li.rc-time-picker-panel-select-option-disabled:hover {
 
 .ac-btns span.ac-btns-item {
   color: #0073e1;
-  font-size: 13px; }
+  font-size: 12px; }
   .ac-btns span.ac-btns-item[disabled] {
     color: #dfe1e6; }
 
 .ac-btns button.ac-btns-item.u-button {
   box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
-  font-size: 13px;
+  font-size: 12px;
   min-width: 60px;
   min-height: 30px;
   padding: 0 10px;
@@ -12032,7 +12032,9 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     background: linear-gradient(90deg, #fa482e, #f32f27);
     color: #fff;
     border: none;
-    box-shadow: none; }
+    box-shadow: none;
+    height: 30px;
+    line-height: 30px; }
     .ac-btns button.ac-btns-item.u-button.u-button-primary:hover {
       background: linear-gradient(90deg, #f32f27, #fa482e);
       color: #fff; }
@@ -12061,6 +12063,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     color: #111;
     background-color: #fff;
     height: 30px; }
+  .ac-btns button.ac-btns-item.u-button.ac-btns-add .uf {
+    font-size: 12px;
+    padding: 0;
+    margin-right: 3px; }
   .ac-btns button.ac-btns-item.u-button.ac-btns-search {
     background: linear-gradient(90deg, #fa482e, #f32f27);
     color: #fff;
@@ -12084,10 +12090,10 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       position: relative;
       bottom: 2px; }
   .ac-btns button.ac-btns-item.u-button.u-button[disabled], .ac-btns button.ac-btns-item.u-button.u-button[disabled]:hover {
-    background: #fff;
-    color: #dfe1e6;
-    border-color: #d0d0d0;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); }
+    border: 1px solid #d9d9d9;
+    color: rgba(0, 0, 0, 0.25);
+    background: #f7f7f7;
+    box-shadow: none; }
 
 .ac-btns .icon.ac-btns-add, .ac-btns .icon.ac-btns-update, .ac-btns .icon.ac-btns-delete {
   color: linear-gradient(90deg, #fa482e, #f32f27); }
@@ -13525,7 +13531,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     color: #adb4bc; }
   .ac-gridcn .u-table tr.filterable th .datepicker-input-group .u-form-control {
     height: 26px;
-    font-size: 13px;
+    font-size: 12px;
     padding-left: 8px;
     padding-right: 8px; }
   .ac-gridcn .u-table tr.filterable th .u-select {
@@ -13533,7 +13539,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     .ac-gridcn .u-table tr.filterable th .u-select .u-select-selection-rendered {
       line-height: 26px; }
       .ac-gridcn .u-table tr.filterable th .u-select .u-select-selection-rendered .u-select-selection-selected-value {
-        font-size: 13px; }
+        font-size: 12px; }
     .ac-gridcn .u-table tr.filterable th .u-select .u-select-selection {
       height: 26px; }
     .ac-gridcn .u-table tr.filterable th .u-select .u-select-arrow {
@@ -13723,7 +13729,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     width: calc(100% - 30px);
     height: 26px;
     text-align: left;
-    font-size: 13px;
+    font-size: 12px;
     padding: 0 8px; }
   .ac-gridcn .u-table tr td .triangle-flag input,
   .ac-gridcn .u-table tr td .triangle-flag .u-select .u-select-selection,
@@ -13746,7 +13752,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     color: #adb4bc; }
   .ac-gridcn .u-table tr td .triangle-flag .datepicker-input-group .u-form-control {
     height: 26px;
-    font-size: 13px;
+    font-size: 12px;
     padding-left: 8px;
     padding-right: 8px; }
   .ac-gridcn .u-table tr td .triangle-flag .u-select {
@@ -13756,7 +13762,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-left: 0;
       margin-right: 0; }
       .ac-gridcn .u-table tr td .triangle-flag .u-select .u-select-selection-rendered .u-select-selection-selected-value {
-        font-size: 13px;
+        font-size: 12px;
         padding-left: 8px;
         padding-right: 8px; }
     .ac-gridcn .u-table tr td .triangle-flag .u-select .u-select-selection {
