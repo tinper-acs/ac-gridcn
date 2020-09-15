@@ -10392,7 +10392,7 @@ ul {
   width: 100%;
   height: 32px;
   cursor: text;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.5;
   color: #424242;
   background-color: #fff;
@@ -10518,6 +10518,9 @@ ul {
 
 /* FormGroup */
 /*  Navlayout  */
+.u-input-group-addon {
+  font-size: 12px; }
+
 .u-input-group-btn {
   font-size: 0;
   white-space: nowrap;
@@ -10962,10 +10965,6 @@ ul {
 .rc-calendar-date:hover {
   background: rgb(235, 236, 240);
   cursor: pointer; }
-
-.rc-calendar-selected-day:not(.rc-calendar-disabled-cell) .rc-calendar-date {
-  background: rgb(245, 60, 50);
-  color: #fff !important; }
 
 .rc-calendar-selected-date .rc-calendar-date {
   background: rgb(245, 60, 50);
@@ -13305,6 +13304,8 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       .u-modal .u-modal-header .u-close .uf-close {
         font-size: 12px;
         color: #505F79; }
+        .u-modal .u-modal-header .u-close .uf-close:hover {
+          color: #e23; }
   .u-modal .u-modal-title {
     margin: 0;
     line-height: 1.42857143; }
@@ -13398,14 +13399,15 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       min-width: 60px;
       min-height: 28px;
       line-height: 28px;
-      padding: 0 10px; }
+      padding: 0 10px;
+      font-size: 12px; }
     .ac-confirm .u-modal-dialog .ac-confirm-footer .u-button.u-button-secondary {
       background: #dbe0e5;
       border: none; }
       .ac-confirm .u-modal-dialog .ac-confirm-footer .u-button.u-button-secondary:hover {
         background: #e5e9ec; }
     .ac-confirm .u-modal-dialog .ac-confirm-footer .u-button.u-button-primary {
-      margin-right: 8px;
+      margin-left: 8px;
       background: linear-gradient(-45deg, #fc4c2f, #ee2223);
       color: #fff;
       border: none;
@@ -13443,7 +13445,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       margin-left: 15px; }
   .ac-confirm .ac-confirm-body.u-modal-body .ac-confirm-body-content {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     color: #555555;
     margin: 8px 48px; }
 

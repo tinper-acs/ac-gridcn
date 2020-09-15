@@ -331,7 +331,7 @@ class Grid extends Component {
                 data:this.allData,
                 selectData:selectList
             })
-            this.props.onChange(this.allData);
+            this.props.onChange(this.allData, field, value, index);
         }
     }
     //增行
@@ -474,22 +474,24 @@ class Grid extends Component {
             })
             console.log(this.errors)
         }else{
-            let data = cloneDeep(this.state.data);
-            data.forEach(item=>{
-                item._edit = false;//是否编辑态
-                item._status = '';//是否编辑态，用于显示是否编辑过
-                item._checked = false;
-            })
-            this.setState({
-                data,
-                adding:false,
-                allEditing:false,
-                selectData:[],
-                pasting:false
-            })
+            let saveData = this.props.save(selectList);
+            if(saveData !== false) {
+                let data = cloneDeep(this.state.data);
+                data.forEach(item=>{
+                    item._edit = false;//是否编辑态
+                    item._status = '';//是否编辑态，用于显示是否编辑过
+                    item._checked = false;
+                })
+                this.setState({
+                    data,
+                    adding:false,
+                    allEditing:false,
+                    selectData:[],
+                    pasting:false
+                })
+                this.allData = data;
+            }
             // this.props.onChange(data)
-            this.allData = data;
-            this.props.save(selectList);
         }
     }
 
@@ -580,7 +582,8 @@ class Grid extends Component {
             keyword:'警告',
             content:"数据未保存，确定离开？",
             onOk:()=> {
-                let data = cloneDeep(this.state.data);
+                // let data = cloneDeep(this.state.data);
+                let data = cloneDeep(this.props.data); // 取消时取props中的data重置数据
                 data.forEach(item=>{
                     item._edit = false;//是否编辑态
                     item._status = '';//是否编辑态，用于显示是否编辑过

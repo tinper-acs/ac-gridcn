@@ -47,7 +47,9 @@ class Demo2 extends Component {
                 required:true,
                 validate:true,
                 fieldProps:{
-                    defaultValue:'姓名'
+                    defaultValue:'姓名',
+                    // autoSize: { minRows: 3, maxRows: 5 },
+                    // componentClass: 'textarea' // 多行文本示例
                 },
             },
             {
@@ -330,6 +332,10 @@ class Demo2 extends Component {
             items:20
         })
     }
+
+    onChange = (data) => {
+        console.log('data',data);
+    }
     
     render () {
         let paginationObj = {
@@ -364,6 +370,7 @@ class Demo2 extends Component {
                         console.log('保存，数据如下-----------',selectList)
                     }}
                     headerScroll={true}
+                    onChange = {this.onChange}
                     title="我是标题"
                 />
             </div>
