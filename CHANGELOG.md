@@ -1,3 +1,12 @@
+## [1.0.2](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.1...v1.0.2) (2020-09-15)
+
+
+### Bug Fixes
+
+* save && 取消edit逻辑 && 增加onChange回调参数列信息 行信息 #JCJS-4101 && #JCJS-4102 && #JCJS-4109 ([7c4358e](https://github.com/tinper-bee/ac-gridcn/commit/7c4358e4f6d8218f0ba519c2f76da5ba04bd44a3)), closes [#JCJS-4101](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4101) [#JCJS-4102](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4102) [#JCJS-4109](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4109)
+
+
+
 <a name="0.2.38"></a>
 ## [0.2.38](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.37...v0.2.38) (2020-05-27)
 
