@@ -1,3 +1,12 @@
+## [1.0.4](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.3...v1.0.4) (2020-09-29)
+
+
+### Bug Fixes
+
+* api ([95965ab](https://github.com/tinper-bee/ac-gridcn/commit/95965ab5234b7eca619302e11538f0981220a35b))
+
+
+
 ## [1.0.3](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.2...v1.0.3) (2020-09-29)
 
 
