@@ -1,3 +1,12 @@
+## [1.0.3](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.2...v1.0.3) (2020-09-29)
+
+
+### Bug Fixes
+
+* save reset addNum ([7b69c75](https://github.com/tinper-bee/ac-gridcn/commit/7b69c7551988ab4352dfd66b74d4182ceab25c8e))
+
+
+
 ## [1.0.2](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.1...v1.0.2) (2020-09-15)
 
 
