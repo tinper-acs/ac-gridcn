@@ -487,6 +487,7 @@ class Grid extends Component {
                     adding:false,
                     allEditing:false,
                     selectData:[],
+                    addNum:0,
                     pasting:false
                 })
                 this.allData = data;
