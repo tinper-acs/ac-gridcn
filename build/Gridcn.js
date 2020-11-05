@@ -485,7 +485,7 @@ var _initialiseProps = function _initialiseProps() {
                 data: _this2.allData,
                 selectData: selectList
             });
-            _this2.props.onChange(_this2.allData);
+            _this2.props.onChange(_this2.allData, field, value, index);
         }
     };
 
@@ -622,22 +622,25 @@ var _initialiseProps = function _initialiseProps() {
             });
             console.log(_this2.errors);
         } else {
-            var data = (0, _lodash2["default"])(_this2.state.data);
-            data.forEach(function (item) {
-                item._edit = false; //是否编辑态
-                item._status = ''; //是否编辑态，用于显示是否编辑过
-                item._checked = false;
-            });
-            _this2.setState({
-                data: data,
-                adding: false,
-                allEditing: false,
-                selectData: [],
-                pasting: false
-            });
+            var saveData = _this2.props.save(selectList);
+            if (saveData !== false) {
+                var data = (0, _lodash2["default"])(_this2.state.data);
+                data.forEach(function (item) {
+                    item._edit = false; //是否编辑态
+                    item._status = ''; //是否编辑态，用于显示是否编辑过
+                    item._checked = false;
+                });
+                _this2.setState({
+                    data: data,
+                    adding: false,
+                    allEditing: false,
+                    selectData: [],
+                    addNum: 0,
+                    pasting: false
+                });
+                _this2.allData = data;
+            }
             // this.props.onChange(data)
-            _this2.allData = data;
-            _this2.props.save(selectList);
         }
     };
 
@@ -726,7 +729,8 @@ var _initialiseProps = function _initialiseProps() {
             keyword: '警告',
             content: "数据未保存，确定离开？",
             onOk: function onOk() {
-                var data = (0, _lodash2["default"])(_this2.state.data);
+                // let data = cloneDeep(this.state.data);
+                var data = (0, _lodash2["default"])(_this2.props.data); // 取消时取props中的data重置数据
                 data.forEach(function (item) {
                     item._edit = false; //是否编辑态
                     item._status = ''; //是否编辑态，用于显示是否编辑过
