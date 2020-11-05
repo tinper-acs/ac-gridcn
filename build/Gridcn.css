@@ -9622,6 +9622,8 @@ ul {
   position: relative;
   line-height: 1.33;
   overflow: hidden; }
+  .u-table.copy .u-table-thead th {
+    user-select: unset; }
   .u-table-body {
     position: relative; }
     .u-table-body .u-table-row-expand-columns-in-body .expand-icon-con {
@@ -10623,8 +10625,8 @@ ul {
 .u-grid th:last-child.column-number-right {
   padding-right: 34px; }
 
-.u-grid th:last-child .cansort.drop-menu {
-  width: calc(100% - 55px) !important; }
+.u-grid th:last-child > span:first-child {
+  width: calc(100% - 58px) !important; }
 
 .u-grid th .bee-table-column-sorter {
   margin-left: 0px; }
