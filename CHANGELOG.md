@@ -1,3 +1,12 @@
+## [1.0.6](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.5...v1.0.6) (2020-11-05)
+
+
+### Bug Fixes
+
+* 更新ac-tips样式 ([03bb881](https://github.com/tinper-bee/ac-gridcn/commit/03bb881d232d34ef6e1aedd3b29678266a72e7e5))
+
+
+
 ## [1.0.5](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.4...v1.0.5) (2020-11-05)
 
 
