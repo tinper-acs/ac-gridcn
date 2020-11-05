@@ -1,3 +1,12 @@
+## [1.0.5](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.4...v1.0.5) (2020-11-05)
+
+
+### Bug Fixes
+
+* 表头居中样式 ([b628ec4](https://github.com/tinper-bee/ac-gridcn/commit/b628ec4b93e063cc1028f15b85bd1eea7b3c4024))
+
+
+
 ## [1.0.4](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.3...v1.0.4) (2020-09-29)
 
 
