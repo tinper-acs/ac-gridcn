@@ -761,3 +761,107 @@ $font-size:12px;
     border: 1px solid #ccc;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
+
+
+.ac-gridcn-field-model{
+    .u-modal-body{
+        display: flex;
+        flex-wrap: wrap;
+        align-content: flex-start;
+
+        // .u-col-md-4,
+        // .u-col-sm-4,
+        // .u-col-xs-4{
+
+        // }
+
+        // .u-col-md-6,
+        // .u-col-sm-6,
+        // .u-col-xs-6{
+        //     .u-input-number.u-input-group.simple .u-form-control{
+        //         min-width: 215px !important;
+        //     }
+        // }
+    }
+    .u-form-item{
+        padding: 0;
+        .input{
+            width: 100%;
+            display: flex;
+            .datepicker-container,
+            .u-select,
+            .u-input-number-out,
+            .u-form-control{
+                width: 100%;
+                min-width: 100px !important;
+            }
+            .u-label{
+                padding-top: 8px;
+            }
+            
+        }
+        // .u-select,
+        // .u-input-number-out{ 
+        //     width: 100%;
+        // }
+        // .datepicker-container{
+        //     .u-form-control{
+        //         width: 100%;
+        //     }
+        // } 
+        .error{
+            padding-left: 96px;
+        }
+        .disable-text{
+            width: 100%;
+            min-width: 100px;
+        }
+    }
+}
+
+#yxyweb-support-container .u-modal.fade.in{ 
+    z-index: 1701;
+}
+
+// .ac-gridcn-field-model{
+//     .u-modal-body{
+//         display: flex;
+//         flex-wrap: wrap;
+//         align-content: flex-start;
+
+//         .u-col-md-4,
+//         .u-col-sm-4,
+//         .u-col-xs-4{
+
+//         }
+
+//         .u-col-md-6,
+//         .u-col-sm-6,
+//         .u-col-xs-6{
+//             .u-input-number.u-input-group.simple .u-form-control{
+//                 min-width: 215px !important;
+//             }
+//         }
+//     }
+//     .u-form-item{
+//         padding: 0;
+//         .input{
+//             width: auto;
+//         }
+//         .u-select,
+//         .u-input-number-out{
+//             display: inline-block;
+//         }
+//         .error{
+//             padding-left: 96px;
+//         }
+       
+//         .u-form-control,
+//         .u-select{
+//             min-width: 240px !important;
+//         }
+//     }
+//     .disable-text{
+//         min-width: 100px;
+//     }
+// }

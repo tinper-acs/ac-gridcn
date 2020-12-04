@@ -6,6 +6,7 @@ import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
 import Modal from 'bee-modal';
 import isequal from 'lodash.isequal';
+// import RowFieldModel from './FieldModel';
 //文本输入组件
 import TextField from './RowField/TextField';
 //下拉选择组件
@@ -56,6 +57,10 @@ class Grid extends Component {
             addNum:0,//新增的条数
             canExport:false,
             pasting:false,//正在粘贴
+
+            rowField:{
+                show:false,
+            }
         }
         this.oldColumns = props.columns;
         this.selectList = [];//选中的数据
@@ -217,11 +222,16 @@ class Grid extends Component {
                     break;
                     case 'refer':
                         item.render=(text,record,index)=>{
-                            let displayName = 'name';
+                            let displayName = fieldProps['displayname'];//'name';
                             if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
                             let value = oldRender&&oldRender(text,record,index);
-                            if(text&&(typeof text == 'object')&&(!record._edit)){
-                                value = oldRender&&oldRender(text[displayName],record,index);
+                            if(text && record._edit){
+                                value = text instanceof Array?value:null;
+                                value =  !value && text instanceof Object?oldRender&& oldRender(text[displayName],record,index):value;
+                            }else if(text && record._edit === false){
+                                value = text instanceof Array?text.map(da=>{return da[displayName]}):null;
+                                value = value ?value.join(","):null;
+                                value = !value && text instanceof Object?oldRender&&oldRender(text[displayName],record,index):value;
                             }
                             return (
                                 record._edit?<span>
@@ -235,12 +245,18 @@ class Grid extends Component {
                                             onChange :this.onChange,
                                             status :record._status,
                                             onValidate:this.onValidate,
-                                            text:item.listKey?record[item.listKey]:value
+                                            text:item.listKey?record[item.listKey]:value,
+                                            rowFieldContext:this.props.rowFieldContext
                                         })
                                     }
                                 </span>:<div>{item.listKey?record[item.listKey]:value}</div>
                             )
                         }
+                        //参照需要根据valueField 来显示内容
+                        if(fieldProps.defaultValue!=undefined && this.props.rowFieldContext){
+                            defaultValueKeyValue[dataIndex]=fieldProps.defaultValue[fieldProps.valueField];
+                        }
+                        
                     break;
                 }
             }
@@ -336,12 +352,29 @@ class Grid extends Component {
     }
     //增行
     addRow=()=>{
+        const {rowFieldContext,rowFieldCancel} = this.props; 
         let defaultValueKeyValue = this.state.defaultValueKeyValue;
         let data = cloneDeep(this.state.data);
         let item = cloneDeep(defaultValueKeyValue);
         item._edit = true;
         item._status = 'edit';
         item._checked = true;
+        if(rowFieldContext){
+            this.setState({
+                rowField:{
+                    show:true,
+                    title:'增行',
+                    columns:this.props.columns,
+                    itemDate:item,
+                    clsfix:this.props.clsfix,
+                    rowFieldRow:this.props.rowFieldRow,
+                    // className:this.props.className,
+                    // ...this.props,
+                    cancel:(_item)=>{this.rowFieldCancel(_item,data)}
+                }
+            })
+            return;
+        }
         data.unshift(item);
         let selectList = [];
         data.forEach((item,index)=>{
@@ -357,6 +390,32 @@ class Grid extends Component {
         this.selectList = selectList;
         this.allData = data;
         this.props.onChange(data)
+    }
+
+    //弹框后新增
+    rowFieldCancel =(_item,data)=>{
+        this.state.rowField.show = false;
+        this.setState({
+            rowField:{...rowField}
+        })
+        if(!_item)return;
+        let {selectData,addNum,rowField} = this.state;
+        _item._edit = true;
+        _item._status = 'edit';
+        _item._checked = true;  
+        selectData.push(_item);
+        if(_item){
+            data.unshift(_item);
+        }
+        this.setState({
+            data,
+            selectData,
+            adding:true,
+            addNum:addNum+1,
+            rowField:{...rowField}
+        })
+        this.props.onChange(data)
+        this.allData = data;
     }
 
     //取消新增
@@ -862,12 +921,15 @@ class Grid extends Component {
     }
 
     render() {
+        const {rowField} = this.state;
         return (
             <span>
                 {
                     this.state.isMax?ReactDOM.createPortal(this.renderDom(),document.querySelector('body')):this.renderDom()
                 }
-
+                {/* {
+                    rowField.show?<RowFieldModel {...rowField} />:null
+                } */}
             </span>
         )
         
