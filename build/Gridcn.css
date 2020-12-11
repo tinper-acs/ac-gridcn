@@ -15336,7 +15336,7 @@ li.rc-time-picker-panel-select-option-disabled:hover {
       height: 32px !important;
       line-height: 32px !important; }
     .ac-gridcn-field-model .u-form-item .input .u-input-group.simple .u-input-group-btn {
-      top: 2px !important; }
+      line-height: 32px !important; }
     .ac-gridcn-field-model .u-form-item .input .u-label {
       padding-top: 8px; }
     .ac-gridcn-field-model .u-form-item .input .triangle-flag {
@@ -15352,4 +15352,4 @@ li.rc-time-picker-panel-select-option-disabled:hover {
     min-width: 100px; }
 
 #yxyweb-support-container .u-modal.fade.in {
-  z-index: 3001; }
+  z-index: 3001 !important; }
