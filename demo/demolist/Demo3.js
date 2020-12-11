@@ -1,11 +1,10 @@
 /**
 *
-* @title 编辑表格使用参照
-* @description 编辑表格使用参照
+* @title 编辑表格使用参照、行编辑为弹框模式
+* @description 编辑表格使用参照(ac-mdf-refer)、行编辑为弹框模式(rowFieldPop)
 *
 */
 import React, { Component } from 'react';
-// import data from './data';
 import { EditGrid} from '../../src/index'
 import moment from 'moment';
 import Button from 'bee-button';
@@ -151,35 +150,14 @@ class Demo3 extends Component {
                     component:<ReferField/>,
                     fieldProps:{
                         multiple: true,
-                       
-                        // valueField: 'id',
-                        // text: '',
-                        displayname: 'name',
+                        displayName: 'name',
                         valueField: 'code',
-                        defaultValue:[{"code":"00000062",name:'aa'},{"code":"HYL-kjry",name:'ccc'}],
-                        //defaultValue 为字符串的情况下
-                        //如果没有valueField, defaultValue 设置为ID值即可回显示。
-                        //如果 valueField: 'code', 设置 defaultValue 的值为code 的值即可回显
-
+                        defaultValue:[{"code":"lwnkuiaj",name:'aa'},{"code":"lwncaigou",name:'ccc'}],
                         // code: "00000062"
                         // id: "1771704067707136"
                         // name: "小丽"
-
-
-                        // defaultValue:{
-                        //     'code':"999",
-                        //     'id':'123',
-                        //     'name':'张三'
-                        // },
-                        // cRefType: 'productcenter.pc_nomalproductref',
-                        // cRefType:"ucf-staff-center.bd_adminorgTabletreeref",
-                        cRefType: 'ucf-staff-center.bd_staff_ref',
+                        cRefType: 'ucfbasedoc.bd_baseorgref',
                         referValueType:'any',
-                        // model:(refer_model)=>{
-                        //     console.log(" refer_model ： ",refer_model)
-                        //     refer_model._set_data('externalData', { name: 456 })
-                        // }
-                        
                     }
             },
             {
@@ -259,7 +237,7 @@ class Demo3 extends Component {
         })
     }
 
-    onChange = (value) => {
+    onChange = (value,error) => {
         console.log('Demo3 onchange ',value);
     }
     
@@ -280,21 +258,6 @@ class Demo3 extends Component {
             // disabled: false//分页条禁用状态
         }
 
-       
-        //新增的时候，实现自己的逻辑
-        let rowFieldContext = (_item,_data)=>{
-            const {name} = this.state;
-            let _name = name?name:_data[0].name;
-            let popContin = null;
-            if(this.column.length > 5){
-                popContin = <div>  
-                    <FormControl value={_name} onChange={this.inputChange} />
-                    我的弹框的model  </div>;
-            }
-            this._data = _data;
-            return popContin;
-        }
-
         return (
             <div className='grid-parent'>
                 <div style={{'marginBottom':'20px'}}>
@@ -311,8 +274,8 @@ class Demo3 extends Component {
                     columns={this.column}//定义列
                     paginationObj={paginationObj}//分页数据
                     
-                    // rowFieldContext = {rowFieldContext}
-                    // rowFieldRow = {4}
+                    rowFieldPop = {true}
+                    rowFieldRow = {4}
 
                     excludeKeys={['id','ts','lastModified']}
                     delRow={(selectList,newData)=>{

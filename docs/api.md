@@ -53,13 +53,18 @@ import 'ac-gridcn/build/Gridcn.css';
 |patternMessage|正则校验错误信息|string|-|
 |fieldProps|传给`field`的属性|string|-|
 |listKey|编辑表格中，用于浏览态显示的key值|string|-|
+#### ac-gridcn
 
+|参数|说明|类型|默认值|
+|:---|:-----|:----|:------|
+|rowFieldPop| 行编辑是否为弹框模式(默认 false)|Array|-| 
+|rowFieldRow| layout 几行几列布局(默认为3列) |number|-|
 
 #### fieldProps
 
 |参数|说明|类型|默认值|
 |:---|:-----|:----|:------|
-|defaultValue|新增时默认值|string|-|
+|defaultValue|新增时默认值|Array|-|
 |maxLength|最大长度，type=`input`时生效|string|-|
 |options|type=`select` 时的下拉内容|bool|-|
 |precision|小数点后保留几位小数，type=`inputNumber`生效|number|-|

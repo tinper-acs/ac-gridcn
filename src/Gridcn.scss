@@ -3,7 +3,7 @@
 @import "../node_modules/bee-complex-grid/src/Grid.scss";
 @import "../node_modules/bee-datepicker/src/DatePicker.scss";
 @import "../node_modules/ac-btns/src/Btns.scss";
-@import "../node_modules/ac-tips/src/AcTips.scss";
+@import "../node_modules/ac-tips/build/AcTips.css";
 @import "../node_modules/bee-modal/src/Modal.scss";
 
 $primaryColor : #e14c46;
@@ -769,6 +769,13 @@ $font-size:12px;
         flex-wrap: wrap;
         align-content: flex-start;
 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        padding: 16px 0 !important;
+        padding-right: 80px !important;
+
         // .u-col-md-4,
         // .u-col-sm-4,
         // .u-col-xs-4{
@@ -785,7 +792,12 @@ $font-size:12px;
     }
     .u-form-item{
         padding: 0;
+        min-height: 54px;
+
         .input{
+            &>div{
+                width: 100%;
+            }
             width: 100%;
             display: flex;
             .datepicker-container,
@@ -794,23 +806,26 @@ $font-size:12px;
             .u-form-control{
                 width: 100%;
                 min-width: 100px !important;
+                height: 32px !important;
+                line-height: 32px !important;
+            }
+            .u-input-group.simple .u-input-group-btn{
+                line-height: 32px !important;
             }
             .u-label{
                 padding-top: 8px;
             }
-            
+            .triangle-flag{
+                width: 100%;
+            }
         }
-        // .u-select,
-        // .u-input-number-out{ 
-        //     width: 100%;
-        // }
-        // .datepicker-container{
-        //     .u-form-control{
-        //         width: 100%;
-        //     }
-        // } 
         .error{
-            padding-left: 96px;
+            padding-left: 84px;
+            display: inline-block;
+            padding-top: 5px;
+            .uf{
+                margin: 0px;
+            }
         }
         .disable-text{
             width: 100%;
@@ -820,48 +835,5 @@ $font-size:12px;
 }
 
 #yxyweb-support-container .u-modal.fade.in{ 
-    z-index: 1701;
+    z-index: 3001 !important;
 }
-
-// .ac-gridcn-field-model{
-//     .u-modal-body{
-//         display: flex;
-//         flex-wrap: wrap;
-//         align-content: flex-start;
-
-//         .u-col-md-4,
-//         .u-col-sm-4,
-//         .u-col-xs-4{
-
-//         }
-
-//         .u-col-md-6,
-//         .u-col-sm-6,
-//         .u-col-xs-6{
-//             .u-input-number.u-input-group.simple .u-form-control{
-//                 min-width: 215px !important;
-//             }
-//         }
-//     }
-//     .u-form-item{
-//         padding: 0;
-//         .input{
-//             width: auto;
-//         }
-//         .u-select,
-//         .u-input-number-out{
-//             display: inline-block;
-//         }
-//         .error{
-//             padding-left: 96px;
-//         }
-       
-//         .u-form-control,
-//         .u-select{
-//             min-width: 240px !important;
-//         }
-//     }
-//     .disable-text{
-//         min-width: 100px;
-//     }
-// }

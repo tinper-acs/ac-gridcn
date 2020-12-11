@@ -4,8 +4,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _react = require("react");
@@ -39,6 +37,10 @@ var _beeModal2 = _interopRequireDefault(_beeModal);
 var _lodash3 = require("lodash.isequal");
 
 var _lodash4 = _interopRequireDefault(_lodash3);
+
+var _FieldModel = require("./FieldModel");
+
+var _FieldModel2 = _interopRequireDefault(_FieldModel);
 
 var _TextField = require("./RowField/TextField");
 
@@ -128,7 +130,9 @@ var Grid = function (_Component) {
             isMax: false, //是否最大化了
             columns: props.columns,
             data: props.data,
-            defaultValueKeyValue: {} }, _defineProperty(_this$state, "isMax", false), _defineProperty(_this$state, "selectData", []), _defineProperty(_this$state, "allEditing", false), _defineProperty(_this$state, "adding", false), _defineProperty(_this$state, "addNum", 0), _defineProperty(_this$state, "canExport", false), _defineProperty(_this$state, "pasting", false), _this$state);
+            defaultValueKeyValue: {} }, _defineProperty(_this$state, "isMax", false), _defineProperty(_this$state, "selectData", []), _defineProperty(_this$state, "allEditing", false), _defineProperty(_this$state, "adding", false), _defineProperty(_this$state, "addNum", 0), _defineProperty(_this$state, "canExport", false), _defineProperty(_this$state, "pasting", false), _defineProperty(_this$state, "rowField", {
+            show: false
+        }), _this$state);
         _this.oldColumns = props.columns;
         _this.selectList = []; //选中的数据
         _this.allData = []; //表格所有数据
@@ -160,7 +164,11 @@ var Grid = function (_Component) {
     };
     //校验选中数据
 
+
     //增行
+
+
+    //弹框后新增
 
 
     //取消新增
@@ -211,10 +219,13 @@ var Grid = function (_Component) {
 
 
     Grid.prototype.render = function render() {
+        var rowField = this.state.rowField;
+
         return _react2["default"].createElement(
             "span",
             null,
-            this.state.isMax ? ReactDOM.createPortal(this.renderDom(), document.querySelector('body')) : this.renderDom()
+            this.state.isMax ? ReactDOM.createPortal(this.renderDom(), document.querySelector('body')) : this.renderDom(),
+            rowField.show ? _react2["default"].createElement(_FieldModel2["default"], rowField) : null
         );
     };
 
@@ -373,11 +384,16 @@ var _initialiseProps = function _initialiseProps() {
                         break;
                     case 'refer':
                         item.render = function (text, record, index) {
-                            var displayName = 'name';
+                            var displayName = fieldProps['displayname']; //'name';
+                            displayName = displayName ? displayName : 'name';
                             if (fieldProps && fieldProps.displayName) name = fieldProps.displayName;
-                            var value = oldRender && oldRender(text, record, index);
-                            if (text && (typeof text === "undefined" ? "undefined" : _typeof(text)) == 'object' && !record._edit) {
-                                value = oldRender && oldRender(text[displayName], record, index);
+                            var value = text;
+                            if (text && record._edit === false) {
+                                value = text instanceof Array ? text.map(function (da) {
+                                    return da[displayName];
+                                }) : null;
+                                value = value ? value.join(",") : null;
+                                value = !value && text instanceof Object ? text[displayName] : value;
                             }
                             return record._edit ? _react2["default"].createElement(
                                 "span",
@@ -389,7 +405,8 @@ var _initialiseProps = function _initialiseProps() {
                                     onChange: _this2.onChange,
                                     status: record._status,
                                     onValidate: _this2.onValidate,
-                                    text: item.listKey ? record[item.listKey] : value
+                                    text: item.listKey ? record[item.listKey] : value,
+                                    rowFieldPop: _this2.props.rowFieldPop
                                 }))
                             ) : _react2["default"].createElement(
                                 "div",
@@ -397,6 +414,11 @@ var _initialiseProps = function _initialiseProps() {
                                 item.listKey ? record[item.listKey] : value
                             );
                         };
+                        //参照需要根据valueField 来显示内容
+                        if (fieldProps.defaultValue != undefined && _this2.props.rowFieldPop) {
+                            defaultValueKeyValue[dataIndex] = fieldProps.defaultValue[fieldProps.valueField];
+                        }
+
                         break;
                 }
             }
@@ -490,12 +512,35 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     this.addRow = function () {
+        var _props = _this2.props,
+            rowFieldPop = _props.rowFieldPop,
+            rowFieldRow = _props.rowFieldRow,
+            rowFieldDialog = _props.rowFieldDialog;
+
         var defaultValueKeyValue = _this2.state.defaultValueKeyValue;
         var data = (0, _lodash2["default"])(_this2.state.data);
         var item = (0, _lodash2["default"])(defaultValueKeyValue);
         item._edit = true;
         item._status = 'edit';
         item._checked = true;
+        if (rowFieldPop) {
+            _this2.setState({
+                rowField: {
+                    show: true,
+                    title: '增行',
+                    columns: _this2.props.columns,
+                    itemDate: item,
+                    clsfix: _this2.props.clsfix,
+                    rowFieldRow: rowFieldRow ? rowFieldRow : 3,
+                    rowFieldDialog: rowFieldDialog,
+                    // className:this.props.className,
+                    cancel: function cancel(_item) {
+                        _this2.rowFieldCancel(_item, data);
+                    }
+                }
+            });
+            return;
+        }
         data.unshift(item);
         var selectList = [];
         data.forEach(function (item, index) {
@@ -511,6 +556,35 @@ var _initialiseProps = function _initialiseProps() {
         _this2.selectList = selectList;
         _this2.allData = data;
         _this2.props.onChange(data);
+    };
+
+    this.rowFieldCancel = function (_item, data) {
+        _this2.state.rowField.show = false;
+        _this2.setState({
+            rowField: _extends({}, rowField)
+        });
+        if (!_item) return;
+        var _state = _this2.state,
+            selectData = _state.selectData,
+            addNum = _state.addNum,
+            rowField = _state.rowField;
+
+        _item._edit = true;
+        _item._status = 'edit';
+        _item._checked = true;
+        selectData.push(_item);
+        if (_item) {
+            data.unshift(_item);
+        }
+        _this2.setState({
+            data: data,
+            selectData: selectData,
+            adding: true,
+            addNum: addNum + 1,
+            rowField: _extends({}, rowField)
+        });
+        _this2.props.onChange(data);
+        _this2.allData = data;
     };
 
     this.cancelAdd = function () {
@@ -838,29 +912,29 @@ var _initialiseProps = function _initialiseProps() {
     };
 
     this.renderDom = function () {
-        var _state = _this2.state,
-            copying = _state.copying,
-            isMax = _state.isMax,
-            columns = _state.columns,
-            data = _state.data,
-            allEditing = _state.allEditing,
-            adding = _state.adding,
-            open = _state.open,
-            selectData = _state.selectData,
-            canExport = _state.canExport,
-            pasting = _state.pasting;
+        var _state2 = _this2.state,
+            copying = _state2.copying,
+            isMax = _state2.isMax,
+            columns = _state2.columns,
+            data = _state2.data,
+            allEditing = _state2.allEditing,
+            adding = _state2.adding,
+            open = _state2.open,
+            selectData = _state2.selectData,
+            canExport = _state2.canExport,
+            pasting = _state2.pasting;
 
-        var _props = _this2.props,
-            clsfix = _props.clsfix,
-            paginationObj = _props.paginationObj,
-            exportData = _props.exportData,
-            disabled = _props.disabled,
-            title = _props.title,
-            hideSave = _props.hideSave,
-            isEdit = _props.isEdit,
-            powerBtns = _props.powerBtns,
-            forcePowerBtns = _props.forcePowerBtns,
-            otherProps = _objectWithoutProperties(_props, ["clsfix", "paginationObj", "exportData", "disabled", "title", "hideSave", "isEdit", "powerBtns", "forcePowerBtns"]);
+        var _props2 = _this2.props,
+            clsfix = _props2.clsfix,
+            paginationObj = _props2.paginationObj,
+            exportData = _props2.exportData,
+            disabled = _props2.disabled,
+            title = _props2.title,
+            hideSave = _props2.hideSave,
+            isEdit = _props2.isEdit,
+            powerBtns = _props2.powerBtns,
+            forcePowerBtns = _props2.forcePowerBtns,
+            otherProps = _objectWithoutProperties(_props2, ["clsfix", "paginationObj", "exportData", "disabled", "title", "hideSave", "isEdit", "powerBtns", "forcePowerBtns"]);
 
         var _paginationObj = 'none';
         if (paginationObj != 'none') {

@@ -6,7 +6,7 @@ import cloneDeep from 'lodash.clonedeep';
 import Icon from 'bee-icon';
 import Modal from 'bee-modal';
 import isequal from 'lodash.isequal';
-// import RowFieldModel from './FieldModel';
+import RowFieldModel from './FieldModel';
 //文本输入组件
 import TextField from './RowField/TextField';
 //下拉选择组件
@@ -223,15 +223,13 @@ class Grid extends Component {
                     case 'refer':
                         item.render=(text,record,index)=>{
                             let displayName = fieldProps['displayname'];//'name';
+                            displayName = displayName?displayName:'name';
                             if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
-                            let value = oldRender&&oldRender(text,record,index);
-                            if(text && record._edit){
-                                value = text instanceof Array?value:null;
-                                value =  !value && text instanceof Object?oldRender&& oldRender(text[displayName],record,index):value;
-                            }else if(text && record._edit === false){
+                            let value = text; 
+                            if(text && record._edit === false){
                                 value = text instanceof Array?text.map(da=>{return da[displayName]}):null;
                                 value = value ?value.join(","):null;
-                                value = !value && text instanceof Object?oldRender&&oldRender(text[displayName],record,index):value;
+                                value = !value && text instanceof Object?text[displayName]:value;
                             }
                             return (
                                 record._edit?<span>
@@ -246,14 +244,14 @@ class Grid extends Component {
                                             status :record._status,
                                             onValidate:this.onValidate,
                                             text:item.listKey?record[item.listKey]:value,
-                                            rowFieldContext:this.props.rowFieldContext
+                                            rowFieldPop:this.props.rowFieldPop
                                         })
                                     }
                                 </span>:<div>{item.listKey?record[item.listKey]:value}</div>
                             )
                         }
                         //参照需要根据valueField 来显示内容
-                        if(fieldProps.defaultValue!=undefined && this.props.rowFieldContext){
+                        if(fieldProps.defaultValue!=undefined && this.props.rowFieldPop){
                             defaultValueKeyValue[dataIndex]=fieldProps.defaultValue[fieldProps.valueField];
                         }
                         
@@ -350,16 +348,17 @@ class Grid extends Component {
             this.props.onChange(this.allData, field, value, index);
         }
     }
+ 
     //增行
     addRow=()=>{
-        const {rowFieldContext,rowFieldCancel} = this.props; 
+        const {rowFieldPop,rowFieldRow,rowFieldDialog} = this.props; 
         let defaultValueKeyValue = this.state.defaultValueKeyValue;
         let data = cloneDeep(this.state.data);
         let item = cloneDeep(defaultValueKeyValue);
         item._edit = true;
         item._status = 'edit';
         item._checked = true;
-        if(rowFieldContext){
+        if(rowFieldPop){
             this.setState({
                 rowField:{
                     show:true,
@@ -367,9 +366,9 @@ class Grid extends Component {
                     columns:this.props.columns,
                     itemDate:item,
                     clsfix:this.props.clsfix,
-                    rowFieldRow:this.props.rowFieldRow,
+                    rowFieldRow:rowFieldRow?rowFieldRow:3,
+                    rowFieldDialog,
                     // className:this.props.className,
-                    // ...this.props,
                     cancel:(_item)=>{this.rowFieldCancel(_item,data)}
                 }
             })
@@ -927,9 +926,9 @@ class Grid extends Component {
                 {
                     this.state.isMax?ReactDOM.createPortal(this.renderDom(),document.querySelector('body')):this.renderDom()
                 }
-                {/* {
+                {
                     rowField.show?<RowFieldModel {...rowField} />:null
-                } */}
+                }
             </span>
         )
         
