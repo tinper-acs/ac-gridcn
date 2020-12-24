@@ -3,6 +3,7 @@ import BeeGrid from "bee-complex-grid";
 import Btns from 'ac-btns';
 import ButtonGroup from 'bee-button-group';
 import cloneDeep from 'lodash.clonedeep';
+import Tooltip from 'bee-tooltip';
 import Icon from 'bee-icon';
 import Modal from 'bee-modal';
 import isequal from 'lodash.isequal';
@@ -222,14 +223,14 @@ class Grid extends Component {
                     break;
                     case 'refer':
                         item.render=(text,record,index)=>{
-                            let displayName = fieldProps['displayname'];//'name';
-                            displayName = displayName?displayName:'name';
-                            if(fieldProps&&fieldProps.displayName)name=fieldProps.displayName;
-                            let value = text; 
-                            if(text && record._edit === false){
-                                value = text instanceof Array?text.map(da=>{return da[displayName]}):null;
-                                value = value ?value.join(","):null;
-                                value = !value && text instanceof Object?text[displayName]:value;
+                            let displayname = fieldProps['displayname'];//'name';
+                            displayname = displayname?displayname:'name';
+
+                            let _text = text;
+                            if(!record._edit){
+                                _text = text instanceof Array?text.map(da=>da[displayname]):null; 
+                                _text = !_text && text instanceof Object?[text[displayname]]:_text;
+                                _text = _text ?_text.join(","):null;
                             }
                             return (
                                 record._edit?<span>
@@ -238,16 +239,14 @@ class Grid extends Component {
                                             ...other,
                                             ...fieldProps,
                                             index : index,
-                                            value ,
+                                            value : text,
                                             field :item.dataIndex,
                                             onChange :this.onChange,
                                             status :record._status,
                                             onValidate:this.onValidate,
-                                            text:item.listKey?record[item.listKey]:value,
-                                            rowFieldPop:this.props.rowFieldPop
                                         })
                                     }
-                                </span>:<div>{item.listKey?record[item.listKey]:value}</div>
+                                </span>: <Tooltip inverse overlay={_text}><div>{_text}</div></Tooltip>
                             )
                         }
                         //参照需要根据valueField 来显示内容

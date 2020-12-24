@@ -1,45 +1,75 @@
+<a name="1.0.9"></a>
+## [1.0.9](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.8...v1.0.9) (2020-12-24)
+
+
+
+<a name="1.0.8"></a>
+## [1.0.8](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.6...v1.0.8) (2020-12-11)
+
+
+
+<a name="1.0.6"></a>
 ## [1.0.6](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.5...v1.0.6) (2020-11-05)
 
 
 ### Bug Fixes
 
-* 更新ac-tips样式 ([03bb881](https://github.com/tinper-bee/ac-gridcn/commit/03bb881d232d34ef6e1aedd3b29678266a72e7e5))
+* 更新ac-tips样式 ([03bb881](https://github.com/tinper-bee/ac-gridcn/commit/03bb881))
 
 
 
+<a name="1.0.5"></a>
 ## [1.0.5](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.4...v1.0.5) (2020-11-05)
 
 
 ### Bug Fixes
 
-* 表头居中样式 ([b628ec4](https://github.com/tinper-bee/ac-gridcn/commit/b628ec4b93e063cc1028f15b85bd1eea7b3c4024))
+* 表头居中样式 ([b628ec4](https://github.com/tinper-bee/ac-gridcn/commit/b628ec4))
 
 
 
+<a name="1.0.4"></a>
 ## [1.0.4](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.3...v1.0.4) (2020-09-29)
 
 
 ### Bug Fixes
 
-* api ([95965ab](https://github.com/tinper-bee/ac-gridcn/commit/95965ab5234b7eca619302e11538f0981220a35b))
+* api ([95965ab](https://github.com/tinper-bee/ac-gridcn/commit/95965ab))
 
 
 
+<a name="1.0.3"></a>
 ## [1.0.3](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.2...v1.0.3) (2020-09-29)
 
 
 ### Bug Fixes
 
-* save reset addNum ([7b69c75](https://github.com/tinper-bee/ac-gridcn/commit/7b69c7551988ab4352dfd66b74d4182ceab25c8e))
+* save reset addNum ([7b69c75](https://github.com/tinper-bee/ac-gridcn/commit/7b69c75))
 
 
 
+<a name="1.0.2"></a>
 ## [1.0.2](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.1...v1.0.2) (2020-09-15)
 
 
 ### Bug Fixes
 
-* save && 取消edit逻辑 && 增加onChange回调参数列信息 行信息 #JCJS-4101 && #JCJS-4102 && #JCJS-4109 ([7c4358e](https://github.com/tinper-bee/ac-gridcn/commit/7c4358e4f6d8218f0ba519c2f76da5ba04bd44a3)), closes [#JCJS-4101](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4101) [#JCJS-4102](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4102) [#JCJS-4109](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4109)
+* save && 取消edit逻辑 && 增加onChange回调参数列信息 行信息 #JCJS-4101 && #JCJS-4102 && #JCJS-4109 ([7c4358e](https://github.com/tinper-bee/ac-gridcn/commit/7c4358e)), closes [#JCJS-4101](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4101) [#JCJS-4102](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4102) [#JCJS-4109](https://github.com/tinper-bee/ac-gridcn/issues/JCJS-4109)
+
+
+
+<a name="1.0.1"></a>
+## [1.0.1](https://github.com/tinper-bee/ac-gridcn/compare/v1.0.0...v1.0.1) (2020-08-14)
+
+
+### Features
+
+* 字体统一为 12px ([d3fee58](https://github.com/tinper-bee/ac-gridcn/commit/d3fee58))
+
+
+
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/tinper-bee/ac-gridcn/compare/v0.2.38...v1.0.0) (2020-07-31)
 
 
 
@@ -379,12 +409,7 @@
 
 
 <a name="0.1.7"></a>
-## [0.1.7](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.6...v0.1.7) (2020-02-21)
-
-
-
-<a name="0.1.6"></a>
-## [0.1.6](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.5...v0.1.6) (2020-02-21)
+## [0.1.7](https://github.com/tinper-bee/ac-gridcn/compare/v0.1.5...v0.1.7) (2020-02-21)
 
 
 ### Features

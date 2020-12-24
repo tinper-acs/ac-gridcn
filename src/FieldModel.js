@@ -68,7 +68,8 @@ class FieldModel extends Component {
       this.props.form.setFieldsValue({
         [_field]:_data
       }, () => {
-        this.setState({value:_field})
+        // this.setState({value:_field})
+        this.setState({value:_data})
       });
   }
 

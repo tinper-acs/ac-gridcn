@@ -26,6 +26,10 @@ var _lodash = require("lodash.clonedeep");
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
+var _beeTooltip = require("bee-tooltip");
+
+var _beeTooltip2 = _interopRequireDefault(_beeTooltip);
+
 var _beeIcon = require("bee-icon");
 
 var _beeIcon2 = _interopRequireDefault(_beeIcon);
@@ -384,34 +388,36 @@ var _initialiseProps = function _initialiseProps() {
                         break;
                     case 'refer':
                         item.render = function (text, record, index) {
-                            var displayName = fieldProps['displayname']; //'name';
-                            displayName = displayName ? displayName : 'name';
-                            if (fieldProps && fieldProps.displayName) name = fieldProps.displayName;
-                            var value = text;
-                            if (text && record._edit === false) {
-                                value = text instanceof Array ? text.map(function (da) {
-                                    return da[displayName];
+                            var displayname = fieldProps['displayname']; //'name';
+                            displayname = displayname ? displayname : 'name';
+
+                            var _text = text;
+                            if (!record._edit) {
+                                _text = text instanceof Array ? text.map(function (da) {
+                                    return da[displayname];
                                 }) : null;
-                                value = value ? value.join(",") : null;
-                                value = !value && text instanceof Object ? text[displayName] : value;
+                                _text = !_text && text instanceof Object ? [text[displayname]] : _text;
+                                _text = _text ? _text.join(",") : null;
                             }
                             return record._edit ? _react2["default"].createElement(
                                 "span",
                                 null,
                                 _react2["default"].cloneElement(component, _extends({}, other, fieldProps, {
                                     index: index,
-                                    value: value,
+                                    value: text,
                                     field: item.dataIndex,
                                     onChange: _this2.onChange,
                                     status: record._status,
-                                    onValidate: _this2.onValidate,
-                                    text: item.listKey ? record[item.listKey] : value,
-                                    rowFieldPop: _this2.props.rowFieldPop
+                                    onValidate: _this2.onValidate
                                 }))
                             ) : _react2["default"].createElement(
-                                "div",
-                                null,
-                                item.listKey ? record[item.listKey] : value
+                                _beeTooltip2["default"],
+                                { inverse: true, overlay: _text },
+                                _react2["default"].createElement(
+                                    "div",
+                                    null,
+                                    _text
+                                )
                             );
                         };
                         //参照需要根据valueField 来显示内容

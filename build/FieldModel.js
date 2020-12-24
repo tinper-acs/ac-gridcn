@@ -99,7 +99,8 @@ var FieldModel = function (_Component) {
 
     _this.onChange = function (_field, _data) {
       _this.props.form.setFieldsValue(_defineProperty({}, _field, _data), function () {
-        _this.setState({ value: _field });
+        // this.setState({value:_field})
+        _this.setState({ value: _data });
       });
     };
 
